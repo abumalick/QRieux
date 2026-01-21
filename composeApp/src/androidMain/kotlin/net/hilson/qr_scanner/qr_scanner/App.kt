@@ -1,49 +1,54 @@
 package net.hilson.qr_scanner.qr_scanner
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import android.Manifest
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.resources.painterResource
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.permissions.shouldShowRationale
+import net.hilson.qr_scanner.qr_scanner.scanner.CameraPreview
+import net.hilson.qr_scanner.qr_scanner.ui.PermissionScreen
+import net.hilson.qr_scanner.qr_scanner.ui.ScanResultSheet
+import net.hilson.qr_scanner.qr_scanner.util.QrContentType
 
-import qr_scanner.composeapp.generated.resources.Res
-import qr_scanner.composeapp.generated.resources.compose_multiplatform
-
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
-@Preview
 fun App() {
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .safeContentPadding()
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
+        val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
+        var scannedContent by remember { mutableStateOf<QrContentType?>(null) }
+        var isScanning by remember { mutableStateOf(true) }
+
+        if (cameraPermissionState.status.isGranted) {
+            if (isScanning) {
+                CameraPreview(
+                    onQrCodeDetected = { rawValue ->
+                        if (isScanning) {
+                            isScanning = false
+                            scannedContent = QrContentType.fromRawValue(rawValue)
+                        }
+                    },
+                    modifier = Modifier.fillMaxSize()
+                )
             }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
+
+            scannedContent?.let { content ->
+                ScanResultSheet(
+                    contentType = content,
+                    onDismiss = {
+                        scannedContent = null
+                        isScanning = true
+                    }
+                )
             }
+        } else {
+            PermissionScreen(
+                showRationale = cameraPermissionState.status.shouldShowRationale,
+                onRequestPermission = { cameraPermissionState.launchPermissionRequest() }
+            )
         }
     }
 }
