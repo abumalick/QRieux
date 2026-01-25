@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">qr_scanner</string>
+
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">مطلوب إذن الكاميرا</string>
+    <string name="permission_camera_required_desc">يحتاج هذا التطبيق إلى الوصول إلى الكاميرا لمسح رموز QR.</string>
+    <string name="permission_allow_camera">السماح بالكاميرا</string>
+    <string name="permission_open_settings">فتح الإعدادات</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">نتيجة المسح</string>
+    <string name="action_open_browser">فتح في المتصفح</string>
+    <string name="action_copy">نسخ</string>
+    <string name="action_share">مشاركة</string>
+    <string name="action_scan_again">مسح مرة أخرى</string>
+    <string name="action_send_email">إرسال بريد إلكتروني</string>
+    <string name="action_call">اتصال</string>
+    <string name="toast_cannot_open">لا يمكن فتح هذا المحتوى</string>
+    <string name="toast_copied">تم النسخ إلى الحافظة</string>
+    <string name="toast_cannot_share">لا يمكن المشاركة</string>
+    <string name="clipboard_label_qr">رمز QR</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">إيقاف الفلاش</string>
+    <string name="flash_turn_on">تشغيل الفلاش</string>
+    <string name="scan_instruction">ضع رمز QR داخل الإطار</string>
+</resources>

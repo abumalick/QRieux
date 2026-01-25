@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">qr_scanner</string>
+
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">Camera Permission Required</string>
+    <string name="permission_camera_required_desc">This app needs camera access to scan QR codes.</string>
+    <string name="permission_allow_camera">Allow Camera</string>
+    <string name="permission_open_settings">Open Settings</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">Scanned Result</string>
+    <string name="action_open_browser">Open in Browser</string>
+    <string name="action_copy">Copy</string>
+    <string name="action_share">Share</string>
+    <string name="action_scan_again">Scan Again</string>
+    <string name="action_send_email">Send Email</string>
+    <string name="action_call">Call</string>
+    <string name="toast_cannot_open">Cannot open this content</string>
+    <string name="toast_copied">Copied to clipboard</string>
+    <string name="toast_cannot_share">Cannot share</string>
+    <string name="clipboard_label_qr">QR Code</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">Turn off flash</string>
+    <string name="flash_turn_on">Turn on flash</string>
+    <string name="scan_instruction">Place QR code inside the frame</string>
 </resources>

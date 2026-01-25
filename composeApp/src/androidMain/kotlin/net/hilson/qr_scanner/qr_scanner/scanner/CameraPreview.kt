@@ -37,6 +37,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
@@ -125,7 +126,9 @@ fun CameraPreview(
                 painter = painterResource(
                     if (flashEnabled) R.drawable.ic_flash_off else R.drawable.ic_flash_on
                 ),
-                contentDescription = if (flashEnabled) "Turn off flash" else "Turn on flash",
+                contentDescription = stringResource(
+                    if (flashEnabled) R.string.flash_turn_off else R.string.flash_turn_on
+                ),
                 modifier = Modifier.size(32.dp)
             )
         }
@@ -161,7 +164,7 @@ private fun ScanOverlay() {
         }
 
         Text(
-            text = "Place QR code inside the frame",
+            text = stringResource(R.string.scan_instruction),
             modifier = Modifier
                 .align(Alignment.Center)
                 .padding(top = 380.dp, start = 32.dp, end = 32.dp),
