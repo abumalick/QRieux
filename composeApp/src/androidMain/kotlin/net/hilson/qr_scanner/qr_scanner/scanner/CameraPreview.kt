@@ -11,9 +11,13 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Text
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
@@ -26,7 +30,12 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -45,10 +54,12 @@ fun CameraPreview(
     var flashEnabled by remember { mutableStateOf(false) }
     var camera by remember { mutableStateOf<androidx.camera.core.Camera?>(null) }
 
-    val cameraExecutor = remember { Executors.newSingleThreadExecutor() }
+    val cameraExecutor = remember(lifecycleOwner) { Executors.newSingleThreadExecutor() }
 
-    DisposableEffect(Unit) {
-        onDispose { cameraExecutor.shutdown() }
+    DisposableEffect(lifecycleOwner) {
+        onDispose {
+            cameraExecutor.shutdown()
+        }
     }
 
     Box(modifier = modifier.fillMaxSize()) {
@@ -123,28 +134,48 @@ fun CameraPreview(
 
 @Composable
 private fun ScanOverlay() {
-    Canvas(modifier = Modifier.fillMaxSize()) {
-        val overlayColor = Color.Black.copy(alpha = 0.6f)
-        val frameSize = size.minDimension * 0.7f
-        val frameLeft = (size.width - frameSize) / 2
-        val frameTop = (size.height - frameSize) / 2
+    Box(modifier = Modifier.fillMaxSize()) {
+        Canvas(modifier = Modifier.fillMaxSize()) {
+            val overlayColor = Color.Black.copy(alpha = 0.6f)
+            val frameSize = size.minDimension * 0.7f
+            val frameLeft = (size.width - frameSize) / 2
+            val frameTop = (size.height - frameSize) / 2
 
-        drawRect(color = overlayColor)
+            drawRect(color = overlayColor)
 
-        drawRoundRect(
-            color = Color.Transparent,
-            topLeft = Offset(frameLeft, frameTop),
-            size = Size(frameSize, frameSize),
-            cornerRadius = CornerRadius(24.dp.toPx()),
-            blendMode = BlendMode.Clear
-        )
+            drawRoundRect(
+                color = Color.Transparent,
+                topLeft = Offset(frameLeft, frameTop),
+                size = Size(frameSize, frameSize),
+                cornerRadius = CornerRadius(24.dp.toPx()),
+                blendMode = BlendMode.Clear
+            )
 
-        drawRoundRect(
-            color = Color.White,
-            topLeft = Offset(frameLeft, frameTop),
-            size = Size(frameSize, frameSize),
-            cornerRadius = CornerRadius(24.dp.toPx()),
-            style = Stroke(width = 4.dp.toPx())
+            drawRoundRect(
+                color = Color.White,
+                topLeft = Offset(frameLeft, frameTop),
+                size = Size(frameSize, frameSize),
+                cornerRadius = CornerRadius(24.dp.toPx()),
+                style = Stroke(width = 4.dp.toPx())
+            )
+        }
+
+        Text(
+            text = "Place QR code inside the frame",
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(top = 380.dp, start = 32.dp, end = 32.dp),
+            style = TextStyle(
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                shadow = Shadow(
+                    color = Color.Black,
+                    offset = Offset(2f, 2f),
+                    blurRadius = 4f
+                )
+            )
         )
     }
 }
