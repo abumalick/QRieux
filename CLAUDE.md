@@ -2,6 +2,13 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## App Focus
+
+QR/barcode scanner designed for elderly and non-tech users. Priorities:
+- **Simplicity** - minimal UI, obvious actions, large touch targets
+- **No ads** - clean experience, no distractions
+- **Security** - no tracking, minimal permissions, offline-capable
+
 ## Build Commands
 
 ```bash
@@ -10,6 +17,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 # Run tests
 ./gradlew :composeApp:testDebugUnitTest
+
+# Build release APK (requires key.properties)
+./gradlew :composeApp:assembleRelease
 
 # Clean and rebuild
 ./gradlew clean :composeApp:assembleDebug
@@ -47,3 +57,21 @@ Use `stringResource(R.string.xxx)` for all user-facing strings. Add translations
 - `composeApp/src/androidMain/res/values/strings.xml` (English, default)
 - `composeApp/src/androidMain/res/values-ar/strings.xml` (Arabic)
 - `composeApp/src/androidMain/res/values-fr/strings.xml` (French)
+
+## Play Store Metadata (Fastlane)
+
+```bash
+bundle install                            # install fastlane
+bundle exec fastlane validate_credentials # test Play Store connection
+bundle exec fastlane upload_metadata      # push metadata + changelogs
+bundle exec fastlane upload_screenshots   # push images
+```
+
+Metadata files in `fastlane/metadata/android/{locale}/`:
+- `title.txt` (max 30 chars)
+- `short_description.txt` (max 80 chars)
+- `full_description.txt` (max 4000 chars)
+- `changelogs/{versionCode}.txt`
+- `images/` - icon, featureGraphic, phoneScreenshots/, etc.
+
+Locales: `en-US`, `fr-FR`, `ar`
