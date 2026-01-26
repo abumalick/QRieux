@@ -75,3 +75,8 @@ Metadata files in `fastlane/metadata/android/{locale}/`:
 - `images/` - icon, featureGraphic, phoneScreenshots/, etc.
 
 Locales: `en-US`, `fr-FR`, `ar`
+
+## Claude Commands
+
+### /release
+Full release process: analyzes changes since last tag, creates changelogs (en/fr/ar), bumps version, builds bundle, uploads to Play Store alpha track, and creates git tag.
