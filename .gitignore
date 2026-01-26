@@ -20,3 +20,9 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 node_modules/
+
+# Fastlane
+fastlane/play-store-credentials.json
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/README.md

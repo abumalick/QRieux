@@ -1,0 +1,42 @@
+default_platform(:android)
+
+platform :android do
+  desc "Download existing metadata from Play Store"
+  lane :download_metadata do
+    supply(
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Upload metadata to Play Store"
+  lane :upload_metadata do
+    supply(
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Upload screenshots only"
+  lane :upload_screenshots do
+    supply(
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true
+    )
+  end
+
+  desc "Validate Play Store credentials"
+  lane :validate_credentials do
+    validate_play_store_json_key(
+      json_key: "fastlane/play-store-credentials.json"
+    )
+  end
+end
