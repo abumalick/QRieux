@@ -1,0 +1,2 @@
+• Now scans all barcode formats: EAN, UPC, Code128, and more
+• Fixed scan result display so action buttons stay visible

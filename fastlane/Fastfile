@@ -34,6 +34,28 @@ platform :android do
     )
   end
 
+  desc "Upload bundle to internal testing track"
+  lane :internal do
+    supply(
+      aab: "composeApp/build/outputs/bundle/release/composeApp-release.aab",
+      track: "internal",
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Upload bundle to alpha (closed testing) track"
+  lane :alpha do
+    supply(
+      aab: "composeApp/build/outputs/bundle/release/composeApp-release.aab",
+      track: "alpha",
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
   desc "Validate Play Store credentials"
   lane :validate_credentials do
     validate_play_store_json_key(

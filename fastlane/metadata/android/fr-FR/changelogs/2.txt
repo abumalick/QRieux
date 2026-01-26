@@ -1,0 +1,2 @@
+• Scanne maintenant tous les formats de codes-barres : EAN, UPC, Code128, etc.
+• Correction de l'affichage des résultats pour garder les boutons d'action visibles

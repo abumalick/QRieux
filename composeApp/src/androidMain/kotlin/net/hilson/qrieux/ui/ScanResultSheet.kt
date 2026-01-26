@@ -199,7 +199,7 @@ private fun ActionButton(text: String, icon: ImageVector, onClick: () -> Unit) {
             modifier = Modifier.size(28.dp)
         )
         Spacer(Modifier.width(12.dp))
-        Text(text = text, fontSize = 22.sp)
+        Text(text = text, fontSize = 22.sp, textAlign = TextAlign.Center)
     }
 }
 
@@ -221,7 +221,7 @@ private fun SecondaryButton(text: String, icon: ImageVector, onClick: () -> Unit
             modifier = Modifier.size(28.dp)
         )
         Spacer(Modifier.width(12.dp))
-        Text(text = text, fontSize = 22.sp)
+        Text(text = text, fontSize = 22.sp, textAlign = TextAlign.Center)
     }
 }
 
