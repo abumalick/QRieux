@@ -1,4 +1,4 @@
-package net.hilson.qr_scanner.qr_scanner
+package net.hilson.qrieux
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

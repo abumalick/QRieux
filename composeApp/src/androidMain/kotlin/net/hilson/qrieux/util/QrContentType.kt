@@ -1,4 +1,4 @@
-package net.hilson.qr_scanner.qr_scanner.util
+package net.hilson.qrieux.util
 
 sealed class QrContentType {
     data class Url(val url: String) : QrContentType()

@@ -27,6 +27,12 @@ Android QR scanner app using Kotlin Multiplatform + Compose Multiplatform. Curre
 - **ui/ScanResultSheet.kt** - Displays scanned content with context-aware actions (open URL, call phone, send email, copy, share)
 - **ui/PermissionScreen.kt** - Camera permission request UI
 - **util/QrContentType.kt** - Sealed class that parses QR content into URL/Email/Phone/Text types
+- **ui/theme/Theme.kt** - Material3 color scheme with brand primary color
+
+### Brand Colors
+
+- Primary: `#4A90D9` (blue) - used in app icon and UI theme
+- Theme defined in `ui/theme/Theme.kt`
 
 ### Tech Stack
 

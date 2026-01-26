@@ -1,4 +1,4 @@
-package net.hilson.qr_scanner.qr_scanner.ui
+package net.hilson.qrieux.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -20,7 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import net.hilson.qr_scanner.qr_scanner.R
+import net.hilson.qrieux.R
 
 @Composable
 fun PermissionScreen(

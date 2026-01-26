@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">qr_scanner</string>
+    <string name="app_name">QRieux</string>
 
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">Autorisation caméra requise</string>

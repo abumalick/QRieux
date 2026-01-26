@@ -1,4 +1,4 @@
-package net.hilson.qr_scanner.qr_scanner.scanner
+package net.hilson.qrieux.scanner
 
 import androidx.annotation.OptIn
 import androidx.camera.core.ExperimentalGetImage

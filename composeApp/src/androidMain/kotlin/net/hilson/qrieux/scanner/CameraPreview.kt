@@ -1,6 +1,7 @@
-package net.hilson.qr_scanner.qr_scanner.scanner
+package net.hilson.qrieux.scanner
 
 import android.content.Context
+import android.view.ViewGroup
 import android.os.Vibrator
 import android.os.VibratorManager
 import android.os.Build
@@ -43,7 +44,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import java.util.concurrent.Executors
-import net.hilson.qr_scanner.qr_scanner.R
+import net.hilson.qrieux.R
 
 @Composable
 fun CameraPreview(
@@ -66,7 +67,13 @@ fun CameraPreview(
     Box(modifier = modifier.fillMaxSize()) {
         AndroidView(
             factory = { ctx ->
-                val previewView = PreviewView(ctx)
+                val previewView = PreviewView(ctx).apply {
+                    scaleType = PreviewView.ScaleType.FILL_CENTER
+                    layoutParams = ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                    )
+                }
                 val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
 
                 cameraProviderFuture.addListener({

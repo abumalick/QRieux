@@ -1,48 +1,44 @@
-package net.hilson.qr_scanner.qr_scanner
+package net.hilson.qrieux
 
 import android.Manifest
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
+import net.hilson.qrieux.ui.theme.QRieuxTheme
 import androidx.compose.ui.Modifier
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
-import net.hilson.qr_scanner.qr_scanner.scanner.CameraPreview
-import net.hilson.qr_scanner.qr_scanner.ui.PermissionScreen
-import net.hilson.qr_scanner.qr_scanner.ui.ScanResultSheet
-import net.hilson.qr_scanner.qr_scanner.util.QrContentType
+import net.hilson.qrieux.scanner.CameraPreview
+import net.hilson.qrieux.ui.PermissionScreen
+import net.hilson.qrieux.ui.ScanResultOverlay
+import net.hilson.qrieux.util.QrContentType
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun App() {
-    MaterialTheme {
+    QRieuxTheme {
         val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
         var scannedContent by remember { mutableStateOf<QrContentType?>(null) }
-        var isScanning by remember { mutableStateOf(true) }
 
         if (cameraPermissionState.status.isGranted) {
-            if (isScanning) {
+            Box(modifier = Modifier.fillMaxSize()) {
                 CameraPreview(
                     onQrCodeDetected = { rawValue ->
-                        if (isScanning) {
-                            isScanning = false
+                        if (scannedContent == null) {
                             scannedContent = QrContentType.fromRawValue(rawValue)
                         }
                     },
                     modifier = Modifier.fillMaxSize()
                 )
-            }
 
-            scannedContent?.let { content ->
-                ScanResultSheet(
-                    contentType = content,
-                    onDismiss = {
-                        scannedContent = null
-                        isScanning = true
-                    }
-                )
+                scannedContent?.let { content ->
+                    ScanResultOverlay(
+                        contentType = content,
+                        onDismiss = { scannedContent = null }
+                    )
+                }
             }
         } else {
             PermissionScreen(
