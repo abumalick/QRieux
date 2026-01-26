@@ -19,15 +19,25 @@ class QrAnalyzer(
 
     private val scanner = BarcodeScanning.getClient(options)
 
+    @Volatile
+    var isEnabled: Boolean = true
+
     @OptIn(ExperimentalGetImage::class)
     override fun analyze(imageProxy: ImageProxy) {
+        if (!isEnabled) {
+            imageProxy.close()
+            return
+        }
+
         val mediaImage = imageProxy.image
         if (mediaImage != null) {
             val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
             scanner.process(image)
                 .addOnSuccessListener { barcodes ->
-                    barcodes.firstOrNull()?.rawValue?.let { value ->
-                        onQrCodeDetected(value)
+                    if (isEnabled) {
+                        barcodes.firstOrNull()?.rawValue?.let { value ->
+                            onQrCodeDetected(value)
+                        }
                     }
                 }
                 .addOnCompleteListener {

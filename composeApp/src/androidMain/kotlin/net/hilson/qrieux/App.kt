@@ -26,10 +26,9 @@ fun App() {
             Box(modifier = Modifier.fillMaxSize()) {
                 CameraPreview(
                     onQrCodeDetected = { rawValue ->
-                        if (scannedContent == null) {
-                            scannedContent = QrContentType.fromRawValue(rawValue)
-                        }
+                        scannedContent = QrContentType.fromRawValue(rawValue)
                     },
+                    isScanning = scannedContent == null,
                     modifier = Modifier.fillMaxSize()
                 )
 

@@ -49,12 +49,21 @@ import net.hilson.qrieux.R
 @Composable
 fun CameraPreview(
     onQrCodeDetected: (String) -> Unit,
+    isScanning: Boolean,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     var flashEnabled by remember { mutableStateOf(false) }
     var camera by remember { mutableStateOf<androidx.camera.core.Camera?>(null) }
+    val qrAnalyzer = remember { QrAnalyzer { qrValue ->
+        vibrate(context)
+        onQrCodeDetected(qrValue)
+    } }
+
+    LaunchedEffect(isScanning) {
+        qrAnalyzer.isEnabled = isScanning
+    }
 
     val cameraExecutor = remember(lifecycleOwner) { Executors.newSingleThreadExecutor() }
 
@@ -87,10 +96,7 @@ fun CameraPreview(
                         .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                         .build()
                         .also {
-                            it.setAnalyzer(cameraExecutor, QrAnalyzer { qrValue ->
-                                vibrate(ctx)
-                                onQrCodeDetected(qrValue)
-                            })
+                            it.setAnalyzer(cameraExecutor, qrAnalyzer)
                         }
 
                     val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
