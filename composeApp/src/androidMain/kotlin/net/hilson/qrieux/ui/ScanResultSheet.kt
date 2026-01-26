@@ -44,14 +44,12 @@ fun ScanResultOverlay(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black.copy(alpha = 0.85f)),
-        contentAlignment = Alignment.Center
+            .background(Color.Black.copy(alpha = 0.85f))
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(24.dp)
-                .verticalScroll(rememberScrollState()),
+                .fillMaxSize()
+                .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -65,7 +63,9 @@ fun ScanResultOverlay(
             Spacer(modifier = Modifier.height(24.dp))
 
             Card(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f, fill = false),
                 colors = CardDefaults.cardColors(
                     containerColor = Color.White
                 ),
@@ -73,7 +73,9 @@ fun ScanResultOverlay(
             ) {
                 Text(
                     text = rawValue,
-                    modifier = Modifier.padding(20.dp),
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .padding(20.dp),
                     fontSize = 20.sp,
                     color = Color.Black
                 )
