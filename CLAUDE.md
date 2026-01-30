@@ -15,15 +15,17 @@ QR/barcode scanner designed for elderly and non-tech users. Priorities:
 # Build debug APK
 ./gradlew :composeApp:assembleDebug
 
-# Run tests
+# Build release bundle for Play Store (requires key.properties)
+./gradlew :composeApp:bundleRelease
+
+# Run all tests
 ./gradlew :composeApp:testDebugUnitTest
 
-# Build release APK (requires key.properties)
-./gradlew :composeApp:assembleRelease
-
-# Clean and rebuild
-./gradlew clean :composeApp:assembleDebug
+# Run single test class
+./gradlew :composeApp:testDebugUnitTest --tests "net.hilson.qr_scanner.qr_scanner.ComposeAppAndroidUnitTest"
 ```
+
+Version is in `composeApp/build.gradle.kts` — update both `versionCode` and `versionName` for releases.
 
 ## Architecture
 
@@ -39,10 +41,9 @@ Android QR scanner app using Kotlin Multiplatform + Compose Multiplatform. Curre
 - **util/QrContentType.kt** - Sealed class that parses QR content into URL/Email/Phone/Text types
 - **ui/theme/Theme.kt** - Material3 color scheme with brand primary color
 
-### Brand Colors
+### Brand Color
 
-- Primary: `#4A90D9` (blue) - used in app icon and UI theme
-- Theme defined in `ui/theme/Theme.kt`
+Primary: `#4A90D9` (blue) — defined in `ui/theme/Theme.kt`, used in app icon and UI.
 
 ### Tech Stack
 
