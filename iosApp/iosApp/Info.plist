@@ -34,6 +34,8 @@
     <string>QRieux needs camera access to scan QR codes</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>QRieux needs photo access to scan QR codes from images</string>
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
     <key>UIApplicationSceneManifest</key>
     <dict>
         <key>UIApplicationSupportsMultipleScenes</key>
