@@ -79,7 +79,12 @@ android {
         }
     }
     buildTypes {
+        getByName("debug") {
+            applicationIdSuffix = ".dev"
+            resValue("string", "app_name", "QRieux Dev")
+        }
         getByName("release") {
+            resValue("string", "app_name", "QRieux")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(

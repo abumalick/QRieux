@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">QRieux</string>
-
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">Camera Permission Required</string>
     <string name="permission_camera_required_desc">This app needs camera access to scan QR codes.</string>

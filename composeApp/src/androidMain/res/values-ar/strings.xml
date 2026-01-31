@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">qr_scanner</string>
-
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">مطلوب إذن الكاميرا</string>
     <string name="permission_camera_required_desc">يحتاج هذا التطبيق إلى الوصول إلى الكاميرا لمسح رموز QR.</string>
