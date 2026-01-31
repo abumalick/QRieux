@@ -44,6 +44,10 @@ Finding a QR code scanner that is simple, ad-free, free, and privacy-respecting 
 ./gradlew :composeApp:testDebugUnitTest
 ```
 
+## Testing
+
+Open [examples/test-qr-codes.html](examples/test-qr-codes.html) in a browser to test scanning all supported QR code types (URLs, emails, phones, plain text).
+
 ## Contributing
 
 Contributions welcome! Please open an issue first to discuss what you'd like to change.
