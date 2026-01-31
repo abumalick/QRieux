@@ -26,3 +26,13 @@ fastlane/play-store-credentials.json
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/README.md
+
+# iOS fastlane secrets
+iosApp/fastlane/AuthKey_*.p8
+iosApp/fastlane/api_key.json
+iosApp/fastlane/report.xml
+iosApp/fastlane/README.md
+
+# iOS build artifacts
+iosApp/*.ipa
+iosApp/*.dSYM.zip

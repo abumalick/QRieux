@@ -1,0 +1,34 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Build and upload to TestFlight"
+  lane :beta do
+    api_key = app_store_connect_api_key(
+      key_id: "5ATMT9LU8Q",
+      issuer_id: "28ada9f3-83a2-4d95-aa1f-fd8360311595",
+      key_filepath: "fastlane/AuthKey_5ATMT9LU8Q.p8"
+    )
+
+    build_app(
+      project: "iosApp.xcodeproj",
+      scheme: "iosApp",
+      export_method: "app-store",
+      xcargs: "-allowProvisioningUpdates"
+    )
+
+    upload_to_testflight(
+      api_key: api_key,
+      skip_waiting_for_build_processing: true
+    )
+  end
+
+  desc "Build only (no upload)"
+  lane :build do
+    build_app(
+      project: "iosApp.xcodeproj",
+      scheme: "iosApp",
+      export_method: "app-store",
+      xcargs: "-allowProvisioningUpdates"
+    )
+  end
+end
