@@ -37,8 +37,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import java.util.concurrent.Executors
+import net.hilson.qrieux.AndroidContext
 import net.hilson.qrieux.R
-import net.hilson.qrieux.util.vibrate
+import net.hilson.qrieux.vibrate
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PhotoLibrary
 
@@ -54,7 +55,7 @@ fun CameraPreview(
     var flashEnabled by remember { mutableStateOf(false) }
     var camera by remember { mutableStateOf<androidx.camera.core.Camera?>(null) }
     val qrAnalyzer = remember { QrAnalyzer { qrValue ->
-        vibrate(context)
+        vibrate(AndroidContext(context))
         onQrCodeDetected(qrValue)
     } }
 

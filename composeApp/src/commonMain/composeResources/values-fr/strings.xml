@@ -1,0 +1,29 @@
+<resources>
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">Autorisation caméra requise</string>
+    <string name="permission_camera_required_desc">Cette application a besoin d\'accéder à la caméra pour scanner les codes QR.</string>
+    <string name="permission_allow_camera">Autoriser la caméra</string>
+    <string name="permission_open_settings">Ouvrir les paramètres</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">Résultat du scan</string>
+    <string name="action_open_browser">Ouvrir dans le navigateur</string>
+    <string name="action_copy">Copier</string>
+    <string name="action_share">Partager</string>
+    <string name="action_scan_again">Scanner à nouveau</string>
+    <string name="action_send_email">Envoyer un e-mail</string>
+    <string name="action_call">Appeler</string>
+    <string name="toast_cannot_open">Impossible d\'ouvrir ce contenu</string>
+    <string name="toast_copied">Copié dans le presse-papiers</string>
+    <string name="toast_cannot_share">Impossible de partager</string>
+    <string name="clipboard_label_qr">Code QR</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">Éteindre le flash</string>
+    <string name="flash_turn_on">Allumer le flash</string>
+    <string name="scan_instruction">Placez le code QR dans le cadre</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">Choisir une photo de la galerie</string>
+    <string name="gallery_no_qr_found">Aucun code QR trouvé dans l\'image</string>
+</resources>

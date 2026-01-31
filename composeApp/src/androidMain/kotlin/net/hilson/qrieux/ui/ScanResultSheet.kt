@@ -1,11 +1,6 @@
 package net.hilson.qrieux.ui
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -27,6 +22,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import net.hilson.qrieux.R
 import net.hilson.qrieux.util.QrContentType
+import net.hilson.qrieux.AndroidContext
+import net.hilson.qrieux.copyToClipboard
+import net.hilson.qrieux.dialPhone
+import net.hilson.qrieux.openUrl
+import net.hilson.qrieux.sendEmail
+import net.hilson.qrieux.shareText
+import net.hilson.qrieux.showToast
 
 @Composable
 fun ScanResultOverlay(
@@ -94,88 +96,89 @@ fun ScanResultOverlay(
 }
 
 @Composable
-private fun UrlActions(url: String, onDismiss: () -> Unit, context: Context) {
+private fun UrlActions(url: String, onDismiss: () -> Unit, context: android.content.Context) {
     val uri = Uri.parse(url)
     val isSafeScheme = uri.scheme?.lowercase() in listOf("http", "https")
-    val toastCannotOpen = stringResource(R.string.toast_cannot_open)
     val toastCopied = stringResource(R.string.toast_copied)
     val clipboardLabel = stringResource(R.string.clipboard_label_qr)
     val shareTitle = stringResource(R.string.action_share)
-    val toastCannotShare = stringResource(R.string.toast_cannot_share)
+    val platformContext = AndroidContext(context)
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         if (isSafeScheme) {
             ActionButton(stringResource(R.string.action_open_browser), Icons.Default.OpenInBrowser) {
-                launchIntent(context, Intent(Intent.ACTION_VIEW, uri), toastCannotOpen)
+                openUrl(platformContext, url)
             }
         }
         ActionButton(stringResource(R.string.action_copy), Icons.Default.ContentCopy) {
-            copyToClipboard(context, url, clipboardLabel, toastCopied)
+            copyToClipboard(platformContext, url, clipboardLabel)
+            showToast(platformContext, toastCopied)
         }
         ActionButton(stringResource(R.string.action_share), Icons.Default.Share) {
-            shareText(context, url, shareTitle, toastCannotShare)
+            shareText(platformContext, url, shareTitle)
         }
         SecondaryButton(stringResource(R.string.action_scan_again), Icons.Default.QrCodeScanner, onDismiss)
     }
 }
 
 @Composable
-private fun EmailActions(email: String, onDismiss: () -> Unit, context: Context) {
-    val toastCannotOpen = stringResource(R.string.toast_cannot_open)
+private fun EmailActions(email: String, onDismiss: () -> Unit, context: android.content.Context) {
     val toastCopied = stringResource(R.string.toast_copied)
     val clipboardLabel = stringResource(R.string.clipboard_label_qr)
     val shareTitle = stringResource(R.string.action_share)
-    val toastCannotShare = stringResource(R.string.toast_cannot_share)
+    val platformContext = AndroidContext(context)
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         ActionButton(stringResource(R.string.action_send_email), Icons.AutoMirrored.Filled.Send) {
-            launchIntent(context, Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$email")), toastCannotOpen)
+            sendEmail(platformContext, email)
         }
         ActionButton(stringResource(R.string.action_copy), Icons.Default.ContentCopy) {
-            copyToClipboard(context, email, clipboardLabel, toastCopied)
+            copyToClipboard(platformContext, email, clipboardLabel)
+            showToast(platformContext, toastCopied)
         }
         ActionButton(stringResource(R.string.action_share), Icons.Default.Share) {
-            shareText(context, email, shareTitle, toastCannotShare)
+            shareText(platformContext, email, shareTitle)
         }
         SecondaryButton(stringResource(R.string.action_scan_again), Icons.Default.QrCodeScanner, onDismiss)
     }
 }
 
 @Composable
-private fun PhoneActions(phone: String, onDismiss: () -> Unit, context: Context) {
-    val toastCannotOpen = stringResource(R.string.toast_cannot_open)
+private fun PhoneActions(phone: String, onDismiss: () -> Unit, context: android.content.Context) {
     val toastCopied = stringResource(R.string.toast_copied)
     val clipboardLabel = stringResource(R.string.clipboard_label_qr)
     val shareTitle = stringResource(R.string.action_share)
-    val toastCannotShare = stringResource(R.string.toast_cannot_share)
+    val platformContext = AndroidContext(context)
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         ActionButton(stringResource(R.string.action_call), Icons.Default.Phone) {
-            launchIntent(context, Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone")), toastCannotOpen)
+            dialPhone(platformContext, phone)
         }
         ActionButton(stringResource(R.string.action_copy), Icons.Default.ContentCopy) {
-            copyToClipboard(context, phone, clipboardLabel, toastCopied)
+            copyToClipboard(platformContext, phone, clipboardLabel)
+            showToast(platformContext, toastCopied)
         }
         ActionButton(stringResource(R.string.action_share), Icons.Default.Share) {
-            shareText(context, phone, shareTitle, toastCannotShare)
+            shareText(platformContext, phone, shareTitle)
         }
         SecondaryButton(stringResource(R.string.action_scan_again), Icons.Default.QrCodeScanner, onDismiss)
     }
 }
 
 @Composable
-private fun TextActions(text: String, onDismiss: () -> Unit, context: Context) {
+private fun TextActions(text: String, onDismiss: () -> Unit, context: android.content.Context) {
     val toastCopied = stringResource(R.string.toast_copied)
     val clipboardLabel = stringResource(R.string.clipboard_label_qr)
     val shareTitle = stringResource(R.string.action_share)
-    val toastCannotShare = stringResource(R.string.toast_cannot_share)
+    val platformContext = AndroidContext(context)
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         ActionButton(stringResource(R.string.action_copy), Icons.Default.ContentCopy) {
-            copyToClipboard(context, text, clipboardLabel, toastCopied)
+            copyToClipboard(platformContext, text, clipboardLabel)
+            showToast(platformContext, toastCopied)
         }
         ActionButton(stringResource(R.string.action_share), Icons.Default.Share) {
-            shareText(context, text, shareTitle, toastCannotShare)
+            shareText(platformContext, text, shareTitle)
         }
         SecondaryButton(stringResource(R.string.action_scan_again), Icons.Default.QrCodeScanner, onDismiss)
     }
@@ -225,28 +228,3 @@ private fun SecondaryButton(text: String, icon: ImageVector, onClick: () -> Unit
     }
 }
 
-private fun launchIntent(context: Context, intent: Intent, errorMessage: String) {
-    try {
-        context.startActivity(intent)
-    } catch (e: Exception) {
-        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
-    }
-}
-
-private fun copyToClipboard(context: Context, text: String, label: String, successMessage: String) {
-    val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-    clipboard.setPrimaryClip(ClipData.newPlainText(label, text))
-    Toast.makeText(context, successMessage, Toast.LENGTH_SHORT).show()
-}
-
-private fun shareText(context: Context, text: String, shareTitle: String, errorMessage: String) {
-    try {
-        val intent = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, text)
-        }
-        context.startActivity(Intent.createChooser(intent, shareTitle))
-    } catch (e: Exception) {
-        Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
-    }
-}

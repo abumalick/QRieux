@@ -1,6 +1,7 @@
 package net.hilson.qrieux
 
 import android.Manifest
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
@@ -18,6 +19,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import net.hilson.qrieux.scanner.CameraPreview
 import net.hilson.qrieux.scanner.scanBarcodeFromUri
@@ -25,11 +27,11 @@ import net.hilson.qrieux.ui.PermissionScreen
 import net.hilson.qrieux.ui.ScanResultOverlay
 import net.hilson.qrieux.ui.theme.QRieuxTheme
 import net.hilson.qrieux.util.QrContentType
-import net.hilson.qrieux.util.vibrate
+import net.hilson.qrieux.vibrate
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun App() {
+fun App(sharedImageUri: Uri? = null, shareTimestamp: Long = 0L) {
     QRieuxTheme {
         val context = LocalContext.current
         val scope = rememberCoroutineScope()
@@ -38,12 +40,27 @@ fun App() {
         val snackbarHostState = remember { SnackbarHostState() }
         val noQrFoundMessage = stringResource(R.string.gallery_no_qr_found)
 
+        LaunchedEffect(shareTimestamp) {
+            if (shareTimestamp > 0L) {
+                sharedImageUri?.let { uri ->
+                    delay(100) // ensure UI is ready
+                    val result = scanBarcodeFromUri(context, uri)
+                    if (result != null) {
+                        vibrate(AndroidContext(context))
+                        scannedContent = QrContentType.fromRawValue(result)
+                    } else {
+                        snackbarHostState.showSnackbar(noQrFoundMessage)
+                    }
+                }
+            }
+        }
+
         val pickMedia = rememberLauncherForActivityResult(PickVisualMedia()) { uri ->
             uri?.let {
                 scope.launch {
                     val result = scanBarcodeFromUri(context, it)
                     if (result != null) {
-                        vibrate(context)
+                        vibrate(AndroidContext(context))
                         scannedContent = QrContentType.fromRawValue(result)
                     } else {
                         snackbarHostState.showSnackbar(noQrFoundMessage)

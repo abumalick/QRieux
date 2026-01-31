@@ -10,15 +10,15 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import org.jetbrains.compose.resources.stringResource
+import qr_scanner.composeapp.generated.resources.Res
+import qr_scanner.composeapp.generated.resources.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import net.hilson.qrieux.AndroidContext
-import net.hilson.qrieux.R
+import net.hilson.qrieux.IosContext
 import net.hilson.qrieux.openAppSettings
 
 @Composable
@@ -26,8 +26,7 @@ fun PermissionScreen(
     showRationale: Boolean,
     onRequestPermission: () -> Unit
 ) {
-    val context = LocalContext.current
-    val platformContext = AndroidContext(context)
+    val platformContext = IosContext()
 
     Box(
         modifier = Modifier
@@ -40,7 +39,7 @@ fun PermissionScreen(
             modifier = Modifier.padding(32.dp)
         ) {
             Text(
-                text = stringResource(R.string.permission_camera_required_title),
+                text = stringResource(Res.string.permission_camera_required_title),
                 color = Color.White,
                 fontSize = 28.sp,
                 textAlign = TextAlign.Center
@@ -49,7 +48,7 @@ fun PermissionScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = stringResource(R.string.permission_camera_required_desc),
+                text = stringResource(Res.string.permission_camera_required_desc),
                 color = Color.White.copy(alpha = 0.8f),
                 fontSize = 20.sp,
                 textAlign = TextAlign.Center
@@ -68,7 +67,7 @@ fun PermissionScreen(
                 )
             ) {
                 Text(
-                    text = stringResource(R.string.permission_allow_camera),
+                    text = stringResource(Res.string.permission_allow_camera),
                     fontSize = 22.sp
                 )
             }
@@ -86,7 +85,7 @@ fun PermissionScreen(
                 )
             ) {
                 Text(
-                    text = stringResource(R.string.permission_open_settings),
+                    text = stringResource(Res.string.permission_open_settings),
                     fontSize = 22.sp
                 )
             }

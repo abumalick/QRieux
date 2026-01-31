@@ -12,34 +12,53 @@ QR/barcode scanner designed for elderly and non-tech users. Priorities:
 ## Build Commands
 
 ```bash
-# Build debug APK
-./gradlew :composeApp:assembleDebug
+# Android
+./gradlew :composeApp:assembleDebug            # Build debug APK
+./gradlew :composeApp:bundleRelease            # Build release bundle (requires key.properties)
 
-# Build release bundle for Play Store (requires key.properties)
-./gradlew :composeApp:bundleRelease
+# iOS
+./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64   # Build iOS debug framework
+./gradlew :composeApp:linkReleaseFrameworkIosArm64          # Build iOS release framework
 
-# Run all tests
-./gradlew :composeApp:testDebugUnitTest
+# Tests
+./gradlew :composeApp:testDebugUnitTest        # Run all unit tests
 
 # Run single test class
 ./gradlew :composeApp:testDebugUnitTest --tests "net.hilson.qr_scanner.qr_scanner.ComposeAppAndroidUnitTest"
 ```
 
-Version is in `composeApp/build.gradle.kts` — update both `versionCode` and `versionName` for releases.
+Version:
+- Android: `composeApp/build.gradle.kts` — update both `versionCode` and `versionName`
+- iOS: `iosApp/iosApp/Info.plist` — update `CFBundleShortVersionString` and `CFBundleVersion`
 
 ## Architecture
 
-Android QR scanner app using Kotlin Multiplatform + Compose Multiplatform. Currently Android-only.
+QR scanner app using Kotlin Multiplatform + Compose Multiplatform. Supports Android and iOS.
+
+### Source Sets
+
+- **commonMain** - Shared code (QrContentType, Platform expect declarations)
+- **androidMain** - Android implementation (CameraX, ML Kit, Android-specific UI)
+- **iosMain** - iOS implementation (AVFoundation, Vision framework, iOS-specific UI)
 
 ### Key Components
 
+**Common:**
+- **util/QrContentType.kt** - Sealed class that parses QR content into URL/Email/Phone/Text types
+- **Platform.kt** - Expect declarations for platform functions (vibrate, openUrl, share, etc.)
+
+**Android (androidMain):**
 - **App.kt** - Root composable; manages camera permission state and scan results
 - **scanner/CameraPreview.kt** - CameraX preview with flash toggle and scan overlay UI
 - **scanner/QrAnalyzer.kt** - ML Kit barcode analyzer (ImageAnalysis.Analyzer impl)
-- **ui/ScanResultSheet.kt** - Displays scanned content with context-aware actions (open URL, call phone, send email, copy, share)
+- **ui/ScanResultSheet.kt** - Displays scanned content with context-aware actions
 - **ui/PermissionScreen.kt** - Camera permission request UI
-- **util/QrContentType.kt** - Sealed class that parses QR content into URL/Email/Phone/Text types
-- **ui/theme/Theme.kt** - Material3 color scheme with brand primary color
+
+**iOS (iosMain):**
+- **App.ios.kt** - iOS root composable with AVFoundation camera permission handling
+- **scanner/CameraPreview.ios.kt** - AVCaptureSession preview with Vision barcode scanning
+- **scanner/GalleryScanner.ios.kt** - Vision framework barcode scanning for images
+- **PhotoPicker.ios.kt** - PHPickerViewController for photo selection
 
 ### Brand Color
 
@@ -47,10 +66,19 @@ Primary: `#4A90D9` (blue) — defined in `ui/theme/Theme.kt`, used in app icon a
 
 ### Tech Stack
 
+**Shared:**
+- Compose Multiplatform for UI
+- Compose Material3 + Material Icons Extended
+
+**Android:**
 - CameraX for camera capture
 - ML Kit Barcode Scanning for QR detection
 - Accompanist Permissions for runtime permission handling
-- Compose Material3 for UI
+
+**iOS:**
+- AVFoundation for camera capture
+- Vision framework for barcode scanning (built-in, no extra dependencies)
+- PhotosUI for photo picker
 
 ### Localization
 
