@@ -22,4 +22,8 @@
     <string name="flash_turn_off">Turn off flash</string>
     <string name="flash_turn_on">Turn on flash</string>
     <string name="scan_instruction">Place QR code inside the frame</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">Pick photo from gallery</string>
+    <string name="gallery_no_qr_found">No QR code found in image</string>
 </resources>

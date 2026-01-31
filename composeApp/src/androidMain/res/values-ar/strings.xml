@@ -22,4 +22,8 @@
     <string name="flash_turn_off">إيقاف الفلاش</string>
     <string name="flash_turn_on">تشغيل الفلاش</string>
     <string name="scan_instruction">ضع رمز QR داخل الإطار</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">اختيار صورة من المعرض</string>
+    <string name="gallery_no_qr_found">لم يتم العثور على رمز QR في الصورة</string>
 </resources>

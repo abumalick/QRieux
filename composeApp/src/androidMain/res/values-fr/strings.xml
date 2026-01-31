@@ -22,4 +22,8 @@
     <string name="flash_turn_off">Éteindre le flash</string>
     <string name="flash_turn_on">Allumer le flash</string>
     <string name="scan_instruction">Placez le code QR dans le cadre</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">Choisir une photo de la galerie</string>
+    <string name="gallery_no_qr_found">Aucun code QR trouvé dans l\'image</string>
 </resources>

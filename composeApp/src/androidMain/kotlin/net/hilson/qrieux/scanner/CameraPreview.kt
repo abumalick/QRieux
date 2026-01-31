@@ -1,10 +1,6 @@
 package net.hilson.qrieux.scanner
 
-import android.content.Context
 import android.view.ViewGroup
-import android.os.Vibrator
-import android.os.VibratorManager
-import android.os.Build
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
@@ -12,10 +8,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
@@ -45,11 +38,15 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import java.util.concurrent.Executors
 import net.hilson.qrieux.R
+import net.hilson.qrieux.util.vibrate
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PhotoLibrary
 
 @Composable
 fun CameraPreview(
     onQrCodeDetected: (String) -> Unit,
     isScanning: Boolean,
+    onGalleryClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -145,6 +142,24 @@ fun CameraPreview(
                 modifier = Modifier.size(32.dp)
             )
         }
+
+        FilledIconButton(
+            onClick = onGalleryClick,
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(24.dp)
+                .size(64.dp),
+            colors = IconButtonDefaults.filledIconButtonColors(
+                containerColor = Color.Black.copy(alpha = 0.5f),
+                contentColor = Color.White
+            )
+        ) {
+            Icon(
+                imageVector = Icons.Default.PhotoLibrary,
+                contentDescription = stringResource(R.string.gallery_pick_photo),
+                modifier = Modifier.size(32.dp)
+            )
+        }
     }
 }
 
@@ -196,18 +211,3 @@ private fun ScanOverlay() {
     }
 }
 
-@Suppress("DEPRECATION")
-private fun vibrate(context: Context) {
-    val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-        vibratorManager.defaultVibrator
-    } else {
-        context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-    }
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        vibrator.vibrate(android.os.VibrationEffect.createOneShot(100, android.os.VibrationEffect.DEFAULT_AMPLITUDE))
-    } else {
-        vibrator.vibrate(100)
-    }
-}
