@@ -15,6 +15,8 @@ Finding a QR code scanner that is simple, ad-free, free, and privacy-respecting 
 - **No tracking** — your data stays on your device
 - **Simple UI** — large buttons, obvious actions
 - **Smart actions** — open links, call phones, send emails, copy, share
+- **Gallery scanning** — scan QR codes from photos
+- **Share to scan** — share images from other apps to scan
 - **Multilingual** — English, French, Arabic
 
 ## Coming Soon
