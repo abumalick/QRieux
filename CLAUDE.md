@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+**⚠️ Public repo** — never commit secrets, API keys, or credentials to GitHub.
+
 ## App Focus
 
 QR/barcode scanner designed for elderly and non-tech users. Priorities:
