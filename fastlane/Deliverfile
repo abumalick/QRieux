@@ -4,10 +4,10 @@
 app_identifier "net.hilson.qrieux"
 
 # Metadata path
-metadata_path "./fastlane/metadata"
+metadata_path "./fastlane/metadata/ios"
 
 # Screenshots path
-screenshots_path "./fastlane/screenshots"
+screenshots_path "./fastlane/screenshots/ios"
 
 # Skip binary upload (we handle that separately)
 skip_binary_upload true

@@ -1,2 +1,15 @@
+# Android
 json_key_file("fastlane/play-store-credentials.json")
 package_name("net.hilson.qrieux")
+
+# iOS
+app_identifier("net.hilson.qrieux")
+team_id("H8JDJQSJ7M")
+
+for_platform :ios do
+  app_identifier("net.hilson.qrieux")
+end
+
+for_platform :android do
+  package_name("net.hilson.qrieux")
+end

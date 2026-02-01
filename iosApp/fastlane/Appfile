@@ -1,3 +1,0 @@
-app_identifier("net.hilson.qrieux")
-apple_id(ENV["FASTLANE_USER"])
-team_id("H8JDJQSJ7M")
