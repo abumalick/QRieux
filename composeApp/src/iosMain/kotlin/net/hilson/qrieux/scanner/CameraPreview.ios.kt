@@ -89,7 +89,7 @@ fun CameraPreview(
             },
             modifier = Modifier
                 .align(Alignment.TopEnd)
-                .padding(24.dp)
+                .padding(top = 56.dp, end = 24.dp)
                 .size(64.dp),
             colors = IconButtonDefaults.filledIconButtonColors(
                 containerColor = if (flashEnabled) Color.White else Color.Black.copy(alpha = 0.5f),

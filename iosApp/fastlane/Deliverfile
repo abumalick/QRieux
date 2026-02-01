@@ -1,0 +1,32 @@
+# App Store Connect metadata configuration
+
+# App identifier
+app_identifier "net.hilson.qrieux"
+
+# Metadata path
+metadata_path "./fastlane/metadata"
+
+# Screenshots path
+screenshots_path "./fastlane/screenshots"
+
+# Skip binary upload (we handle that separately)
+skip_binary_upload true
+
+# Force upload even if metadata seems unchanged
+force true
+
+# Overwrite existing screenshots
+overwrite_screenshots true
+
+# Submit for review settings (set to false for first submission)
+submit_for_review false
+automatic_release false
+
+# Skip waiting for screenshots processing
+skip_screenshots false
+
+# App rating configuration (4+ for simple utility app)
+app_rating_config_path "./fastlane/rating_config.json"
+
+# Price tier (0 = free)
+price_tier 0

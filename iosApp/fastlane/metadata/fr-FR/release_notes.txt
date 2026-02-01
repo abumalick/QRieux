@@ -1,0 +1,2 @@
+• Affichage bord à bord amélioré
+• Meilleur positionnement des boutons

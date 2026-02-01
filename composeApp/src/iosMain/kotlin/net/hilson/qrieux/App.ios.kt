@@ -1,9 +1,11 @@
 package net.hilson.qrieux
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.*
@@ -62,10 +64,11 @@ fun App(sharedImage: UIImage? = null) {
         }
 
         Scaffold(
-            snackbarHost = { SnackbarHost(snackbarHostState) }
-        ) { paddingValues ->
+            snackbarHost = { SnackbarHost(snackbarHostState) },
+            containerColor = Color.Black
+        ) { _ ->
             if (cameraPermissionGranted) {
-                Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
+                Box(modifier = Modifier.fillMaxSize()) {
                     CameraPreview(
                         onQrCodeDetected = { rawValue ->
                             scannedContent = QrContentType.fromRawValue(rawValue)
