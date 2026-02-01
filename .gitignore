@@ -36,3 +36,7 @@ iosApp/fastlane/README.md
 # iOS build artifacts
 iosApp/*.ipa
 iosApp/*.dSYM.zip
+
+# iOS API keys (sensitive)
+fastlane/AuthKey_*.p8
+fastlane/api_key.json
