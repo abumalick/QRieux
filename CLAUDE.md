@@ -16,9 +16,13 @@ QR/barcode scanner designed for elderly and non-tech users. Priorities:
 ./gradlew :composeApp:assembleDebug            # Build debug APK
 ./gradlew :composeApp:bundleRelease            # Build release bundle (requires key.properties)
 
-# iOS
+# iOS framework (for Xcode integration)
 ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64   # Build iOS debug framework
 ./gradlew :composeApp:linkReleaseFrameworkIosArm64          # Build iOS release framework
+
+# iOS app (run from iosApp/ directory)
+cd iosApp && bundle exec fastlane build   # Build only
+cd iosApp && bundle exec fastlane beta    # Build + upload to TestFlight
 
 # Tests
 ./gradlew :composeApp:testDebugUnitTest        # Run all unit tests
@@ -27,9 +31,12 @@ QR/barcode scanner designed for elderly and non-tech users. Priorities:
 ./gradlew :composeApp:testDebugUnitTest --tests "net.hilson.qr_scanner.qr_scanner.ComposeAppAndroidUnitTest"
 ```
 
-Version:
-- Android: `composeApp/build.gradle.kts` — update both `versionCode` and `versionName`
-- iOS: `iosApp/iosApp/Info.plist` — update `CFBundleShortVersionString` and `CFBundleVersion`
+**Version bump** (must update both platforms):
+- Android: `composeApp/build.gradle.kts` — `versionCode` and `versionName`
+- iOS: `iosApp/iosApp/Info.plist` — `CFBundleShortVersionString` and `CFBundleVersion`
+
+**Debug vs Release:**
+- Debug build has applicationId suffix `.dev` and app name "QRieux Dev" (can install alongside release)
 
 ## Architecture
 
@@ -86,6 +93,10 @@ Use `stringResource(R.string.xxx)` for all user-facing strings. Add translations
 - `composeApp/src/androidMain/res/values/strings.xml` (English, default)
 - `composeApp/src/androidMain/res/values-ar/strings.xml` (Arabic)
 - `composeApp/src/androidMain/res/values-fr/strings.xml` (French)
+
+### Manual Testing
+
+Open `examples/test-qr-codes.html` in browser to test all supported QR types (URLs, emails, phones, text).
 
 ## Play Store Metadata (Fastlane)
 
