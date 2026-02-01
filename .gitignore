@@ -22,6 +22,7 @@ captures
 node_modules/
 
 # Fastlane
+fastlane/.env
 fastlane/play-store-credentials.json
 fastlane/report.xml
 fastlane/Preview.html

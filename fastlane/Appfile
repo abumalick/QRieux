@@ -4,7 +4,7 @@ package_name("net.hilson.qrieux")
 
 # iOS
 app_identifier("net.hilson.qrieux")
-team_id("H8JDJQSJ7M")
+team_id(ENV["APPLE_TEAM_ID"])
 
 for_platform :ios do
   app_identifier("net.hilson.qrieux")
