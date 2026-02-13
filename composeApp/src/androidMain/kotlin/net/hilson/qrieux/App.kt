@@ -23,6 +23,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import net.hilson.qrieux.scanner.CameraPreview
 import net.hilson.qrieux.scanner.scanBarcodeFromUri
+import net.hilson.qrieux.ui.OnboardingScreen
 import net.hilson.qrieux.ui.PermissionScreen
 import net.hilson.qrieux.ui.ScanResultOverlay
 import net.hilson.qrieux.ui.theme.QRieuxTheme
@@ -34,11 +35,15 @@ import net.hilson.qrieux.vibrate
 fun App(sharedImageUri: Uri? = null, shareTimestamp: Long = 0L) {
     QRieuxTheme {
         val context = LocalContext.current
+        val platformContext = AndroidContext(context)
         val scope = rememberCoroutineScope()
         val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
         var scannedContent by remember { mutableStateOf<QrContentType?>(null) }
         val snackbarHostState = remember { SnackbarHostState() }
         val noQrFoundMessage = stringResource(R.string.gallery_no_qr_found)
+        var showOnboarding by remember {
+            mutableStateOf(sharedImageUri == null && !isOnboardingCompleted(platformContext))
+        }
 
         LaunchedEffect(shareTimestamp) {
             if (shareTimestamp > 0L) {
@@ -72,7 +77,12 @@ fun App(sharedImageUri: Uri? = null, shareTimestamp: Long = 0L) {
         Scaffold(
             snackbarHost = { SnackbarHost(snackbarHostState) }
         ) { paddingValues ->
-            if (cameraPermissionState.status.isGranted) {
+            if (showOnboarding) {
+                OnboardingScreen(onFinish = {
+                    setOnboardingCompleted(platformContext)
+                    showOnboarding = false
+                })
+            } else if (cameraPermissionState.status.isGranted) {
                 Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
                     CameraPreview(
                         onQrCodeDetected = { rawValue ->
@@ -82,6 +92,7 @@ fun App(sharedImageUri: Uri? = null, shareTimestamp: Long = 0L) {
                         onGalleryClick = {
                             pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
                         },
+                        onHelpClick = { showOnboarding = true },
                         modifier = Modifier.fillMaxSize()
                     )
 

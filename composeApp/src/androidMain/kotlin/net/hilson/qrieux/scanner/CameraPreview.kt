@@ -18,6 +18,8 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -41,6 +43,7 @@ import net.hilson.qrieux.AndroidContext
 import net.hilson.qrieux.R
 import net.hilson.qrieux.vibrate
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.PhotoLibrary
 
 @Composable
@@ -48,6 +51,7 @@ fun CameraPreview(
     onQrCodeDetected: (String) -> Unit,
     isScanning: Boolean,
     onGalleryClick: () -> Unit,
+    onHelpClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -71,95 +75,119 @@ fun CameraPreview(
         }
     }
 
-    Box(modifier = modifier.fillMaxSize()) {
-        AndroidView(
-            factory = { ctx ->
-                val previewView = PreviewView(ctx).apply {
-                    scaleType = PreviewView.ScaleType.FILL_CENTER
-                    layoutParams = ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT
-                    )
-                }
-                val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
-
-                cameraProviderFuture.addListener({
-                    val cameraProvider = cameraProviderFuture.get()
-
-                    val preview = Preview.Builder().build().also {
-                        it.surfaceProvider = previewView.surfaceProvider
+    // Force LTR so button positions don't flip in RTL locales (camera UI is ergonomic, not directional)
+    val originalLayoutDirection = LocalLayoutDirection.current
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+        Box(modifier = modifier.fillMaxSize()) {
+            AndroidView(
+                factory = { ctx ->
+                    val previewView = PreviewView(ctx).apply {
+                        scaleType = PreviewView.ScaleType.FILL_CENTER
+                        layoutParams = ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT
+                        )
                     }
+                    val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
 
-                    val imageAnalysis = ImageAnalysis.Builder()
-                        .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                        .build()
-                        .also {
-                            it.setAnalyzer(cameraExecutor, qrAnalyzer)
+                    cameraProviderFuture.addListener({
+                        val cameraProvider = cameraProviderFuture.get()
+
+                        val preview = Preview.Builder().build().also {
+                            it.surfaceProvider = previewView.surfaceProvider
                         }
 
-                    val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+                        val imageAnalysis = ImageAnalysis.Builder()
+                            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                            .build()
+                            .also {
+                                it.setAnalyzer(cameraExecutor, qrAnalyzer)
+                            }
 
-                    try {
-                        cameraProvider.unbindAll()
-                        camera = cameraProvider.bindToLifecycle(
-                            lifecycleOwner,
-                            cameraSelector,
-                            preview,
-                            imageAnalysis
-                        )
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }, ContextCompat.getMainExecutor(ctx))
+                        val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
-                previewView
-            },
-            modifier = Modifier.fillMaxSize()
-        )
+                        try {
+                            cameraProvider.unbindAll()
+                            camera = cameraProvider.bindToLifecycle(
+                                lifecycleOwner,
+                                cameraSelector,
+                                preview,
+                                imageAnalysis
+                            )
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }, ContextCompat.getMainExecutor(ctx))
 
-        ScanOverlay()
-
-        FilledIconButton(
-            onClick = {
-                flashEnabled = !flashEnabled
-                camera?.cameraControl?.enableTorch(flashEnabled)
-            },
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(24.dp)
-                .size(64.dp),
-            colors = IconButtonDefaults.filledIconButtonColors(
-                containerColor = if (flashEnabled) Color.White else Color.Black.copy(alpha = 0.5f),
-                contentColor = if (flashEnabled) Color.Black else Color.White
+                    previewView
+                },
+                modifier = Modifier.fillMaxSize()
             )
-        ) {
-            Icon(
-                painter = painterResource(
-                    if (flashEnabled) R.drawable.ic_flash_off else R.drawable.ic_flash_on
-                ),
-                contentDescription = stringResource(
-                    if (flashEnabled) R.string.flash_turn_off else R.string.flash_turn_on
-                ),
-                modifier = Modifier.size(32.dp)
-            )
-        }
 
-        FilledIconButton(
-            onClick = onGalleryClick,
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(24.dp)
-                .size(64.dp),
-            colors = IconButtonDefaults.filledIconButtonColors(
-                containerColor = Color.Black.copy(alpha = 0.5f),
-                contentColor = Color.White
-            )
-        ) {
-            Icon(
-                imageVector = Icons.Default.PhotoLibrary,
-                contentDescription = stringResource(R.string.gallery_pick_photo),
-                modifier = Modifier.size(32.dp)
-            )
+            ScanOverlay()
+
+            FilledIconButton(
+                onClick = onHelpClick,
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(24.dp)
+                    .size(64.dp),
+                colors = IconButtonDefaults.filledIconButtonColors(
+                    containerColor = Color.Black.copy(alpha = 0.5f),
+                    contentColor = Color.White
+                )
+            ) {
+                CompositionLocalProvider(LocalLayoutDirection provides originalLayoutDirection) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.HelpOutline,
+                        contentDescription = stringResource(R.string.help),
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+            }
+
+            FilledIconButton(
+                onClick = {
+                    flashEnabled = !flashEnabled
+                    camera?.cameraControl?.enableTorch(flashEnabled)
+                },
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(24.dp)
+                    .size(64.dp),
+                colors = IconButtonDefaults.filledIconButtonColors(
+                    containerColor = if (flashEnabled) Color.White else Color.Black.copy(alpha = 0.5f),
+                    contentColor = if (flashEnabled) Color.Black else Color.White
+                )
+            ) {
+                Icon(
+                    painter = painterResource(
+                        if (flashEnabled) R.drawable.ic_flash_off else R.drawable.ic_flash_on
+                    ),
+                    contentDescription = stringResource(
+                        if (flashEnabled) R.string.flash_turn_off else R.string.flash_turn_on
+                    ),
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+
+            FilledIconButton(
+                onClick = onGalleryClick,
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(24.dp)
+                    .size(64.dp),
+                colors = IconButtonDefaults.filledIconButtonColors(
+                    containerColor = Color.Black.copy(alpha = 0.5f),
+                    contentColor = Color.White
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.PhotoLibrary,
+                    contentDescription = stringResource(R.string.gallery_pick_photo),
+                    modifier = Modifier.size(32.dp)
+                )
+            }
         }
     }
 }

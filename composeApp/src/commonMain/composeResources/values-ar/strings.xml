@@ -26,4 +26,16 @@
     <!-- Gallery -->
     <string name="gallery_pick_photo">اختيار صورة من المعرض</string>
     <string name="gallery_no_qr_found">لم يتم العثور على رمز QR في الصورة</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">ما هي رموز QR؟</string>
+    <string name="onboarding_step1_desc">رموز QR هي مربعات صغيرة تجدها على المنتجات وقوائم المطاعم والملصقات والتذاكر. تحتوي على معلومات مفيدة مثل روابط المواقع وأرقام الهواتف والنصوص.</string>
+    <string name="onboarding_step2_title">كيفية المسح</string>
+    <string name="onboarding_step2_desc">وجّه الكاميرا نحو رمز QR أو رمز شريطي. يقرأه التطبيق تلقائياً ويعرض لك محتواه. يمكنك بعدها فتح الروابط أو نسخ النص أو الاتصال بالأرقام.</string>
+    <string name="onboarding_step3_title">المسح من الصور</string>
+    <string name="onboarding_step3_desc">يمكنك أيضاً مسح رموز QR من الصور المحفوظة على هاتفك. اضغط على أيقونة الصورة في شاشة الكاميرا لاختيار صورة من معرض الصور.</string>
+    <string name="onboarding_next">التالي</string>
+    <string name="onboarding_get_started">ابدأ الآن</string>
+    <string name="onboarding_skip">تخطي</string>
+    <string name="help">مساعدة</string>
 </resources>

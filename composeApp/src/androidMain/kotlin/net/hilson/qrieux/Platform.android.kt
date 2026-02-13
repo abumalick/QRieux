@@ -80,3 +80,17 @@ actual fun openAppSettings(context: PlatformContext) {
     }
     ctx.startActivity(intent)
 }
+
+private const val PREFS_NAME = "qrieux"
+
+actual fun isOnboardingCompleted(context: PlatformContext): Boolean {
+    val ctx = (context as AndroidContext).context
+    return ctx.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        .getBoolean("onboarding_completed", false)
+}
+
+actual fun setOnboardingCompleted(context: PlatformContext) {
+    val ctx = (context as AndroidContext).context
+    ctx.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        .edit().putBoolean("onboarding_completed", true).apply()
+}

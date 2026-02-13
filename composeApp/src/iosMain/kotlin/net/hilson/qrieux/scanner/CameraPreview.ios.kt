@@ -22,6 +22,7 @@ import qr_scanner.composeapp.generated.resources.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FlashOn
 import androidx.compose.material.icons.filled.FlashOff
+import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
@@ -29,6 +30,8 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.interop.UIKitView
 import androidx.compose.ui.unit.dp
@@ -51,6 +54,7 @@ fun CameraPreview(
     onQrCodeDetected: (String) -> Unit,
     isScanning: Boolean,
     onGalleryClick: () -> Unit,
+    onHelpClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var flashEnabled by remember { mutableStateOf(false) }
@@ -68,59 +72,83 @@ fun CameraPreview(
         cameraView.isEnabled = isScanning
     }
 
-    Box(modifier = modifier.fillMaxSize()) {
-        UIKitView(
-            factory = { cameraView },
-            modifier = Modifier.fillMaxSize(),
-            update = { view ->
-                (view as? MetadataCameraView)?.updateLayout()
-            },
-            onRelease = { view ->
-                (view as? MetadataCameraView)?.stopCamera()
+    // Force LTR so button positions don't flip in RTL locales (camera UI is ergonomic, not directional)
+    val originalLayoutDirection = LocalLayoutDirection.current
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+        Box(modifier = modifier.fillMaxSize()) {
+            UIKitView(
+                factory = { cameraView },
+                modifier = Modifier.fillMaxSize(),
+                update = { view ->
+                    (view as? MetadataCameraView)?.updateLayout()
+                },
+                onRelease = { view ->
+                    (view as? MetadataCameraView)?.stopCamera()
+                }
+            )
+
+            ScanOverlay()
+
+            FilledIconButton(
+                onClick = onHelpClick,
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(top = 56.dp, start = 24.dp)
+                    .size(64.dp),
+                colors = IconButtonDefaults.filledIconButtonColors(
+                    containerColor = Color.Black.copy(alpha = 0.5f),
+                    contentColor = Color.White
+                )
+            ) {
+                CompositionLocalProvider(LocalLayoutDirection provides originalLayoutDirection) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.HelpOutline,
+                        contentDescription = stringResource(Res.string.help),
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
             }
-        )
 
-        ScanOverlay()
+            FilledIconButton(
+                onClick = {
+                    flashEnabled = !flashEnabled
+                    cameraView.setFlash(flashEnabled)
+                },
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(top = 56.dp, end = 24.dp)
+                    .size(64.dp),
+                colors = IconButtonDefaults.filledIconButtonColors(
+                    containerColor = if (flashEnabled) Color.White else Color.Black.copy(alpha = 0.5f),
+                    contentColor = if (flashEnabled) Color.Black else Color.White
+                )
+            ) {
+                Icon(
+                    imageVector = if (flashEnabled) Icons.Default.FlashOff else Icons.Default.FlashOn,
+                    contentDescription = stringResource(
+                        if (flashEnabled) Res.string.flash_turn_off else Res.string.flash_turn_on
+                    ),
+                    modifier = Modifier.size(32.dp)
+                )
+            }
 
-        FilledIconButton(
-            onClick = {
-                flashEnabled = !flashEnabled
-                cameraView.setFlash(flashEnabled)
-            },
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(top = 56.dp, end = 24.dp)
-                .size(64.dp),
-            colors = IconButtonDefaults.filledIconButtonColors(
-                containerColor = if (flashEnabled) Color.White else Color.Black.copy(alpha = 0.5f),
-                contentColor = if (flashEnabled) Color.Black else Color.White
-            )
-        ) {
-            Icon(
-                imageVector = if (flashEnabled) Icons.Default.FlashOff else Icons.Default.FlashOn,
-                contentDescription = stringResource(
-                    if (flashEnabled) Res.string.flash_turn_off else Res.string.flash_turn_on
-                ),
-                modifier = Modifier.size(32.dp)
-            )
-        }
-
-        FilledIconButton(
-            onClick = onGalleryClick,
-            modifier = Modifier
-                .align(Alignment.BottomStart)
-                .padding(24.dp)
-                .size(64.dp),
-            colors = IconButtonDefaults.filledIconButtonColors(
-                containerColor = Color.Black.copy(alpha = 0.5f),
-                contentColor = Color.White
-            )
-        ) {
-            Icon(
-                imageVector = Icons.Default.PhotoLibrary,
-                contentDescription = stringResource(Res.string.gallery_pick_photo),
-                modifier = Modifier.size(32.dp)
-            )
+            FilledIconButton(
+                onClick = onGalleryClick,
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(24.dp)
+                    .size(64.dp),
+                colors = IconButtonDefaults.filledIconButtonColors(
+                    containerColor = Color.Black.copy(alpha = 0.5f),
+                    contentColor = Color.White
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.PhotoLibrary,
+                    contentDescription = stringResource(Res.string.gallery_pick_photo),
+                    modifier = Modifier.size(32.dp)
+                )
+            }
         }
     }
 }

@@ -26,4 +26,16 @@
     <!-- Gallery -->
     <string name="gallery_pick_photo">Pick photo from gallery</string>
     <string name="gallery_no_qr_found">No QR code found in image</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">What are QR Codes?</string>
+    <string name="onboarding_step1_desc">QR codes are small square patterns you can find on products, restaurant menus, posters, and tickets. They contain useful information like website links, phone numbers, or text.</string>
+    <string name="onboarding_step2_title">How to Scan</string>
+    <string name="onboarding_step2_desc">Point your camera at a QR code or barcode. The app reads it automatically and shows you what it contains. You can then open links, copy text, or call phone numbers.</string>
+    <string name="onboarding_step3_title">Scan from Photos</string>
+    <string name="onboarding_step3_desc">You can also scan QR codes from photos saved on your phone. Tap the photo icon on the camera screen to pick an image from your gallery.</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_get_started">Get Started</string>
+    <string name="onboarding_skip">Skip</string>
+    <string name="help">Help</string>
 </resources>

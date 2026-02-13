@@ -17,6 +17,7 @@ import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.launch
 import net.hilson.qrieux.scanner.CameraPreview
 import net.hilson.qrieux.scanner.scanBarcodeFromImage
+import net.hilson.qrieux.ui.OnboardingScreen
 import net.hilson.qrieux.ui.PermissionScreen
 import net.hilson.qrieux.ui.ScanResultOverlay
 import net.hilson.qrieux.ui.theme.QRieuxTheme
@@ -37,11 +38,15 @@ import platform.darwin.dispatch_get_main_queue
 @Composable
 fun App(sharedImage: UIImage? = null) {
     QRieuxTheme {
+        val platformContext = IosContext()
         val scope = rememberCoroutineScope()
         var scannedContent by remember { mutableStateOf<QrContentType?>(null) }
         var cameraPermissionGranted by remember { mutableStateOf(false) }
         var showRationale by remember { mutableStateOf(false) }
         val snackbarHostState = remember { SnackbarHostState() }
+        var showOnboarding by remember {
+            mutableStateOf(sharedImage == null && !isOnboardingCompleted(platformContext))
+        }
 
         var showPhotoPicker by remember { mutableStateOf(false) }
 
@@ -67,7 +72,12 @@ fun App(sharedImage: UIImage? = null) {
             snackbarHost = { SnackbarHost(snackbarHostState) },
             containerColor = Color.Black
         ) { _ ->
-            if (cameraPermissionGranted) {
+            if (showOnboarding) {
+                OnboardingScreen(onFinish = {
+                    setOnboardingCompleted(platformContext)
+                    showOnboarding = false
+                })
+            } else if (cameraPermissionGranted) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     CameraPreview(
                         onQrCodeDetected = { rawValue ->
@@ -75,6 +85,7 @@ fun App(sharedImage: UIImage? = null) {
                         },
                         isScanning = scannedContent == null,
                         onGalleryClick = { showPhotoPicker = true },
+                        onHelpClick = { showOnboarding = true },
                         modifier = Modifier.fillMaxSize()
                     )
 

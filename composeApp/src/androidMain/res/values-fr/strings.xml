@@ -26,4 +26,16 @@
     <!-- Gallery -->
     <string name="gallery_pick_photo">Choisir une photo de la galerie</string>
     <string name="gallery_no_qr_found">Aucun code QR trouvé dans l\'image</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">Qu\'est-ce qu\'un code QR ?</string>
+    <string name="onboarding_step1_desc">Les codes QR sont de petits carrés que l\'on trouve sur les produits, les menus de restaurants, les affiches et les billets. Ils contiennent des informations utiles comme des liens, des numéros de téléphone ou du texte.</string>
+    <string name="onboarding_step2_title">Comment scanner</string>
+    <string name="onboarding_step2_desc">Dirigez votre caméra vers un code QR ou un code-barres. L\'application le lit automatiquement et vous montre son contenu. Vous pouvez ensuite ouvrir des liens, copier du texte ou appeler des numéros.</string>
+    <string name="onboarding_step3_title">Scanner depuis vos photos</string>
+    <string name="onboarding_step3_desc">Vous pouvez aussi scanner des codes QR depuis les photos enregistrées sur votre téléphone. Appuyez sur l\'icône photo sur l\'écran de la caméra pour choisir une image.</string>
+    <string name="onboarding_next">Suivant</string>
+    <string name="onboarding_get_started">Commencer</string>
+    <string name="onboarding_skip">Passer</string>
+    <string name="help">Aide</string>
 </resources>

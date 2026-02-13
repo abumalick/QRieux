@@ -10,6 +10,7 @@ import platform.UIKit.UIImpactFeedbackStyle
 import platform.UIKit.UISceneActivationStateForegroundActive
 import platform.UIKit.UIViewController
 import platform.UIKit.UIWindow
+import platform.Foundation.NSUserDefaults
 import platform.UIKit.UIWindowScene
 
 class IosContext : PlatformContext
@@ -72,4 +73,11 @@ actual fun openAppSettings(context: PlatformContext) {
     NSURL.URLWithString("app-settings:")?.let { nsUrl ->
         UIApplication.sharedApplication.openURL(nsUrl, emptyMap<Any?, Any>()) { _ -> }
     }
+}
+
+actual fun isOnboardingCompleted(context: PlatformContext): Boolean =
+    NSUserDefaults.standardUserDefaults.boolForKey("onboarding_completed")
+
+actual fun setOnboardingCompleted(context: PlatformContext) {
+    NSUserDefaults.standardUserDefaults.setBool(true, forKey = "onboarding_completed")
 }
