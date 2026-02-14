@@ -22,9 +22,9 @@ QR/barcode scanner designed for elderly and non-tech users. Priorities:
 ./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64   # Build iOS debug framework
 ./gradlew :composeApp:linkReleaseFrameworkIosArm64          # Build iOS release framework
 
-# iOS app (run from iosApp/ directory)
-cd iosApp && bundle exec fastlane build   # Build only
-cd iosApp && bundle exec fastlane beta    # Build + upload to TestFlight
+# iOS app (run from project root, NOT iosApp/)
+bundle exec fastlane ios build   # Build only
+bundle exec fastlane ios beta    # Build + upload to TestFlight
 
 # Tests
 ./gradlew :composeApp:testDebugUnitTest        # Run all unit tests
@@ -100,23 +100,32 @@ Use `stringResource(R.string.xxx)` for all user-facing strings. Add translations
 
 Open `examples/test-qr-codes.html` in browser to test all supported QR types (URLs, emails, phones, text).
 
-## Play Store Metadata (Fastlane)
+## Fastlane
+
+All fastlane commands run from **project root** (Fastfile is at `fastlane/Fastfile`).
 
 ```bash
-bundle install                            # install fastlane
-bundle exec fastlane validate_credentials # test Play Store connection
-bundle exec fastlane upload_metadata      # push metadata + changelogs
-bundle exec fastlane upload_screenshots   # push images
+bundle install                                    # install fastlane
+
+# Android (Play Store)
+bundle exec fastlane android validate_credentials # test Play Store connection
+bundle exec fastlane android upload_metadata      # push metadata + changelogs
+bundle exec fastlane android upload_screenshots   # push images
+bundle exec fastlane android alpha                # upload AAB to alpha track
+
+# iOS (App Store Connect)
+bundle exec fastlane ios beta                     # build + upload to TestFlight
+bundle exec fastlane ios upload_metadata          # push metadata to ASC
 ```
 
-Metadata files in `fastlane/metadata/android/{locale}/`:
-- `title.txt` (max 30 chars)
-- `short_description.txt` (max 80 chars)
-- `full_description.txt` (max 4000 chars)
-- `changelogs/{versionCode}.txt`
-- `images/` - icon, featureGraphic, phoneScreenshots/, etc.
+**Android metadata** in `fastlane/metadata/android/{locale}/`:
+- `title.txt` (max 30 chars), `short_description.txt` (max 80 chars), `full_description.txt` (max 4000 chars)
+- `changelogs/{versionCode}.txt`, `images/`
 
-Locales: `en-US`, `fr-FR`, `ar`
+**iOS metadata** in `fastlane/metadata/ios/{locale}/`:
+- `release_notes.txt`
+
+Locales: `en-US`, `fr-FR`, `ar` (Android) / `ar-SA` (iOS)
 
 ## Claude Commands
 

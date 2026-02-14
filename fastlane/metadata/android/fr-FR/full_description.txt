@@ -10,3 +10,5 @@ Fonctionnalités :
 • Interface simple avec de grands boutons faciles à utiliser
 
 Sans pub. Sans tracking. Fonctionne hors ligne. Scannez, c'est tout.
+
+QRieux est open source : https://github.com/abumalick/QRieux

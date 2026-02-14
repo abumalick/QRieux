@@ -10,3 +10,5 @@ Features:
 • Clean, easy-to-use interface with large buttons
 
 No ads. No tracking. Works fully offline. Just scan.
+
+QRieux is open source: https://github.com/abumalick/QRieux
