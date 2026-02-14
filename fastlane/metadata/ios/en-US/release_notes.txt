@@ -1,2 +1,3 @@
-• Improved edge-to-edge display
-• Better button positioning
+• New: Share an image to QRieux to scan its QR code
+• New: Scan WiFi QR codes and connect with one tap
+• Fix: Flash button no longer shows as on after returning from background

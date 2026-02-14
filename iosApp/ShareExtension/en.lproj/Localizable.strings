@@ -1,0 +1,7 @@
+"share_error" = "Error";
+"share_image_shared" = "Image shared";
+"share_open_app" = "Open QRieux to scan the QR code.";
+"share_error_read" = "Could not read the shared image.";
+"share_error_process" = "Could not process the image.";
+"share_error_save" = "Could not save the image.";
+"share_ok" = "OK";

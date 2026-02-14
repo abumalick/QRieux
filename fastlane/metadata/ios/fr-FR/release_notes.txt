@@ -1,2 +1,3 @@
-• Affichage bord à bord amélioré
-• Meilleur positionnement des boutons
+• Nouveau : Partagez une image vers QRieux pour scanner son code QR
+• Nouveau : Scannez un code QR WiFi et connectez-vous en un clic
+• Correction : Le bouton flash ne s'affiche plus comme activé après retour de l'arrière-plan
