@@ -1,1 +1,2 @@
 • New: Scan WiFi QR codes and connect with one tap
+• Fix: Flash button no longer shows as on after returning from background

@@ -37,6 +37,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import java.util.concurrent.Executors
 import net.hilson.qrieux.AndroidContext
@@ -65,6 +67,16 @@ fun CameraPreview(
 
     LaunchedEffect(isScanning) {
         qrAnalyzer.isEnabled = isScanning
+    }
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_START) {
+                flashEnabled = false
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
 
     val cameraExecutor = remember(lifecycleOwner) { Executors.newSingleThreadExecutor() }

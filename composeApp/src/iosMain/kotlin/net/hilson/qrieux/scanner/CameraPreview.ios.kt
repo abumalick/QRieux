@@ -40,6 +40,9 @@ import kotlinx.cinterop.readValue
 import net.hilson.qrieux.IosContext
 import net.hilson.qrieux.vibrate
 import platform.AVFoundation.*
+import platform.Foundation.NSNotificationCenter
+import platform.Foundation.NSOperationQueue
+import platform.UIKit.UIApplicationWillEnterForegroundNotification
 import platform.CoreGraphics.CGRectZero
 import platform.UIKit.*
 import platform.darwin.NSObject
@@ -70,6 +73,20 @@ fun CameraPreview(
 
     LaunchedEffect(isScanning) {
         cameraView.isEnabled = isScanning
+    }
+
+    DisposableEffect(Unit) {
+        val observer = NSNotificationCenter.defaultCenter.addObserverForName(
+            UIApplicationWillEnterForegroundNotification,
+            null,
+            NSOperationQueue.mainQueue
+        ) { _ ->
+            flashEnabled = false
+            cameraView.setFlash(false)
+        }
+        onDispose {
+            NSNotificationCenter.defaultCenter.removeObserver(observer)
+        }
     }
 
     // Force LTR so button positions don't flip in RTL locales (camera UI is ergonomic, not directional)
