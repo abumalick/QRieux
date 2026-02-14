@@ -5,7 +5,9 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.net.wifi.WifiNetworkSuggestion
 import android.os.Build
+import android.os.Bundle
 import android.os.Vibrator
 import android.os.VibratorManager
 import android.provider.Settings
@@ -71,6 +73,46 @@ actual fun copyToClipboard(context: PlatformContext, text: String, label: String
 actual fun showToast(context: PlatformContext, message: String) {
     val ctx = (context as AndroidContext).context
     Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show()
+}
+
+actual fun connectToWifi(context: PlatformContext, ssid: String, password: String, authType: String, hidden: Boolean, onResult: (Boolean) -> Unit) {
+    val ctx = (context as AndroidContext).context
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        val suggestion = buildWifiSuggestion(ssid, password, authType, hidden)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val bundle = Bundle().apply {
+                putParcelableArrayList(Settings.EXTRA_WIFI_NETWORK_LIST, arrayListOf(suggestion))
+            }
+            try {
+                ctx.startActivity(Intent(Settings.ACTION_WIFI_ADD_NETWORKS).apply { putExtras(bundle) })
+            } catch (_: Exception) {}
+            onResult(true)
+        } else {
+            val wifiManager = ctx.getSystemService(Context.WIFI_SERVICE) as android.net.wifi.WifiManager
+            wifiManager.removeNetworkSuggestions(listOf(suggestion))
+            val status = wifiManager.addNetworkSuggestions(listOf(suggestion))
+            onResult(status == android.net.wifi.WifiManager.STATUS_NETWORK_SUGGESTIONS_SUCCESS)
+        }
+    } else {
+        val clipboard = ctx.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboard.setPrimaryClip(ClipData.newPlainText("WiFi Password", password))
+        try {
+            ctx.startActivity(Intent(Settings.ACTION_WIFI_SETTINGS))
+        } catch (_: Exception) {}
+        onResult(true)
+    }
+}
+
+@androidx.annotation.RequiresApi(Build.VERSION_CODES.Q)
+private fun buildWifiSuggestion(ssid: String, password: String, authType: String, hidden: Boolean): WifiNetworkSuggestion {
+    val builder = WifiNetworkSuggestion.Builder()
+        .setSsid(ssid)
+        .setIsHiddenSsid(hidden)
+    when (authType) {
+        "WPA", "WPA2", "WPA3" -> builder.setWpa2Passphrase(password)
+        "WEP" -> builder.setWpa2Passphrase(password)
+    }
+    return builder.build()
 }
 
 actual fun openAppSettings(context: PlatformContext) {

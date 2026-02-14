@@ -14,7 +14,7 @@ Finding a QR code scanner that is simple, ad-free, free, and privacy-respecting 
 - **No ads** — clean experience, no distractions
 - **No tracking** — your data stays on your device
 - **Simple UI** — large buttons, obvious actions
-- **Smart actions** — open links, call phones, send emails, copy, share
+- **Smart actions** — open links, call phones, send emails, connect to WiFi, copy, share
 - **Gallery scanning** — scan QR codes from photos
 - **Share to scan** — share images from other apps to scan
 - **Multilingual** — English, French, Arabic
@@ -46,7 +46,7 @@ Finding a QR code scanner that is simple, ad-free, free, and privacy-respecting 
 
 ## Testing
 
-Open [examples/test-qr-codes.html](examples/test-qr-codes.html) in a browser to test scanning all supported QR code types (URLs, emails, phones, plain text).
+Open [examples/test-qr-codes.html](examples/test-qr-codes.html) in a browser to test scanning all supported QR code types (URLs, emails, phones, WiFi, plain text).
 
 ## Contributing
 

@@ -4,7 +4,7 @@ Fonctionnalités :
 • Scan instantané des codes QR et codes-barres
 • Scan depuis la galerie — choisissez une image avec un code QR
 • Partagez des images vers l'app — scannez des codes QR depuis d'autres apps
-• Actions en un clic : ouvrir des URLs, appeler, envoyer des emails
+• Actions en un clic : ouvrir des URLs, appeler, envoyer des emails, se connecter au WiFi
 • Copier et partager facilement le contenu scanné
 • Support du flash pour les conditions de faible luminosité
 • Interface simple avec de grands boutons faciles à utiliser

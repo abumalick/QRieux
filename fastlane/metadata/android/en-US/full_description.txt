@@ -4,7 +4,7 @@ Features:
 • Instant QR code and barcode scanning
 • Scan from gallery — pick any image with a QR code
 • Share images to the app — scan QR codes shared from other apps
-• One-tap actions: open URLs, call phone numbers, send emails
+• One-tap actions: open URLs, call phone numbers, send emails, connect to WiFi
 • Copy and share scanned content easily
 • Flash/torch support for low-light scanning
 • Clean, easy-to-use interface with large buttons

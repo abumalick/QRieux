@@ -17,6 +17,9 @@
     <string name="toast_copied">Copied to clipboard</string>
     <string name="toast_cannot_share">Cannot share</string>
     <string name="clipboard_label_qr">QR Code</string>
+    <string name="action_connect_wifi">Connect to WiFi</string>
+    <string name="wifi_copy_password">Copy Password</string>
+    <string name="toast_wifi_sent">Check your WiFi icon to confirm the connection, or try again</string>
 
     <!-- Camera Preview -->
     <string name="flash_turn_off">Turn off flash</string>

@@ -2,6 +2,9 @@ package net.hilson.qrieux
 
 import platform.Foundation.NSURL
 import platform.Foundation.NSURLComponents
+import platform.NetworkExtension.NEHotspotConfiguration
+import platform.NetworkExtension.NEHotspotConfigurationErrorAlreadyAssociated
+import platform.NetworkExtension.NEHotspotConfigurationManager
 import platform.UIKit.UIActivityViewController
 import platform.UIKit.UIApplication
 import platform.UIKit.UIPasteboard
@@ -67,6 +70,21 @@ actual fun copyToClipboard(context: PlatformContext, text: String, label: String
 
 actual fun showToast(context: PlatformContext, message: String) {
     // iOS doesn't have native toast; handled at UI level if needed
+}
+
+actual fun connectToWifi(context: PlatformContext, ssid: String, password: String, authType: String, hidden: Boolean, onResult: (Boolean) -> Unit) {
+    val configuration = when (authType.uppercase()) {
+        "NOPASS", "" -> NEHotspotConfiguration(sSID = ssid)
+        "WEP" -> NEHotspotConfiguration(sSID = ssid, passphrase = password, isWEP = true)
+        else -> NEHotspotConfiguration(sSID = ssid, passphrase = password, isWEP = false)
+    }
+    configuration.hidden = hidden
+    NEHotspotConfigurationManager.sharedManager.applyConfiguration(configuration) { error ->
+        val success = error == null || error.code == NEHotspotConfigurationErrorAlreadyAssociated
+        platform.darwin.dispatch_async(platform.darwin.dispatch_get_main_queue()) {
+            onResult(success)
+        }
+    }
 }
 
 actual fun openAppSettings(context: PlatformContext) {

@@ -17,6 +17,9 @@
     <string name="toast_copied">تم النسخ إلى الحافظة</string>
     <string name="toast_cannot_share">لا يمكن المشاركة</string>
     <string name="clipboard_label_qr">رمز QR</string>
+    <string name="action_connect_wifi">الاتصال بالواي فاي</string>
+    <string name="wifi_copy_password">نسخ كلمة المرور</string>
+    <string name="toast_wifi_sent">تحقق من أيقونة الواي فاي للتأكد من الاتصال، أو حاول مرة أخرى</string>
 
     <!-- Camera Preview -->
     <string name="flash_turn_off">إيقاف الفلاش</string>

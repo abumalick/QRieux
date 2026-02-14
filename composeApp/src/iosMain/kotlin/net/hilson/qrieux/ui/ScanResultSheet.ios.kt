@@ -10,6 +10,10 @@ import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import org.jetbrains.compose.resources.stringResource
 import qr_scanner.composeapp.generated.resources.Res
@@ -18,9 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import net.hilson.qrieux.IosContext
+import net.hilson.qrieux.connectToWifi
 import net.hilson.qrieux.copyToClipboard
 import net.hilson.qrieux.dialPhone
 import net.hilson.qrieux.openUrl
@@ -41,6 +49,7 @@ fun ScanResultOverlay(
         is QrContentType.Url -> contentType.url
         is QrContentType.Email -> contentType.email
         is QrContentType.Phone -> contentType.phone
+        is QrContentType.Wifi -> contentType.ssid
         is QrContentType.Text -> contentType.text
     }
 
@@ -52,6 +61,7 @@ fun ScanResultOverlay(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .windowInsetsPadding(WindowInsets.statusBars)
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -91,6 +101,7 @@ fun ScanResultOverlay(
                 is QrContentType.Url -> UrlActions(contentType.url, onDismiss, platformContext, onCopied)
                 is QrContentType.Email -> EmailActions(contentType.email, onDismiss, platformContext, onCopied)
                 is QrContentType.Phone -> PhoneActions(contentType.phone, onDismiss, platformContext, onCopied)
+                is QrContentType.Wifi -> WifiActions(contentType, onDismiss, platformContext, onCopied, onShowMessage)
                 is QrContentType.Text -> TextActions(contentType.text, onDismiss, platformContext, onCopied)
             }
         }
@@ -151,6 +162,55 @@ private fun PhoneActions(phone: String, onDismiss: () -> Unit, context: IosConte
         }
         ActionButton(stringResource(Res.string.action_share), Icons.Default.Share) {
             shareText(context, phone, "")
+        }
+        SecondaryButton(stringResource(Res.string.action_scan_again), Icons.Default.QrCodeScanner, onDismiss)
+    }
+}
+
+@Composable
+private fun WifiActions(wifi: QrContentType.Wifi, onDismiss: () -> Unit, context: IosContext, onCopied: () -> Unit, onShowMessage: (String) -> Unit) {
+    val clipboardLabel = stringResource(Res.string.clipboard_label_qr)
+    val msgConnected = stringResource(Res.string.toast_wifi_connected)
+    val msgFailed = stringResource(Res.string.toast_wifi_failed)
+    var connecting by remember { mutableStateOf(false) }
+    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        Button(
+            onClick = {
+                connecting = true
+                connectToWifi(context, wifi.ssid, wifi.password, wifi.authType, wifi.hidden) { success ->
+                    connecting = false
+                    onShowMessage(if (success) msgConnected else msgFailed)
+                }
+            },
+            enabled = !connecting,
+            modifier = Modifier.fillMaxWidth().height(72.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+        ) {
+            if (connecting) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(28.dp),
+                    color = Color.White,
+                    strokeWidth = 3.dp
+                )
+            } else {
+                Icon(imageVector = Icons.Default.Wifi, contentDescription = null, modifier = Modifier.size(28.dp))
+            }
+            Spacer(Modifier.width(12.dp))
+            Text(
+                text = stringResource(if (connecting) Res.string.wifi_connecting else Res.string.action_connect_wifi),
+                fontSize = 22.sp,
+                textAlign = TextAlign.Center
+            )
+        }
+        if (wifi.password.isNotEmpty()) {
+            ActionButton(stringResource(Res.string.wifi_copy_password), Icons.Default.ContentCopy) {
+                copyToClipboard(context, wifi.password, clipboardLabel)
+                onCopied()
+            }
+        }
+        ActionButton(stringResource(Res.string.action_share), Icons.Default.Share) {
+            shareText(context, wifi.ssid, "")
         }
         SecondaryButton(stringResource(Res.string.action_scan_again), Icons.Default.QrCodeScanner, onDismiss)
     }

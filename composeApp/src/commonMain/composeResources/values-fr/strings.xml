@@ -17,6 +17,11 @@
     <string name="toast_copied">Copié dans le presse-papiers</string>
     <string name="toast_cannot_share">Impossible de partager</string>
     <string name="clipboard_label_qr">Code QR</string>
+    <string name="action_connect_wifi">Se connecter au WiFi</string>
+    <string name="wifi_copy_password">Copier le mot de passe</string>
+    <string name="wifi_connecting">Connexion…</string>
+    <string name="toast_wifi_connected">Connecté au WiFi</string>
+    <string name="toast_wifi_failed">Impossible de se connecter au WiFi, vérifiez le mot de passe et réessayez</string>
 
     <!-- Camera Preview -->
     <string name="flash_turn_off">Éteindre le flash</string>
