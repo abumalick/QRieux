@@ -23,6 +23,7 @@ node_modules/
 
 # Fastlane
 fastlane/.env
+fastlane/metadata/review_information/
 fastlane/play-store-credentials.json
 fastlane/report.xml
 fastlane/Preview.html
@@ -35,8 +36,8 @@ iosApp/fastlane/report.xml
 iosApp/fastlane/README.md
 
 # iOS build artifacts
-iosApp/*.ipa
-iosApp/*.dSYM.zip
+*.ipa
+*.dSYM.zip
 
 # iOS API keys (sensitive)
 fastlane/AuthKey_*.p8
