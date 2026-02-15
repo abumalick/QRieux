@@ -27,6 +27,3 @@ skip_screenshots false
 
 # App rating configuration (4+ for simple utility app)
 app_rating_config_path "./fastlane/rating_config.json"
-
-# Price tier (0 = free)
-price_tier 0

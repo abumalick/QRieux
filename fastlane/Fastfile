@@ -125,7 +125,8 @@ platform :ios do
       skip_binary_upload: true,
       skip_metadata: true,
       overwrite_screenshots: true,
-      force: true
+      force: true,
+      precheck_include_in_app_purchases: false
     )
   end
 
@@ -143,6 +144,11 @@ platform :ios do
       overwrite_screenshots: true,
       force: true
     )
+  end
+
+  desc "Generate iOS screenshots using simulator"
+  lane :generate_screenshots do
+    sh("bash ../scripts/generate_ios_screenshots.sh")
   end
 
   desc "Submit for App Store review"
