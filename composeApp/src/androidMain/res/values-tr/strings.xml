@@ -1,0 +1,44 @@
+<resources>
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">Kamera İzni Gerekli</string>
+    <string name="permission_camera_required_desc">Bu uygulama QR kodları taramak için kamera erişimine ihtiyaç duyar.</string>
+    <string name="permission_allow_camera">Kameraya İzin Ver</string>
+    <string name="permission_open_settings">Ayarları Aç</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">Tarama Sonucu</string>
+    <string name="action_open_browser">Tarayıcıda Aç</string>
+    <string name="action_copy">Kopyala</string>
+    <string name="action_share">Paylaş</string>
+    <string name="action_scan_again">Tekrar Tara</string>
+    <string name="action_send_email">E-posta Gönder</string>
+    <string name="action_call">Ara</string>
+    <string name="toast_cannot_open">Bu içerik açılamıyor</string>
+    <string name="toast_copied">Panoya kopyalandı</string>
+    <string name="toast_cannot_share">Paylaşılamıyor</string>
+    <string name="clipboard_label_qr">QR Kod</string>
+    <string name="action_connect_wifi">WiFi\'ye Bağlan</string>
+    <string name="wifi_copy_password">Şifreyi Kopyala</string>
+    <string name="toast_wifi_sent">Bağlantıyı onaylamak için WiFi simgesini kontrol edin veya tekrar deneyin</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">Flaşı kapat</string>
+    <string name="flash_turn_on">Flaşı aç</string>
+    <string name="scan_instruction">QR kodu çerçevenin içine yerleştirin</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">Galeriden fotoğraf seç</string>
+    <string name="gallery_no_qr_found">Görüntüde QR kod bulunamadı</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">QR Kodlar Nedir?</string>
+    <string name="onboarding_step1_desc">QR kodlar ürünlerde, restoran menülerinde, afişlerde ve biletlerde bulunan küçük kare desenlerdir. Web sitesi bağlantıları, telefon numaraları veya metin gibi faydalı bilgiler içerirler.</string>
+    <string name="onboarding_step2_title">Nasıl Taranır</string>
+    <string name="onboarding_step2_desc">Kameranızı bir QR koda veya barkoda yöneltin. Uygulama otomatik olarak okur ve içeriğini gösterir. Ardından bağlantıları açabilir, metin kopyalayabilir veya arayabilirsiniz.</string>
+    <string name="onboarding_step3_title">Fotoğraflardan Tara</string>
+    <string name="onboarding_step3_desc">Telefonunuza kayıtlı fotoğraflardan da QR kodları tarayabilirsiniz. Kamera ekranındaki fotoğraf simgesine dokunarak galeriden bir görüntü seçin.</string>
+    <string name="onboarding_next">İleri</string>
+    <string name="onboarding_get_started">Başla</string>
+    <string name="onboarding_skip">Atla</string>
+    <string name="help">Yardım</string>
+</resources>

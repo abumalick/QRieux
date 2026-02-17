@@ -1,0 +1,14 @@
+QRieux é um leitor de QR code e código de barras simples e rápido, feito para todos.
+
+Recursos:
+• Leitura instantânea de QR codes e códigos de barras
+• Escaneie da galeria — escolha qualquer imagem com um QR code
+• Compartilhe imagens para o app — escaneie QR codes compartilhados de outros apps
+• Ações com um toque: abrir URLs, ligar para números, enviar e-mails, conectar ao WiFi
+• Copie e compartilhe o conteúdo escaneado facilmente
+• Suporte a flash/lanterna para leitura em ambientes escuros
+• Interface limpa e fácil de usar com botões grandes
+
+Sem anúncios. Sem rastreamento. Funciona totalmente offline. Apenas escaneie.
+
+QRieux é código aberto: https://github.com/abumalick/QRieux

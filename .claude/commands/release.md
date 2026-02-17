@@ -27,13 +27,13 @@ Read current version from `composeApp/build.gradle.kts`:
 
 ## 3. Create Changelogs
 
-Create changelog files for the NEW versionCode in:
-- `fastlane/metadata/android/en-US/changelogs/<versionCode>.txt`
-- `fastlane/metadata/android/fr-FR/changelogs/<versionCode>.txt`
-- `fastlane/metadata/android/ar/changelogs/<versionCode>.txt`
+Create changelog files for the NEW versionCode in all supported locales:
+`en-US`, `zh-CN`, `hi-IN`, `es-ES`, `fr-FR`, `ar`, `bn-BD`, `pt-BR`, `ru-RU`, `ja-JP`, `id`, `de-DE`, `ur`, `tr-TR`, `ko-KR`, `vi`, `it-IT`, `th`, `ta-IN`, `sw`
+
+Path: `fastlane/metadata/android/<locale>/changelogs/<versionCode>.txt`
 
 Format: Bullet points starting with "•", max 500 chars per file.
-Translate appropriately for each language (French for fr-FR, Arabic for ar).
+Translate appropriately for each language.
 
 ## 4. Update Version in build.gradle.kts
 

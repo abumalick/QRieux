@@ -1,0 +1,1 @@
+qr,codice qr,codice a barre,scanner,lettore,scansione,offline,no pubblicità,privacy,semplice

@@ -29,9 +29,11 @@ PHONE_PORT=5554
 TABLET_PORT=5556
 
 SKIP_BUILD=false
+ONLY_LOCALE=""
 for arg in "$@"; do
   case "$arg" in
     --skip-build) SKIP_BUILD=true ;;
+    --locale=*) ONLY_LOCALE="${arg#--locale=}" ;;
   esac
 done
 
@@ -64,25 +66,111 @@ if [ ! -f "$APK_PATH" ]; then
   exit 1
 fi
 
-# --- Screenshot content per locale ---
-# Format: type|filename|en_content|fr_content|ar_content
+# --- Screenshot content ---
+# Format: type|filename|default_content
 SCREENSHOTS=(
-  "scanner|1_scanner|__SCANNER__|__SCANNER__|__SCANNER__"
-  "url|2_url_result|https://www.wikipedia.org|https://www.wikipedia.org|https://www.wikipedia.org"
-  "wifi|3_wifi_result|WIFI:T:WPA;S:CoffeeShop;P:welcome2024;;|WIFI:T:WPA;S:Café Libre;P:bienvenue2024;;|WIFI:T:WPA;S:مقهى الضيافة;P:أهلا2024;;"
-  "phone|4_phone_result|+1 (555) 123-4567|+33 6 12 34 56 78|+966 50 123 4567"
+  "scanner|1_scanner|__SCANNER__"
+  "url|2_url_result|https://www.wikipedia.org"
+  "wifi|3_wifi_result|__WIFI__"
+  "phone|4_phone_result|__PHONE__"
 )
 
 # Locale configs: lang_tag|fastlane_dir
 LOCALES=(
   "en-US|en-US"
+  "zh-CN|zh-CN"
+  "hi-IN|hi-IN"
+  "es-ES|es-ES"
   "fr-FR|fr-FR"
   "ar-SA|ar"
+  "bn-BD|bn-BD"
+  "pt-BR|pt-BR"
+  "ru-RU|ru-RU"
+  "ja-JP|ja-JP"
+  "in-ID|id"
+  "de-DE|de-DE"
+  "ur|ur"
+  "tr-TR|tr-TR"
+  "ko-KR|ko-KR"
+  "vi|vi"
+  "it-IT|it-IT"
+  "th|th"
+  "ta-IN|ta-IN"
+  "sw|sw"
+)
+
+if [ -n "$ONLY_LOCALE" ]; then
+  FILTERED=()
+  for entry in "${LOCALES[@]}"; do
+    fastlane_dir="$(echo "$entry" | cut -d'|' -f2)"
+    if [ "$fastlane_dir" = "$ONLY_LOCALE" ]; then
+      FILTERED+=("$entry")
+    fi
+  done
+  if [ ${#FILTERED[@]} -eq 0 ]; then
+    echo "ERROR: Locale '$ONLY_LOCALE' not found. Available:"
+    for entry in "${LOCALES[@]}"; do echo "  $(echo "$entry" | cut -d'|' -f2)"; done
+    exit 1
+  fi
+  LOCALES=("${FILTERED[@]}")
+  echo "==> Running for locale: $ONLY_LOCALE only"
+fi
+
+declare -A WIFI_CONTENT=(
+  ["en-US"]="WIFI:T:WPA;S:CoffeeShop;P:welcome2024;;"
+  ["zh-CN"]="WIFI:T:WPA;S:咖啡馆;P:welcome2024;;"
+  ["hi-IN"]="WIFI:T:WPA;S:CoffeeShop;P:welcome2024;;"
+  ["es-ES"]="WIFI:T:WPA;S:CafeCentral;P:bienvenido2024;;"
+  ["fr-FR"]="WIFI:T:WPA;S:Cafe Libre;P:bienvenue2024;;"
+  ["ar-SA"]="WIFI:T:WPA;S:مقهى الضيافة;P:أهلا2024;;"
+  ["bn-BD"]="WIFI:T:WPA;S:CoffeeShop;P:welcome2024;;"
+  ["pt-BR"]="WIFI:T:WPA;S:CafeDoSol;P:bemvindo2024;;"
+  ["ru-RU"]="WIFI:T:WPA;S:Кофейня;P:welcome2024;;"
+  ["ja-JP"]="WIFI:T:WPA;S:カフェ;P:welcome2024;;"
+  ["in-ID"]="WIFI:T:WPA;S:KedaiKopi;P:welcome2024;;"
+  ["de-DE"]="WIFI:T:WPA;S:Kaffeehaus;P:willkommen2024;;"
+  ["ur"]="WIFI:T:WPA;S:کافی شاپ;P:welcome2024;;"
+  ["tr-TR"]="WIFI:T:WPA;S:Kahvehane;P:hosgeldin2024;;"
+  ["ko-KR"]="WIFI:T:WPA;S:카페;P:welcome2024;;"
+  ["vi"]="WIFI:T:WPA;S:QuanCaPhe;P:welcome2024;;"
+  ["it-IT"]="WIFI:T:WPA;S:CaffeRoma;P:benvenuto2024;;"
+  ["th"]="WIFI:T:WPA;S:ร้านกาแฟ;P:welcome2024;;"
+  ["ta-IN"]="WIFI:T:WPA;S:CoffeeShop;P:welcome2024;;"
+  ["sw"]="WIFI:T:WPA;S:Kahawa;P:karibu2024;;"
+)
+
+declare -A PHONE_CONTENT=(
+  ["en-US"]="+1 (555) 123-4567"
+  ["zh-CN"]="+86 138 0013 8000"
+  ["hi-IN"]="+91 98765 43210"
+  ["es-ES"]="+34 612 345 678"
+  ["fr-FR"]="+33 6 12 34 56 78"
+  ["ar-SA"]="+966 50 123 4567"
+  ["bn-BD"]="+880 1712 345678"
+  ["pt-BR"]="+55 11 91234 5678"
+  ["ru-RU"]="+7 912 345 6789"
+  ["ja-JP"]="+81 90 1234 5678"
+  ["in-ID"]="+62 812 3456 7890"
+  ["de-DE"]="+49 151 1234 5678"
+  ["ur"]="+92 300 1234567"
+  ["tr-TR"]="+90 532 123 4567"
+  ["ko-KR"]="+82 10 1234 5678"
+  ["vi"]="+84 912 345 678"
+  ["it-IT"]="+39 320 123 4567"
+  ["th"]="+66 81 234 5678"
+  ["ta-IN"]="+91 94321 54321"
+  ["sw"]="+255 712 345 678"
 )
 
 get_content() {
-  local entry="$1" locale_idx="$2"
-  echo "$entry" | cut -d'|' -f$((3 + locale_idx))
+  local entry="$1" locale_key="$2"
+  local content
+  content="$(echo "$entry" | cut -d'|' -f3)"
+  case "$content" in
+    __WIFI__) echo "${WIFI_CONTENT[$locale_key]}" ;;
+    __PHONE__) echo "${PHONE_CONTENT[$locale_key]}" ;;
+    *) echo "$content" ;;
+  esac
 }
 
 wait_for_boot() {
@@ -124,9 +212,9 @@ set_locale() {
 capture_screenshots_for_device() {
   local avd_name="$1" serial="$2" device_label="$3" screenshot_subdir="$4" bg_file="$5"
 
-  for locale_idx in 0 1 2; do
+  for locale_idx in $(seq 0 $((${#LOCALES[@]} - 1))); do
     IFS='|' read -r lang_tag fastlane_dir <<< "${LOCALES[$locale_idx]}"
-    echo "[$device_label] Locale: $fastlane_dir"
+    echo "[$device_label] Locale: $fastlane_dir ($((locale_idx + 1))/${#LOCALES[@]})"
 
     local output_dir="$PROJECT_DIR/fastlane/metadata/android/$fastlane_dir/images/$screenshot_subdir"
     mkdir -p "$output_dir"
@@ -156,7 +244,7 @@ capture_screenshots_for_device() {
       local filename
       filename="$(echo "$entry" | cut -d'|' -f2)"
       local content
-      content="$(get_content "$entry" "$locale_idx")"
+      content="$(get_content "$entry" "$lang_tag")"
       local output_path="$output_dir/${filename}.png"
 
       echo "[$device_label]   -> $screenshot_subdir/${filename}.png"

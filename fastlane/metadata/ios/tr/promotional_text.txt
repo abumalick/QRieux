@@ -1,0 +1,1 @@
+Hızlı, basit QR ve barkod tarayıcı. Reklam yok, takip yok, çevrimdışı çalışır.

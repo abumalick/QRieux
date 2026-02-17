@@ -14,9 +14,11 @@ BUNDLE_ID="net.hilson.qrieux"
 BACKGROUNDS_DIR="$SCRIPT_DIR/screenshot_backgrounds"
 
 SKIP_BUILD=false
+ONLY_LOCALE=""
 for arg in "$@"; do
   case "$arg" in
     --skip-build) SKIP_BUILD=true ;;
+    --locale=*) ONLY_LOCALE="${arg#--locale=}" ;;
   esac
 done
 
@@ -44,25 +46,99 @@ if [ ! -d "$APP_BUNDLE" ]; then
   exit 1
 fi
 
-# --- Screenshot content per locale ---
-# Format: type|filename|en_content|fr_content|ar_content
+# --- Screenshot content ---
+# Format: type|filename|default_content
 SCREENSHOTS=(
-  "scanner|1_scanner|__SCANNER__|__SCANNER__|__SCANNER__"
-  "url|2_url_result|https://www.wikipedia.org|https://www.wikipedia.org|https://www.wikipedia.org"
-  "wifi|3_wifi_result|WIFI:T:WPA;S:CoffeeShop;P:welcome2024;;|WIFI:T:WPA;S:Café Libre;P:bienvenue2024;;|WIFI:T:WPA;S:مقهى الضيافة;P:أهلا2024;;"
-  "phone|4_phone_result|+1 (555) 123-4567|+33 6 12 34 56 78|+966 50 123 4567"
+  "scanner|1_scanner|__SCANNER__"
+  "url|2_url_result|https://www.wikipedia.org"
+  "wifi|3_wifi_result|__WIFI__"
+  "phone|4_phone_result|__PHONE__"
 )
 
 # Locale configs: lang|locale|dir
 LOCALES=(
   "en|en_US|en-US"
+  "zh-Hans|zh_CN|zh-Hans"
+  "hi|hi_IN|hi"
+  "es|es_ES|es-ES"
   "fr|fr_FR|fr-FR"
   "ar|ar_SA|ar-SA"
+  "pt-BR|pt_BR|pt-BR"
+  "ru|ru_RU|ru"
+  "ja|ja_JP|ja"
+  "id|id_ID|id"
+  "de|de_DE|de-DE"
+  "tr|tr_TR|tr"
+  "ko|ko_KR|ko"
+  "vi|vi_VN|vi"
+  "it|it_IT|it"
+  "th|th_TH|th"
+)
+
+if [ -n "$ONLY_LOCALE" ]; then
+  FILTERED=()
+  for entry in "${LOCALES[@]}"; do
+    dir="$(echo "$entry" | cut -d'|' -f3)"
+    if [ "$dir" = "$ONLY_LOCALE" ]; then
+      FILTERED+=("$entry")
+    fi
+  done
+  if [ ${#FILTERED[@]} -eq 0 ]; then
+    echo "ERROR: Locale '$ONLY_LOCALE' not found. Available:"
+    for entry in "${LOCALES[@]}"; do echo "  $(echo "$entry" | cut -d'|' -f3)"; done
+    exit 1
+  fi
+  LOCALES=("${FILTERED[@]}")
+  echo "==> Running for locale: $ONLY_LOCALE only"
+fi
+
+declare -A WIFI_CONTENT=(
+  ["en"]="WIFI:T:WPA;S:CoffeeShop;P:welcome2024;;"
+  ["zh-Hans"]="WIFI:T:WPA;S:咖啡馆;P:welcome2024;;"
+  ["hi"]="WIFI:T:WPA;S:CoffeeShop;P:welcome2024;;"
+  ["es"]="WIFI:T:WPA;S:CafeCentral;P:bienvenido2024;;"
+  ["fr"]="WIFI:T:WPA;S:Cafe Libre;P:bienvenue2024;;"
+  ["ar"]="WIFI:T:WPA;S:مقهى الضيافة;P:أهلا2024;;"
+  ["pt-BR"]="WIFI:T:WPA;S:CafeDoSol;P:bemvindo2024;;"
+  ["ru"]="WIFI:T:WPA;S:Кофейня;P:welcome2024;;"
+  ["ja"]="WIFI:T:WPA;S:カフェ;P:welcome2024;;"
+  ["id"]="WIFI:T:WPA;S:KedaiKopi;P:welcome2024;;"
+  ["de"]="WIFI:T:WPA;S:Kaffeehaus;P:willkommen2024;;"
+  ["tr"]="WIFI:T:WPA;S:Kahvehane;P:hosgeldin2024;;"
+  ["ko"]="WIFI:T:WPA;S:카페;P:welcome2024;;"
+  ["vi"]="WIFI:T:WPA;S:QuanCaPhe;P:welcome2024;;"
+  ["it"]="WIFI:T:WPA;S:CaffeRoma;P:benvenuto2024;;"
+  ["th"]="WIFI:T:WPA;S:ร้านกาแฟ;P:welcome2024;;"
+)
+
+declare -A PHONE_CONTENT=(
+  ["en"]="+1 (555) 123-4567"
+  ["zh-Hans"]="+86 138 0013 8000"
+  ["hi"]="+91 98765 43210"
+  ["es"]="+34 612 345 678"
+  ["fr"]="+33 6 12 34 56 78"
+  ["ar"]="+966 50 123 4567"
+  ["pt-BR"]="+55 11 91234 5678"
+  ["ru"]="+7 912 345 6789"
+  ["ja"]="+81 90 1234 5678"
+  ["id"]="+62 812 3456 7890"
+  ["de"]="+49 151 1234 5678"
+  ["tr"]="+90 532 123 4567"
+  ["ko"]="+82 10 1234 5678"
+  ["vi"]="+84 912 345 678"
+  ["it"]="+39 320 123 4567"
+  ["th"]="+66 81 234 5678"
 )
 
 get_content() {
-  local entry="$1" locale_idx="$2"
-  echo "$entry" | cut -d'|' -f$((3 + locale_idx))
+  local entry="$1" locale_key="$2"
+  local content
+  content="$(echo "$entry" | cut -d'|' -f3)"
+  case "$content" in
+    __WIFI__) echo "${WIFI_CONTENT[$locale_key]}" ;;
+    __PHONE__) echo "${PHONE_CONTENT[$locale_key]}" ;;
+    *) echo "$content" ;;
+  esac
 }
 
 warmup_simulator() {
@@ -76,9 +152,9 @@ warmup_simulator() {
 capture_screenshots_for_device() {
   local udid="$1" device_label="$2" prefix="$3" bg_file="$4"
 
-  for locale_idx in 0 1 2; do
+  for locale_idx in $(seq 0 $((${#LOCALES[@]} - 1))); do
     IFS='|' read -r lang locale dir <<< "${LOCALES[$locale_idx]}"
-    echo "[$device_label] Locale: $dir"
+    echo "[$device_label] Locale: $dir ($((locale_idx + 1))/${#LOCALES[@]})"
 
     mkdir -p "$SCREENSHOTS_DIR/$dir"
 
@@ -109,7 +185,7 @@ capture_screenshots_for_device() {
       local filename
       filename="$(echo "$entry" | cut -d'|' -f2)"
       local content
-      content="$(get_content "$entry" "$locale_idx")"
+      content="$(get_content "$entry" "$lang")"
 
       echo "[$device_label]   -> ${prefix}${filename}.png"
 

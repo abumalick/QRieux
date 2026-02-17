@@ -1,0 +1,1 @@
+qr,código qr,código de barras,escáner,lector,escanear,sin conexión,sin anuncios,privacidad,simple

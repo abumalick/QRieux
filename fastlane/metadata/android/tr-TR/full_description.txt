@@ -1,0 +1,14 @@
+QRieux, herkes için tasarlanmış basit ve hızlı bir QR kodu ve barkod tarayıcısıdır.
+
+Özellikler:
+• Anında QR kodu ve barkod tarama
+• Galeriden tarayın — QR kodu içeren herhangi bir görüntüyü seçin
+• Uygulamaya görüntü paylaşın — diğer uygulamalardan paylaşılan QR kodlarını tarayın
+• Tek dokunuşla eylemler: URL aç, telefon numarası ara, e-posta gönder, WiFi'ye bağlan
+• Taranan içeriği kolayca kopyalayın ve paylaşın
+• Düşük ışıkta tarama için flaş/el feneri desteği
+• Büyük düğmeli temiz, kullanımı kolay arayüz
+
+Reklam yok. İzleme yok. Tamamen çevrimdışı çalışır. Sadece tarayın.
+
+QRieux açık kaynaklıdır: https://github.com/abumalick/QRieux

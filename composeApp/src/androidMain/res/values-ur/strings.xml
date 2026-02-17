@@ -1,0 +1,44 @@
+<resources>
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">کیمرے کی اجازت درکار ہے</string>
+    <string name="permission_camera_required_desc">QR کوڈز اسکین کرنے کے لیے اس ایپ کو کیمرے تک رسائی چاہیے۔</string>
+    <string name="permission_allow_camera">کیمرے کی اجازت دیں</string>
+    <string name="permission_open_settings">سیٹنگز کھولیں</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">اسکین کا نتیجہ</string>
+    <string name="action_open_browser">براؤزر میں کھولیں</string>
+    <string name="action_copy">کاپی کریں</string>
+    <string name="action_share">شیئر کریں</string>
+    <string name="action_scan_again">دوبارہ اسکین کریں</string>
+    <string name="action_send_email">ای میل بھیجیں</string>
+    <string name="action_call">کال کریں</string>
+    <string name="toast_cannot_open">یہ مواد کھولا نہیں جا سکتا</string>
+    <string name="toast_copied">کلپ بورڈ پر کاپی ہو گیا</string>
+    <string name="toast_cannot_share">شیئر نہیں ہو سکتا</string>
+    <string name="clipboard_label_qr">QR کوڈ</string>
+    <string name="action_connect_wifi">WiFi سے جوڑیں</string>
+    <string name="wifi_copy_password">پاس ورڈ کاپی کریں</string>
+    <string name="toast_wifi_sent">کنکشن کی تصدیق کے لیے WiFi آئیکن چیک کریں، یا دوبارہ کوشش کریں</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">فلیش بند کریں</string>
+    <string name="flash_turn_on">فلیش چالو کریں</string>
+    <string name="scan_instruction">QR کوڈ کو فریم میں رکھیں</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">گیلری سے تصویر چنیں</string>
+    <string name="gallery_no_qr_found">تصویر میں کوئی QR کوڈ نہیں ملا</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">QR کوڈز کیا ہیں؟</string>
+    <string name="onboarding_step1_desc">QR کوڈز چھوٹے مربع نمونے ہیں جو مصنوعات، ریستوران مینیو، پوسٹروں اور ٹکٹوں پر ملتے ہیں۔ ان میں ویب سائٹ لنکس، فون نمبر یا ٹیکسٹ جیسی مفید معلومات ہوتی ہیں۔</string>
+    <string name="onboarding_step2_title">اسکین کیسے کریں</string>
+    <string name="onboarding_step2_desc">اپنا کیمرا QR کوڈ یا بار کوڈ کی طرف کریں۔ ایپ خود بخود پڑھ کر آپ کو دکھائے گی۔ پھر آپ لنکس کھول سکتے ہیں، ٹیکسٹ کاپی کر سکتے ہیں یا فون کر سکتے ہیں۔</string>
+    <string name="onboarding_step3_title">تصاویر سے اسکین کریں</string>
+    <string name="onboarding_step3_desc">آپ فون میں محفوظ تصاویر سے بھی QR کوڈز اسکین کر سکتے ہیں۔ کیمرا اسکرین پر تصویر کے آئیکن پر ٹیپ کر کے گیلری سے تصویر چنیں۔</string>
+    <string name="onboarding_next">اگلا</string>
+    <string name="onboarding_get_started">شروع کریں</string>
+    <string name="onboarding_skip">چھوڑیں</string>
+    <string name="help">مدد</string>
+</resources>

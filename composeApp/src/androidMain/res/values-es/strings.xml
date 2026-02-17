@@ -1,0 +1,44 @@
+<resources>
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">Permiso de cámara requerido</string>
+    <string name="permission_camera_required_desc">Esta aplicación necesita acceso a la cámara para escanear códigos QR.</string>
+    <string name="permission_allow_camera">Permitir cámara</string>
+    <string name="permission_open_settings">Abrir ajustes</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">Resultado del escaneo</string>
+    <string name="action_open_browser">Abrir en el navegador</string>
+    <string name="action_copy">Copiar</string>
+    <string name="action_share">Compartir</string>
+    <string name="action_scan_again">Escanear de nuevo</string>
+    <string name="action_send_email">Enviar correo</string>
+    <string name="action_call">Llamar</string>
+    <string name="toast_cannot_open">No se puede abrir este contenido</string>
+    <string name="toast_copied">Copiado al portapapeles</string>
+    <string name="toast_cannot_share">No se puede compartir</string>
+    <string name="clipboard_label_qr">Código QR</string>
+    <string name="action_connect_wifi">Conectar a WiFi</string>
+    <string name="wifi_copy_password">Copiar contraseña</string>
+    <string name="toast_wifi_sent">Comprueba el icono WiFi para confirmar la conexión, o inténtalo de nuevo</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">Apagar flash</string>
+    <string name="flash_turn_on">Encender flash</string>
+    <string name="scan_instruction">Coloca el código QR dentro del marco</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">Elegir foto de la galería</string>
+    <string name="gallery_no_qr_found">No se encontró código QR en la imagen</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">¿Qué son los códigos QR?</string>
+    <string name="onboarding_step1_desc">Los códigos QR son pequeños patrones cuadrados que se encuentran en productos, menús de restaurantes, carteles y entradas. Contienen información útil como enlaces web, números de teléfono o texto.</string>
+    <string name="onboarding_step2_title">Cómo escanear</string>
+    <string name="onboarding_step2_desc">Apunta tu cámara hacia un código QR o código de barras. La aplicación lo lee automáticamente y te muestra su contenido. Luego puedes abrir enlaces, copiar texto o llamar a números de teléfono.</string>
+    <string name="onboarding_step3_title">Escanear desde fotos</string>
+    <string name="onboarding_step3_desc">También puedes escanear códigos QR desde fotos guardadas en tu teléfono. Toca el icono de foto en la pantalla de la cámara para elegir una imagen de tu galería.</string>
+    <string name="onboarding_next">Siguiente</string>
+    <string name="onboarding_get_started">Comenzar</string>
+    <string name="onboarding_skip">Omitir</string>
+    <string name="help">Ayuda</string>
+</resources>

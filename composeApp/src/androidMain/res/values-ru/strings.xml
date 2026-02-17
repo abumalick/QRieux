@@ -1,0 +1,44 @@
+<resources>
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">Требуется разрешение камеры</string>
+    <string name="permission_camera_required_desc">Для сканирования QR-кодов приложению нужен доступ к камере.</string>
+    <string name="permission_allow_camera">Разрешить камеру</string>
+    <string name="permission_open_settings">Открыть настройки</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">Результат сканирования</string>
+    <string name="action_open_browser">Открыть в браузере</string>
+    <string name="action_copy">Копировать</string>
+    <string name="action_share">Поделиться</string>
+    <string name="action_scan_again">Сканировать снова</string>
+    <string name="action_send_email">Отправить письмо</string>
+    <string name="action_call">Позвонить</string>
+    <string name="toast_cannot_open">Не удаётся открыть содержимое</string>
+    <string name="toast_copied">Скопировано в буфер обмена</string>
+    <string name="toast_cannot_share">Не удаётся поделиться</string>
+    <string name="clipboard_label_qr">QR-код</string>
+    <string name="action_connect_wifi">Подключиться к WiFi</string>
+    <string name="wifi_copy_password">Копировать пароль</string>
+    <string name="toast_wifi_sent">Проверьте значок WiFi для подтверждения подключения или попробуйте снова</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">Выключить вспышку</string>
+    <string name="flash_turn_on">Включить вспышку</string>
+    <string name="scan_instruction">Поместите QR-код в рамку</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">Выбрать фото из галереи</string>
+    <string name="gallery_no_qr_found">QR-код не найден на изображении</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">Что такое QR-коды?</string>
+    <string name="onboarding_step1_desc">QR-коды — это маленькие квадратные узоры, которые можно найти на товарах, в меню ресторанов, на плакатах и билетах. Они содержат полезную информацию: ссылки, номера телефонов или текст.</string>
+    <string name="onboarding_step2_title">Как сканировать</string>
+    <string name="onboarding_step2_desc">Наведите камеру на QR-код или штрих-код. Приложение автоматически прочитает его и покажет содержимое. Затем вы можете открыть ссылки, скопировать текст или позвонить.</string>
+    <string name="onboarding_step3_title">Сканирование из фото</string>
+    <string name="onboarding_step3_desc">Вы также можете сканировать QR-коды с фотографий на телефоне. Нажмите на значок фото на экране камеры, чтобы выбрать изображение из галереи.</string>
+    <string name="onboarding_next">Далее</string>
+    <string name="onboarding_get_started">Начать</string>
+    <string name="onboarding_skip">Пропустить</string>
+    <string name="help">Помощь</string>
+</resources>

@@ -1,0 +1,44 @@
+<resources>
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">ต้องการสิทธิ์กล้อง</string>
+    <string name="permission_camera_required_desc">แอปนี้ต้องเข้าถึงกล้องเพื่อสแกนคิวอาร์โค้ด</string>
+    <string name="permission_allow_camera">อนุญาตกล้อง</string>
+    <string name="permission_open_settings">เปิดการตั้งค่า</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">ผลการสแกน</string>
+    <string name="action_open_browser">เปิดในเบราว์เซอร์</string>
+    <string name="action_copy">คัดลอก</string>
+    <string name="action_share">แชร์</string>
+    <string name="action_scan_again">สแกนอีกครั้ง</string>
+    <string name="action_send_email">ส่งอีเมล</string>
+    <string name="action_call">โทร</string>
+    <string name="toast_cannot_open">ไม่สามารถเปิดเนื้อหานี้ได้</string>
+    <string name="toast_copied">คัดลอกไปยังคลิปบอร์ดแล้ว</string>
+    <string name="toast_cannot_share">ไม่สามารถแชร์ได้</string>
+    <string name="clipboard_label_qr">คิวอาร์โค้ด</string>
+    <string name="action_connect_wifi">เชื่อมต่อ WiFi</string>
+    <string name="wifi_copy_password">คัดลอกรหัสผ่าน</string>
+    <string name="toast_wifi_sent">ตรวจสอบไอคอน WiFi เพื่อยืนยันการเชื่อมต่อ หรือลองอีกครั้ง</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">ปิดแฟลช</string>
+    <string name="flash_turn_on">เปิดแฟลช</string>
+    <string name="scan_instruction">วางคิวอาร์โค้ดไว้ในกรอบ</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">เลือกรูปจากแกลเลอรี</string>
+    <string name="gallery_no_qr_found">ไม่พบคิวอาร์โค้ดในรูปภาพ</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">คิวอาร์โค้ดคืออะไร?</string>
+    <string name="onboarding_step1_desc">คิวอาร์โค้ดเป็นรูปแบบสี่เหลี่ยมเล็กๆ ที่พบบนสินค้า เมนูร้านอาหาร โปสเตอร์ และตั๋ว มีข้อมูลที่เป็นประโยชน์ เช่น ลิงก์เว็บไซต์ หมายเลขโทรศัพท์ หรือข้อความ</string>
+    <string name="onboarding_step2_title">วิธีสแกน</string>
+    <string name="onboarding_step2_desc">ชี้กล้องไปที่คิวอาร์โค้ดหรือบาร์โค้ด แอปจะอ่านอัตโนมัติและแสดงเนื้อหา จากนั้นคุณสามารถเปิดลิงก์ คัดลอกข้อความ หรือโทรออกได้</string>
+    <string name="onboarding_step3_title">สแกนจากรูปภาพ</string>
+    <string name="onboarding_step3_desc">คุณยังสแกนคิวอาร์โค้ดจากรูปที่บันทึกไว้ในโทรศัพท์ได้ด้วย แตะไอคอนรูปภาพบนหน้าจอกล้องเพื่อเลือกรูปจากแกลเลอรี</string>
+    <string name="onboarding_next">ถัดไป</string>
+    <string name="onboarding_get_started">เริ่มต้น</string>
+    <string name="onboarding_skip">ข้าม</string>
+    <string name="help">ช่วยเหลือ</string>
+</resources>

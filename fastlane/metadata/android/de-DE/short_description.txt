@@ -1,0 +1,1 @@
+Einfacher QR- & Barcode-Scanner. Keine Werbung, kein Tracking, offline.

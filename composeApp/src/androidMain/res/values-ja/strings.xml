@@ -1,0 +1,44 @@
+<resources>
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">カメラの許可が必要です</string>
+    <string name="permission_camera_required_desc">QRコードをスキャンするにはカメラへのアクセスが必要です。</string>
+    <string name="permission_allow_camera">カメラを許可</string>
+    <string name="permission_open_settings">設定を開く</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">スキャン結果</string>
+    <string name="action_open_browser">ブラウザで開く</string>
+    <string name="action_copy">コピー</string>
+    <string name="action_share">共有</string>
+    <string name="action_scan_again">もう一度スキャン</string>
+    <string name="action_send_email">メールを送信</string>
+    <string name="action_call">電話をかける</string>
+    <string name="toast_cannot_open">このコンテンツを開けません</string>
+    <string name="toast_copied">クリップボードにコピーしました</string>
+    <string name="toast_cannot_share">共有できません</string>
+    <string name="clipboard_label_qr">QRコード</string>
+    <string name="action_connect_wifi">WiFiに接続</string>
+    <string name="wifi_copy_password">パスワードをコピー</string>
+    <string name="toast_wifi_sent">WiFiアイコンで接続を確認するか、もう一度お試しください</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">フラッシュをオフ</string>
+    <string name="flash_turn_on">フラッシュをオン</string>
+    <string name="scan_instruction">QRコードを枠内に合わせてください</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">ギャラリーから写真を選択</string>
+    <string name="gallery_no_qr_found">画像にQRコードが見つかりません</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">QRコードとは？</string>
+    <string name="onboarding_step1_desc">QRコードは商品、レストランのメニュー、ポスター、チケットなどにある小さな四角い模様です。ウェブサイトのリンク、電話番号、テキストなどの便利な情報が含まれています。</string>
+    <string name="onboarding_step2_title">スキャン方法</string>
+    <string name="onboarding_step2_desc">カメラをQRコードやバーコードに向けてください。アプリが自動的に読み取り、内容を表示します。リンクを開いたり、テキストをコピーしたり、電話をかけたりできます。</string>
+    <string name="onboarding_step3_title">写真からスキャン</string>
+    <string name="onboarding_step3_desc">スマホに保存した写真からもQRコードをスキャンできます。カメラ画面の写真アイコンをタップして、ギャラリーから画像を選んでください。</string>
+    <string name="onboarding_next">次へ</string>
+    <string name="onboarding_get_started">はじめる</string>
+    <string name="onboarding_skip">スキップ</string>
+    <string name="help">ヘルプ</string>
+</resources>

@@ -82,10 +82,10 @@ Primary: `#4A90D9` (blue) — defined in `ui/theme/Theme.kt`, used in app icon a
 
 ### Localization
 
-Use `stringResource(R.string.xxx)` for all user-facing strings. Add translations to:
-- `composeApp/src/androidMain/res/values/strings.xml` (English, default)
-- `composeApp/src/androidMain/res/values-ar/strings.xml` (Arabic)
-- `composeApp/src/androidMain/res/values-fr/strings.xml` (French)
+Use `stringResource(R.string.xxx)` for all user-facing strings. 20 languages supported.
+
+Android strings: `composeApp/src/androidMain/res/values-{code}/strings.xml`
+Codes: (default=en), `ar`, `bn`, `de`, `es`, `fr`, `hi`, `in` (Indonesian), `it`, `ja`, `ko`, `pt-rBR`, `ru`, `sw`, `ta`, `th`, `tr`, `ur`, `vi`, `zh-rCN`
 
 ### Manual Testing
 
@@ -116,9 +116,10 @@ just ios-metadata               # push metadata to ASC
 **iOS metadata** in `fastlane/metadata/ios/{locale}/`:
 - `release_notes.txt`
 
-Locales: `en-US`, `fr-FR`, `ar` (Android) / `ar-SA` (iOS)
+Android locales: `en-US`, `zh-CN`, `hi-IN`, `es-ES`, `fr-FR`, `ar`, `bn-BD`, `pt-BR`, `ru-RU`, `ja-JP`, `id`, `de-DE`, `ur`, `tr-TR`, `ko-KR`, `vi`, `it-IT`, `th`, `ta-IN`, `sw`
+iOS locales: `en-US`, `zh-Hans`, `hi`, `es-ES`, `fr-FR`, `ar-SA`, `pt-BR`, `ru`, `ja`, `id`, `de-DE`, `tr`, `ko`, `vi`, `it`, `th`
 
 ## Claude Commands
 
 ### /release
-Full release process: analyzes changes since last tag, creates changelogs (en/fr/ar), bumps version, builds bundle, uploads to Play Store production track, and creates git tag.
+Full release process: analyzes changes since last tag, creates changelogs (all 20 locales), bumps version, builds bundle, uploads to Play Store production track, and creates git tag.

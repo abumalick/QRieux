@@ -1,0 +1,14 @@
+QRieux adalah pemindai kode QR dan barcode yang sederhana dan cepat, dirancang untuk semua orang.
+
+Fitur:
+• Pemindaian kode QR dan barcode secara instan
+• Pindai dari galeri — pilih gambar apa pun yang memiliki kode QR
+• Bagikan gambar ke aplikasi — pindai kode QR yang dibagikan dari aplikasi lain
+• Aksi satu ketuk: buka URL, panggil nomor telepon, kirim email, sambungkan ke WiFi
+• Salin dan bagikan konten yang dipindai dengan mudah
+• Dukungan flash/senter untuk pemindaian di tempat gelap
+• Antarmuka yang bersih dan mudah digunakan dengan tombol besar
+
+Tanpa iklan. Tanpa pelacakan. Berfungsi sepenuhnya secara offline. Cukup pindai.
+
+QRieux adalah sumber terbuka: https://github.com/abumalick/QRieux

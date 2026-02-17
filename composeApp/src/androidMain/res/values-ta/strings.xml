@@ -1,0 +1,44 @@
+<resources>
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">கேமரா அனுமதி தேவை</string>
+    <string name="permission_camera_required_desc">QR குறியீடுகளை ஸ்கேன் செய்ய இந்த பயன்பாட்டிற்கு கேமரா அணுகல் தேவை.</string>
+    <string name="permission_allow_camera">கேமராவை அனுமதி</string>
+    <string name="permission_open_settings">அமைப்புகளைத் திற</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">ஸ்கேன் முடிவு</string>
+    <string name="action_open_browser">உலாவியில் திற</string>
+    <string name="action_copy">நகலெடு</string>
+    <string name="action_share">பகிர்</string>
+    <string name="action_scan_again">மீண்டும் ஸ்கேன் செய்</string>
+    <string name="action_send_email">மின்னஞ்சல் அனுப்பு</string>
+    <string name="action_call">அழை</string>
+    <string name="toast_cannot_open">இந்த உள்ளடக்கத்தை திறக்க முடியவில்லை</string>
+    <string name="toast_copied">கிளிப்போர்டுக்கு நகலெடுக்கப்பட்டது</string>
+    <string name="toast_cannot_share">பகிர முடியவில்லை</string>
+    <string name="clipboard_label_qr">QR குறியீடு</string>
+    <string name="action_connect_wifi">WiFi-உடன் இணை</string>
+    <string name="wifi_copy_password">கடவுச்சொல் நகலெடு</string>
+    <string name="toast_wifi_sent">இணைப்பை உறுதிப்படுத்த WiFi ஐகானைச் சரிபாருங்கள், அல்லது மீண்டும் முயற்சிக்கவும்</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">ஃபிளாஷ் அணை</string>
+    <string name="flash_turn_on">ஃபிளாஷ் இயக்கு</string>
+    <string name="scan_instruction">QR குறியீட்டை சட்டத்தினுள் வைக்கவும்</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">கேலரியிலிருந்து புகைப்படம் தேர்வு செய்</string>
+    <string name="gallery_no_qr_found">படத்தில் QR குறியீடு காணப்படவில்லை</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">QR குறியீடுகள் என்றால் என்ன?</string>
+    <string name="onboarding_step1_desc">QR குறியீடுகள் பொருட்கள், உணவகப் பட்டியல்கள், சுவரொட்டிகள், டிக்கெட்டுகளில் காணப்படும் சிறிய சதுர வடிவங்கள். இவற்றில் இணையதள இணைப்புகள், தொலைபேசி எண்கள் அல்லது உரை போன்ற பயனுள்ள தகவல்கள் உள்ளன.</string>
+    <string name="onboarding_step2_title">ஸ்கேன் செய்வது எப்படி</string>
+    <string name="onboarding_step2_desc">கேமராவை QR குறியீடு அல்லது பார்கோடு பக்கம் திருப்புங்கள். பயன்பாடு தானாகவே படிக்கும். பிறகு இணைப்புகளைத் திறக்கலாம், உரை நகலெடுக்கலாம் அல்லது அழைக்கலாம்.</string>
+    <string name="onboarding_step3_title">புகைப்படங்களிலிருந்து ஸ்கேன்</string>
+    <string name="onboarding_step3_desc">உங்கள் தொலைபேசியில் சேமிக்கப்பட்ட புகைப்படங்களிலிருந்தும் QR குறியீடுகளை ஸ்கேன் செய்யலாம். கேமரா திரையில் புகைப்பட ஐகானைத் தட்டி கேலரியிலிருந்து படம் தேர்வு செய்யுங்கள்.</string>
+    <string name="onboarding_next">அடுத்து</string>
+    <string name="onboarding_get_started">தொடங்கு</string>
+    <string name="onboarding_skip">தவிர்</string>
+    <string name="help">உதவி</string>
+</resources>

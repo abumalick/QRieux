@@ -7,8 +7,21 @@
     <key>CFBundleLocalizations</key>
     <array>
         <string>en</string>
+        <string>zh-Hans</string>
+        <string>hi</string>
+        <string>es</string>
         <string>fr</string>
         <string>ar</string>
+        <string>pt-BR</string>
+        <string>ru</string>
+        <string>ja</string>
+        <string>id</string>
+        <string>de</string>
+        <string>tr</string>
+        <string>ko</string>
+        <string>vi</string>
+        <string>it</string>
+        <string>th</string>
     </array>
     <key>CFBundleDisplayName</key>
     <string>QRieux</string>
@@ -23,9 +36,9 @@
     <key>CFBundlePackageType</key>
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.4.0</string>
+    <string>1.5.0</string>
     <key>CFBundleVersion</key>
-    <string>8</string>
+    <string>9</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>CADisableMinimumFrameDurationOnPhone</key>

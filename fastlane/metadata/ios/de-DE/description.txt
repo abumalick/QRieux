@@ -1,0 +1,12 @@
+QRieux ist ein einfacher, schneller QR-Code- und Barcode-Scanner, der für jeden geeignet ist.
+
+Funktionen:
+• Sofortiges Scannen von QR-Codes und Barcodes
+• Aus der Galerie scannen — wähle ein beliebiges Bild mit QR-Code
+• Bilder an die App teilen — scanne QR-Codes aus anderen Apps
+• Ein-Tipp-Aktionen: URLs öffnen, anrufen, E-Mails senden
+• Gescannte Inhalte einfach kopieren und teilen
+• Blitz-/Taschenlampenmodus für schlechte Lichtverhältnisse
+• Übersichtliche, einfach zu bedienende Oberfläche mit großen Tasten
+
+Keine Werbung. Kein Tracking. Funktioniert komplett offline. Einfach scannen.
