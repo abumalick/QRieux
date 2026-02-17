@@ -1,0 +1,46 @@
+<resources>
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">Ruhusa ya Kamera Inahitajika</string>
+    <string name="permission_camera_required_desc">Programu hii inahitaji ufikiaji wa kamera ili kuchanganua misimbo ya QR.</string>
+    <string name="permission_allow_camera">Ruhusu Kamera</string>
+    <string name="permission_open_settings">Fungua Mipangilio</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">Matokeo ya Uchanganuzi</string>
+    <string name="action_open_browser">Fungua kwenye Kivinjari</string>
+    <string name="action_copy">Nakili</string>
+    <string name="action_share">Shiriki</string>
+    <string name="action_scan_again">Changanua Tena</string>
+    <string name="action_send_email">Tuma Barua Pepe</string>
+    <string name="action_call">Piga Simu</string>
+    <string name="toast_cannot_open">Haiwezi kufungua maudhui haya</string>
+    <string name="toast_copied">Imenakiliwa kwenye ubao wa kunakili</string>
+    <string name="toast_cannot_share">Haiwezi kushiriki</string>
+    <string name="clipboard_label_qr">Msimbo wa QR</string>
+    <string name="action_connect_wifi">Unganisha na WiFi</string>
+    <string name="wifi_copy_password">Nakili Nenosiri</string>
+    <string name="wifi_connecting">Inaunganisha…</string>
+    <string name="toast_wifi_connected">Imeunganishwa na WiFi</string>
+    <string name="toast_wifi_failed">Imeshindwa kuunganisha na WiFi, angalia nenosiri na ujaribu tena</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">Zima tochi</string>
+    <string name="flash_turn_on">Washa tochi</string>
+    <string name="scan_instruction">Weka msimbo wa QR ndani ya fremu</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">Chagua picha kutoka galeria</string>
+    <string name="gallery_no_qr_found">Hakuna msimbo wa QR uliopatikana kwenye picha</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">Misimbo ya QR ni nini?</string>
+    <string name="onboarding_step1_desc">Misimbo ya QR ni mifumo midogo ya mraba inayopatikana kwenye bidhaa, menyu za mikahawa, mabango na tiketi. Ina taarifa muhimu kama viungo vya tovuti, nambari za simu au maandishi.</string>
+    <string name="onboarding_step2_title">Jinsi ya Kuchanganua</string>
+    <string name="onboarding_step2_desc">Elekeza kamera yako kwenye msimbo wa QR au barcode. Programu itaisoma kiotomatiki na kukuonyesha yaliyomo. Kisha unaweza kufungua viungo, kunakili maandishi au kupiga simu.</string>
+    <string name="onboarding_step3_title">Changanua kutoka Picha</string>
+    <string name="onboarding_step3_desc">Unaweza pia kuchanganua misimbo ya QR kutoka picha zilizohifadhiwa kwenye simu yako. Gonga ikoni ya picha kwenye skrini ya kamera ili kuchagua picha kutoka galeria.</string>
+    <string name="onboarding_next">Ifuatayo</string>
+    <string name="onboarding_get_started">Anza</string>
+    <string name="onboarding_skip">Ruka</string>
+    <string name="help">Msaada</string>
+</resources>

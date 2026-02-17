@@ -1,0 +1,46 @@
+<resources>
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">Cần quyền truy cập camera</string>
+    <string name="permission_camera_required_desc">Ứng dụng cần truy cập camera để quét mã QR.</string>
+    <string name="permission_allow_camera">Cho phép camera</string>
+    <string name="permission_open_settings">Mở cài đặt</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">Kết quả quét</string>
+    <string name="action_open_browser">Mở trong trình duyệt</string>
+    <string name="action_copy">Sao chép</string>
+    <string name="action_share">Chia sẻ</string>
+    <string name="action_scan_again">Quét lại</string>
+    <string name="action_send_email">Gửi email</string>
+    <string name="action_call">Gọi điện</string>
+    <string name="toast_cannot_open">Không thể mở nội dung này</string>
+    <string name="toast_copied">Đã sao chép vào bộ nhớ tạm</string>
+    <string name="toast_cannot_share">Không thể chia sẻ</string>
+    <string name="clipboard_label_qr">Mã QR</string>
+    <string name="action_connect_wifi">Kết nối WiFi</string>
+    <string name="wifi_copy_password">Sao chép mật khẩu</string>
+    <string name="wifi_connecting">Đang kết nối…</string>
+    <string name="toast_wifi_connected">Đã kết nối WiFi</string>
+    <string name="toast_wifi_failed">Không thể kết nối WiFi, kiểm tra mật khẩu và thử lại</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">Tắt đèn flash</string>
+    <string name="flash_turn_on">Bật đèn flash</string>
+    <string name="scan_instruction">Đặt mã QR vào trong khung</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">Chọn ảnh từ thư viện</string>
+    <string name="gallery_no_qr_found">Không tìm thấy mã QR trong ảnh</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">Mã QR là gì?</string>
+    <string name="onboarding_step1_desc">Mã QR là những hình vuông nhỏ có trên sản phẩm, thực đơn nhà hàng, áp phích và vé. Chúng chứa thông tin hữu ích như liên kết web, số điện thoại hoặc văn bản.</string>
+    <string name="onboarding_step2_title">Cách quét</string>
+    <string name="onboarding_step2_desc">Hướng camera vào mã QR hoặc mã vạch. Ứng dụng sẽ tự động đọc và hiển thị nội dung. Sau đó bạn có thể mở liên kết, sao chép văn bản hoặc gọi điện.</string>
+    <string name="onboarding_step3_title">Quét từ ảnh</string>
+    <string name="onboarding_step3_desc">Bạn cũng có thể quét mã QR từ ảnh đã lưu trên điện thoại. Nhấn vào biểu tượng ảnh trên màn hình camera để chọn ảnh từ thư viện.</string>
+    <string name="onboarding_next">Tiếp theo</string>
+    <string name="onboarding_get_started">Bắt đầu</string>
+    <string name="onboarding_skip">Bỏ qua</string>
+    <string name="help">Trợ giúp</string>
+</resources>

@@ -1,0 +1,46 @@
+<resources>
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">Izin Kamera Diperlukan</string>
+    <string name="permission_camera_required_desc">Aplikasi ini memerlukan akses kamera untuk memindai kode QR.</string>
+    <string name="permission_allow_camera">Izinkan Kamera</string>
+    <string name="permission_open_settings">Buka Pengaturan</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">Hasil Pindai</string>
+    <string name="action_open_browser">Buka di Browser</string>
+    <string name="action_copy">Salin</string>
+    <string name="action_share">Bagikan</string>
+    <string name="action_scan_again">Pindai Lagi</string>
+    <string name="action_send_email">Kirim Email</string>
+    <string name="action_call">Telepon</string>
+    <string name="toast_cannot_open">Tidak dapat membuka konten ini</string>
+    <string name="toast_copied">Disalin ke papan klip</string>
+    <string name="toast_cannot_share">Tidak dapat membagikan</string>
+    <string name="clipboard_label_qr">Kode QR</string>
+    <string name="action_connect_wifi">Sambungkan ke WiFi</string>
+    <string name="wifi_copy_password">Salin Kata Sandi</string>
+    <string name="wifi_connecting">Menyambungkan…</string>
+    <string name="toast_wifi_connected">Terhubung ke WiFi</string>
+    <string name="toast_wifi_failed">Tidak dapat terhubung ke WiFi, periksa kata sandi dan coba lagi</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">Matikan flash</string>
+    <string name="flash_turn_on">Nyalakan flash</string>
+    <string name="scan_instruction">Tempatkan kode QR di dalam bingkai</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">Pilih foto dari galeri</string>
+    <string name="gallery_no_qr_found">Tidak ditemukan kode QR di gambar</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">Apa itu Kode QR?</string>
+    <string name="onboarding_step1_desc">Kode QR adalah pola persegi kecil yang ada di produk, menu restoran, poster, dan tiket. Kode ini berisi informasi berguna seperti tautan situs web, nomor telepon, atau teks.</string>
+    <string name="onboarding_step2_title">Cara Memindai</string>
+    <string name="onboarding_step2_desc">Arahkan kamera ke kode QR atau barcode. Aplikasi akan membacanya secara otomatis dan menampilkan isinya. Anda kemudian bisa membuka tautan, menyalin teks, atau menelepon.</string>
+    <string name="onboarding_step3_title">Pindai dari Foto</string>
+    <string name="onboarding_step3_desc">Anda juga bisa memindai kode QR dari foto yang tersimpan di ponsel. Ketuk ikon foto di layar kamera untuk memilih gambar dari galeri.</string>
+    <string name="onboarding_next">Berikutnya</string>
+    <string name="onboarding_get_started">Mulai</string>
+    <string name="onboarding_skip">Lewati</string>
+    <string name="help">Bantuan</string>
+</resources>

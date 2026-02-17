@@ -1,0 +1,46 @@
+<resources>
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">需要相机权限</string>
+    <string name="permission_camera_required_desc">此应用需要使用相机来扫描二维码。</string>
+    <string name="permission_allow_camera">允许使用相机</string>
+    <string name="permission_open_settings">打开设置</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">扫描结果</string>
+    <string name="action_open_browser">在浏览器中打开</string>
+    <string name="action_copy">复制</string>
+    <string name="action_share">分享</string>
+    <string name="action_scan_again">重新扫描</string>
+    <string name="action_send_email">发送邮件</string>
+    <string name="action_call">拨打电话</string>
+    <string name="toast_cannot_open">无法打开此内容</string>
+    <string name="toast_copied">已复制到剪贴板</string>
+    <string name="toast_cannot_share">无法分享</string>
+    <string name="clipboard_label_qr">二维码</string>
+    <string name="action_connect_wifi">连接WiFi</string>
+    <string name="wifi_copy_password">复制密码</string>
+    <string name="wifi_connecting">正在连接…</string>
+    <string name="toast_wifi_connected">已连接到WiFi</string>
+    <string name="toast_wifi_failed">无法连接WiFi，请检查密码后重试</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">关闭闪光灯</string>
+    <string name="flash_turn_on">打开闪光灯</string>
+    <string name="scan_instruction">将二维码放在框内</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">从相册选择照片</string>
+    <string name="gallery_no_qr_found">图片中未找到二维码</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">什么是二维码？</string>
+    <string name="onboarding_step1_desc">二维码是一种小方块图案，常见于商品、餐厅菜单、海报和票据上。它们包含网站链接、电话号码或文字等有用信息。</string>
+    <string name="onboarding_step2_title">如何扫描</string>
+    <string name="onboarding_step2_desc">将相机对准二维码或条形码，应用会自动读取并显示内容。然后您可以打开链接、复制文字或拨打电话。</string>
+    <string name="onboarding_step3_title">从照片扫描</string>
+    <string name="onboarding_step3_desc">您也可以从手机中保存的照片扫描二维码。点击相机屏幕上的照片图标即可从相册选择图片。</string>
+    <string name="onboarding_next">下一步</string>
+    <string name="onboarding_get_started">开始使用</string>
+    <string name="onboarding_skip">跳过</string>
+    <string name="help">帮助</string>
+</resources>

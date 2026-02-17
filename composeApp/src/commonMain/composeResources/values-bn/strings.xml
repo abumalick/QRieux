@@ -1,0 +1,46 @@
+<resources>
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">ক্যামেরা অনুমতি প্রয়োজন</string>
+    <string name="permission_camera_required_desc">QR কোড স্ক্যান করতে এই অ্যাপের ক্যামেরা অ্যাক্সেস প্রয়োজন।</string>
+    <string name="permission_allow_camera">ক্যামেরা অনুমতি দিন</string>
+    <string name="permission_open_settings">সেটিংস খুলুন</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">স্ক্যান ফলাফল</string>
+    <string name="action_open_browser">ব্রাউজারে খুলুন</string>
+    <string name="action_copy">কপি করুন</string>
+    <string name="action_share">শেয়ার করুন</string>
+    <string name="action_scan_again">আবার স্ক্যান করুন</string>
+    <string name="action_send_email">ইমেইল পাঠান</string>
+    <string name="action_call">কল করুন</string>
+    <string name="toast_cannot_open">এই বিষয়বস্তু খোলা যাচ্ছে না</string>
+    <string name="toast_copied">ক্লিপবোর্ডে কপি হয়েছে</string>
+    <string name="toast_cannot_share">শেয়ার করা যাচ্ছে না</string>
+    <string name="clipboard_label_qr">QR কোড</string>
+    <string name="action_connect_wifi">WiFi-এ সংযোগ করুন</string>
+    <string name="wifi_copy_password">পাসওয়ার্ড কপি করুন</string>
+    <string name="wifi_connecting">সংযোগ হচ্ছে…</string>
+    <string name="toast_wifi_connected">WiFi-এ সংযুক্ত হয়েছে</string>
+    <string name="toast_wifi_failed">WiFi-এ সংযোগ করা যায়নি, পাসওয়ার্ড পরীক্ষা করে আবার চেষ্টা করুন</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">ফ্ল্যাশ বন্ধ করুন</string>
+    <string name="flash_turn_on">ফ্ল্যাশ চালু করুন</string>
+    <string name="scan_instruction">QR কোড ফ্রেমের ভিতরে রাখুন</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">গ্যালারি থেকে ছবি বাছুন</string>
+    <string name="gallery_no_qr_found">ছবিতে কোনো QR কোড পাওয়া যায়নি</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">QR কোড কী?</string>
+    <string name="onboarding_step1_desc">QR কোড হলো ছোট বর্গাকার প্যাটার্ন যা পণ্য, রেস্তোরাঁর মেনু, পোস্টার এবং টিকিটে পাওয়া যায়। এতে ওয়েবসাইট লিংক, ফোন নম্বর বা টেক্সটের মতো দরকারি তথ্য থাকে।</string>
+    <string name="onboarding_step2_title">কীভাবে স্ক্যান করবেন</string>
+    <string name="onboarding_step2_desc">আপনার ক্যামেরা QR কোড বা বারকোডের দিকে ধরুন। অ্যাপ স্বয়ংক্রিয়ভাবে পড়ে আপনাকে দেখাবে। তারপর আপনি লিংক খুলতে, টেক্সট কপি করতে বা ফোন করতে পারবেন।</string>
+    <string name="onboarding_step3_title">ছবি থেকে স্ক্যান করুন</string>
+    <string name="onboarding_step3_desc">আপনার ফোনে সেভ করা ছবি থেকেও QR কোড স্ক্যান করতে পারবেন। ক্যামেরা স্ক্রিনে ছবির আইকনে ট্যাপ করে গ্যালারি থেকে ছবি বেছে নিন।</string>
+    <string name="onboarding_next">পরবর্তী</string>
+    <string name="onboarding_get_started">শুরু করুন</string>
+    <string name="onboarding_skip">এড়িয়ে যান</string>
+    <string name="help">সাহায্য</string>
+</resources>

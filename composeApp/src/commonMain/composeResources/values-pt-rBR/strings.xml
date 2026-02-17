@@ -1,0 +1,46 @@
+<resources>
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">Permissão de câmera necessária</string>
+    <string name="permission_camera_required_desc">Este aplicativo precisa de acesso à câmera para escanear códigos QR.</string>
+    <string name="permission_allow_camera">Permitir câmera</string>
+    <string name="permission_open_settings">Abrir configurações</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">Resultado da leitura</string>
+    <string name="action_open_browser">Abrir no navegador</string>
+    <string name="action_copy">Copiar</string>
+    <string name="action_share">Compartilhar</string>
+    <string name="action_scan_again">Escanear novamente</string>
+    <string name="action_send_email">Enviar e-mail</string>
+    <string name="action_call">Ligar</string>
+    <string name="toast_cannot_open">Não é possível abrir este conteúdo</string>
+    <string name="toast_copied">Copiado para a área de transferência</string>
+    <string name="toast_cannot_share">Não é possível compartilhar</string>
+    <string name="clipboard_label_qr">Código QR</string>
+    <string name="action_connect_wifi">Conectar ao WiFi</string>
+    <string name="wifi_copy_password">Copiar senha</string>
+    <string name="wifi_connecting">Conectando…</string>
+    <string name="toast_wifi_connected">Conectado ao WiFi</string>
+    <string name="toast_wifi_failed">Não foi possível conectar ao WiFi, verifique a senha e tente novamente</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">Desligar flash</string>
+    <string name="flash_turn_on">Ligar flash</string>
+    <string name="scan_instruction">Posicione o código QR dentro da moldura</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">Escolher foto da galeria</string>
+    <string name="gallery_no_qr_found">Nenhum código QR encontrado na imagem</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">O que são códigos QR?</string>
+    <string name="onboarding_step1_desc">Códigos QR são pequenos padrões quadrados encontrados em produtos, cardápios de restaurantes, cartazes e ingressos. Eles contêm informações úteis como links de sites, números de telefone ou texto.</string>
+    <string name="onboarding_step2_title">Como escanear</string>
+    <string name="onboarding_step2_desc">Aponte sua câmera para um código QR ou código de barras. O aplicativo lê automaticamente e mostra o conteúdo. Depois você pode abrir links, copiar texto ou ligar para números.</string>
+    <string name="onboarding_step3_title">Escanear de fotos</string>
+    <string name="onboarding_step3_desc">Você também pode escanear códigos QR de fotos salvas no seu celular. Toque no ícone de foto na tela da câmera para escolher uma imagem da galeria.</string>
+    <string name="onboarding_next">Próximo</string>
+    <string name="onboarding_get_started">Começar</string>
+    <string name="onboarding_skip">Pular</string>
+    <string name="help">Ajuda</string>
+</resources>

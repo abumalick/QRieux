@@ -1,0 +1,46 @@
+<resources>
+    <!-- Permission Screen -->
+    <string name="permission_camera_required_title">Kameraberechtigung erforderlich</string>
+    <string name="permission_camera_required_desc">Diese App benötigt Kamerazugriff zum Scannen von QR-Codes.</string>
+    <string name="permission_allow_camera">Kamera erlauben</string>
+    <string name="permission_open_settings">Einstellungen öffnen</string>
+
+    <!-- Scan Result -->
+    <string name="scan_result_title">Scan-Ergebnis</string>
+    <string name="action_open_browser">Im Browser öffnen</string>
+    <string name="action_copy">Kopieren</string>
+    <string name="action_share">Teilen</string>
+    <string name="action_scan_again">Erneut scannen</string>
+    <string name="action_send_email">E-Mail senden</string>
+    <string name="action_call">Anrufen</string>
+    <string name="toast_cannot_open">Dieser Inhalt kann nicht geöffnet werden</string>
+    <string name="toast_copied">In die Zwischenablage kopiert</string>
+    <string name="toast_cannot_share">Teilen nicht möglich</string>
+    <string name="clipboard_label_qr">QR-Code</string>
+    <string name="action_connect_wifi">Mit WLAN verbinden</string>
+    <string name="wifi_copy_password">Passwort kopieren</string>
+    <string name="wifi_connecting">Verbindung wird hergestellt…</string>
+    <string name="toast_wifi_connected">Mit WLAN verbunden</string>
+    <string name="toast_wifi_failed">Verbindung zum WLAN fehlgeschlagen, Passwort prüfen und erneut versuchen</string>
+
+    <!-- Camera Preview -->
+    <string name="flash_turn_off">Blitz ausschalten</string>
+    <string name="flash_turn_on">Blitz einschalten</string>
+    <string name="scan_instruction">QR-Code im Rahmen platzieren</string>
+
+    <!-- Gallery -->
+    <string name="gallery_pick_photo">Foto aus der Galerie wählen</string>
+    <string name="gallery_no_qr_found">Kein QR-Code im Bild gefunden</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_step1_title">Was sind QR-Codes?</string>
+    <string name="onboarding_step1_desc">QR-Codes sind kleine quadratische Muster auf Produkten, Speisekarten, Plakaten und Tickets. Sie enthalten nützliche Informationen wie Website-Links, Telefonnummern oder Text.</string>
+    <string name="onboarding_step2_title">So scannen Sie</string>
+    <string name="onboarding_step2_desc">Richten Sie Ihre Kamera auf einen QR-Code oder Barcode. Die App liest ihn automatisch und zeigt den Inhalt an. Dann können Sie Links öffnen, Text kopieren oder anrufen.</string>
+    <string name="onboarding_step3_title">Aus Fotos scannen</string>
+    <string name="onboarding_step3_desc">Sie können auch QR-Codes aus gespeicherten Fotos scannen. Tippen Sie auf das Foto-Symbol auf dem Kamerabildschirm, um ein Bild aus der Galerie zu wählen.</string>
+    <string name="onboarding_next">Weiter</string>
+    <string name="onboarding_get_started">Los geht\'s</string>
+    <string name="onboarding_skip">Überspringen</string>
+    <string name="help">Hilfe</string>
+</resources>
