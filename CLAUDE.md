@@ -14,23 +14,14 @@ QR/barcode scanner designed for elderly and non-tech users. Priorities:
 ## Build Commands
 
 ```bash
-# Android
-./gradlew :composeApp:assembleDebug            # Build debug APK
-./gradlew :composeApp:bundleRelease            # Build release bundle (requires key.properties)
-
-# iOS framework (for Xcode integration)
-./gradlew :composeApp:linkDebugFrameworkIosSimulatorArm64   # Build iOS debug framework
-./gradlew :composeApp:linkReleaseFrameworkIosArm64          # Build iOS release framework
-
-# iOS app (run from project root, NOT iosApp/)
-bundle exec fastlane ios build   # Build only
-bundle exec fastlane ios beta    # Build + upload to TestFlight
-
-# Tests
-./gradlew :composeApp:testDebugUnitTest        # Run all unit tests
-
-# Run single test class
-./gradlew :composeApp:testDebugUnitTest --tests "net.hilson.qr_scanner.qr_scanner.ComposeAppAndroidUnitTest"
+just android-debug              # Build debug APK
+just android-release            # Build release bundle (requires key.properties)
+just ios-framework-debug        # Build iOS debug framework for simulator
+just ios-framework-release      # Build iOS release framework
+just ios-build                  # Build iOS app
+just ios-beta                   # Build + upload to TestFlight
+just test                       # Run all unit tests
+just test-class <fully.qualified.ClassName>  # Run single test class
 ```
 
 **Version bump** (must update both platforms):
@@ -105,17 +96,17 @@ Open `examples/test-qr-codes.html` in browser to test all supported QR types (UR
 All fastlane commands run from **project root** (Fastfile is at `fastlane/Fastfile`).
 
 ```bash
-bundle install                                    # install fastlane
+just bundle-install             # install fastlane
 
 # Android (Play Store)
-bundle exec fastlane android validate_credentials # test Play Store connection
-bundle exec fastlane android upload_metadata      # push metadata + changelogs
-bundle exec fastlane android upload_screenshots   # push images
-bundle exec fastlane android alpha                # upload AAB to alpha track
+just android-validate           # test Play Store connection
+just android-metadata           # push metadata + changelogs
+just android-screenshots        # push images
+just android-alpha              # upload AAB to alpha track
 
 # iOS (App Store Connect)
-bundle exec fastlane ios beta                     # build + upload to TestFlight
-bundle exec fastlane ios upload_metadata          # push metadata to ASC
+just ios-beta                   # build + upload to TestFlight
+just ios-metadata               # push metadata to ASC
 ```
 
 **Android metadata** in `fastlane/metadata/android/{locale}/`:
