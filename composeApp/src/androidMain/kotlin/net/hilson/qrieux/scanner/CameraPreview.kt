@@ -205,7 +205,7 @@ fun CameraPreview(
 }
 
 @Composable
-private fun ScanOverlay() {
+internal fun ScanOverlay() {
     Box(modifier = Modifier.fillMaxSize()) {
         Canvas(modifier = Modifier.fillMaxSize()) {
             val overlayColor = Color.Black.copy(alpha = 0.6f)
