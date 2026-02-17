@@ -50,9 +50,9 @@ android-metadata:
 android-screenshots:
     bundle exec fastlane android upload_screenshots
 
-# Upload AAB to alpha track
-android-alpha:
-    bundle exec fastlane android alpha
+# Upload AAB to production track
+android-production:
+    bundle exec fastlane android production
 
 # Fastlane - iOS
 

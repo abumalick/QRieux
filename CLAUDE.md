@@ -102,7 +102,7 @@ just bundle-install             # install fastlane
 just android-validate           # test Play Store connection
 just android-metadata           # push metadata + changelogs
 just android-screenshots        # push images
-just android-alpha              # upload AAB to alpha track
+just android-production          # upload AAB to production track
 
 # iOS (App Store Connect)
 just ios-beta                   # build + upload to TestFlight
@@ -121,4 +121,4 @@ Locales: `en-US`, `fr-FR`, `ar` (Android) / `ar-SA` (iOS)
 ## Claude Commands
 
 ### /release
-Full release process: analyzes changes since last tag, creates changelogs (en/fr/ar), bumps version, builds bundle, uploads to Play Store alpha track, and creates git tag.
+Full release process: analyzes changes since last tag, creates changelogs (en/fr/ar), bumps version, builds bundle, uploads to Play Store production track, and creates git tag.

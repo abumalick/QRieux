@@ -1,5 +1,5 @@
 ---
-description: Prepare and upload a new release to Play Store alpha track
+description: Prepare and upload a new release to Play Store production track
 allowed-tools: Read, Edit, Write, Bash, Glob, Grep
 ---
 
@@ -43,7 +43,7 @@ Edit `composeApp/build.gradle.kts` to update:
 
 ## 5. Build Release Bundle
 
-Run: `./gradlew :composeApp:bundleRelease`
+Run: `just android-release`
 
 Ensure build succeeds before proceeding.
 
@@ -53,9 +53,9 @@ Stage and commit with message: `v<versionName> (versionCode <code>)`
 
 Create a git tag: `git tag v<versionName>`
 
-## 7. Upload to Alpha
+## 7. Upload to Production
 
-Run: `bundle exec fastlane alpha`
+Run: `just android-production`
 
 ## 8. Summary
 

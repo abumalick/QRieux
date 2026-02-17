@@ -15,7 +15,7 @@ platform :android do
   desc "Upload metadata to Play Store"
   lane :upload_metadata do |options|
     supply(
-      track: options[:track] || "alpha",
+      track: options[:track] || "production",
       version_code: options[:version_code],
       skip_upload_apk: true,
       skip_upload_aab: true,
@@ -35,40 +35,14 @@ platform :android do
     )
   end
 
-  desc "Upload bundle to internal testing track"
-  lane :internal do
-    supply(
-      aab: "composeApp/build/outputs/bundle/release/composeApp-release.aab",
-      track: "internal",
-      skip_upload_metadata: true,
-      skip_upload_images: true,
-      skip_upload_screenshots: true
-    )
-  end
-
-  desc "Upload bundle to alpha (closed testing) track"
-  lane :alpha do
-    supply(
-      aab: "composeApp/build/outputs/bundle/release/composeApp-release.aab",
-      track: "alpha",
-      skip_upload_metadata: true,
-      skip_upload_images: true,
-      skip_upload_screenshots: true
-    )
-  end
-
-  desc "Promote alpha to production"
+  desc "Upload bundle to production track"
   lane :production do
     supply(
-      track: "alpha",
-      track_promote_to: "production",
-      rollout: "1.0",
-      skip_upload_apk: true,
-      skip_upload_aab: true,
+      aab: "composeApp/build/outputs/bundle/release/composeApp-release.aab",
+      track: "production",
       skip_upload_metadata: true,
       skip_upload_images: true,
-      skip_upload_screenshots: true,
-      skip_upload_changelogs: true
+      skip_upload_screenshots: true
     )
   end
 
