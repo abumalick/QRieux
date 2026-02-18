@@ -71,7 +71,7 @@ android {
         applicationId = "net.hilson.qrieux"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 10
+        versionCode = 11
         versionName = "1.5.0"
     }
 
