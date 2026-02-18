@@ -60,6 +60,16 @@ android-production:
 ios-metadata:
     bundle exec fastlane ios upload_metadata
 
+# Screenshot generation
+
+# Generate Android screenshots for all locales
+gen-android-screenshots *args:
+    ./scripts/generate_android_screenshots.sh {{args}}
+
+# Generate iOS screenshots for all locales
+gen-ios-screenshots *args:
+    ./scripts/generate_ios_screenshots.sh {{args}}
+
 # Dependencies
 
 # Install fastlane and ruby dependencies

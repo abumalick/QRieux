@@ -20,6 +20,8 @@ just ios-framework-debug        # Build iOS debug framework for simulator
 just ios-framework-release      # Build iOS release framework
 just ios-build                  # Build iOS app
 just ios-beta                   # Build + upload to TestFlight
+just gen-android-screenshots    # Generate Android screenshots (--skip-build, --locale=xx)
+just gen-ios-screenshots        # Generate iOS screenshots (--skip-build, --locale=xx)
 just test                       # Run all unit tests
 just test-class <fully.qualified.ClassName>  # Run single test class
 ```
