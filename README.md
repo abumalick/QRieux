@@ -4,7 +4,7 @@ A simple, ad-free QR code scanner designed for everyone — especially our paren
 
 <p align="center">
   <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_scanner.png" width="250" alt="Scanner">
-  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2_result.png" width="250" alt="Result">
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2_url_result.png" width="250" alt="URL Result">
 </p>
 
 ## Why QRieux?
