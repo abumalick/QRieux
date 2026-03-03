@@ -42,3 +42,5 @@ iosApp/fastlane/README.md
 # iOS API keys (sensitive)
 fastlane/AuthKey_*.p8
 fastlane/api_key.json
+
+.playwright-cli/
