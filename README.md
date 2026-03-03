@@ -46,7 +46,7 @@ Finding a QR code scanner that is simple, ad-free, free, and privacy-respecting 
 
 ## Testing
 
-Open [examples/test-qr-codes.html](examples/test-qr-codes.html) in a browser to test scanning all supported QR code types (URLs, emails, phones, WiFi, plain text).
+Open [examples/test-qr-codes.md](examples/test-qr-codes.md) to test scanning all supported QR code types (URLs, emails, phones, WiFi, plain text).
 
 ## Contributing
 

@@ -91,7 +91,7 @@ Codes: (default=en), `ar`, `bn`, `de`, `es`, `fr`, `hi`, `in` (Indonesian), `it`
 
 ### Manual Testing
 
-Open `examples/test-qr-codes.html` in browser to test all supported QR types (URLs, emails, phones, text).
+Open `examples/test-qr-codes.md` to test all supported QR types (URLs, emails, phones, text).
 
 ## Fastlane
 
