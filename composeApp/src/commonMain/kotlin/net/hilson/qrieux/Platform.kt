@@ -22,4 +22,5 @@ expect fun openAppSettings(context: PlatformContext)
 expect fun connectToWifi(context: PlatformContext, ssid: String, password: String, authType: String, hidden: Boolean, onResult: (Boolean) -> Unit = {})
 expect fun isOnboardingCompleted(context: PlatformContext): Boolean
 expect fun setOnboardingCompleted(context: PlatformContext)
+expect fun addContact(context: PlatformContext, vCardData: String)
 expect fun generateQrCode(content: String, size: Int): GeneratedQrCode?

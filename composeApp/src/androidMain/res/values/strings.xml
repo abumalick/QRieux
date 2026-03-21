@@ -10,6 +10,7 @@
     <string name="action_open_browser">Open in Browser</string>
     <string name="action_copy">Copy</string>
     <string name="action_share">Share</string>
+    <string name="action_add_contact">Add to Contacts</string>
     <string name="action_scan_again">Scan Again</string>
     <string name="action_send_email">Send Email</string>
     <string name="action_call">Call</string>

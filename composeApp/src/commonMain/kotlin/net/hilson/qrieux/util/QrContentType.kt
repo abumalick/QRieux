@@ -5,6 +5,13 @@ sealed class QrContentType {
     data class Email(val email: String) : QrContentType()
     data class Phone(val phone: String) : QrContentType()
     data class Wifi(val ssid: String, val password: String, val authType: String, val hidden: Boolean) : QrContentType()
+    data class Contact(
+        val fullName: String,
+        val phone: String,
+        val email: String,
+        val organization: String,
+        val rawVCard: String
+    ) : QrContentType()
     data class Text(val text: String) : QrContentType()
 
     companion object {
@@ -15,6 +22,7 @@ sealed class QrContentType {
         fun fromRawValue(raw: String): QrContentType {
             val trimmed = raw.trim()
             return when {
+                trimmed.startsWith("BEGIN:VCARD", ignoreCase = true) -> parseVCard(trimmed) ?: Text(trimmed)
                 trimmed.startsWith("WIFI:", ignoreCase = true) -> parseWifi(trimmed) ?: Text(trimmed)
                 URL_PATTERN.matches(trimmed) -> Url(trimmed)
                 trimmed.startsWith("mailto:", ignoreCase = true) -> Email(trimmed.substring(7))
@@ -23,6 +31,39 @@ sealed class QrContentType {
                 PHONE_PATTERN.matches(trimmed) -> Phone(trimmed)
                 else -> Text(trimmed)
             }
+        }
+
+        private fun parseVCard(raw: String): Contact? {
+            var fullName = ""
+            var phone = ""
+            var email = ""
+            var org = ""
+            // Handle both \r\n and \n line endings
+            val lines = raw.replace("\r\n", "\n").split("\n")
+            for (line in lines) {
+                val upper = line.uppercase()
+                when {
+                    upper.startsWith("FN:") || upper.startsWith("FN;") -> {
+                        fullName = extractValue(line)
+                    }
+                    (upper.startsWith("TEL:") || upper.startsWith("TEL;")) && phone.isEmpty() -> {
+                        phone = extractValue(line)
+                    }
+                    (upper.startsWith("EMAIL:") || upper.startsWith("EMAIL;")) && email.isEmpty() -> {
+                        email = extractValue(line)
+                    }
+                    upper.startsWith("ORG:") || upper.startsWith("ORG;") -> {
+                        org = extractValue(line)
+                    }
+                }
+            }
+            if (fullName.isEmpty() && phone.isEmpty() && email.isEmpty()) return null
+            return Contact(fullName, phone, email, org, raw)
+        }
+
+        private fun extractValue(line: String): String {
+            val colonIdx = line.indexOf(':')
+            return if (colonIdx >= 0) line.substring(colonIdx + 1).trim() else ""
         }
 
         // Format: WIFI:T:WPA;S:MyNetwork;P:MyPassword;H:true;;

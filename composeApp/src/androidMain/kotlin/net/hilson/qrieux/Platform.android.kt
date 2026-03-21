@@ -145,6 +145,19 @@ private fun buildWifiSuggestion(ssid: String, password: String, authType: String
     return builder.build()
 }
 
+actual fun addContact(context: PlatformContext, vCardData: String) {
+    val ctx = (context as AndroidContext).context
+    val file = File(ctx.cacheDir, "contact.vcf")
+    file.writeText(vCardData)
+    val uri = FileProvider.getUriForFile(ctx, "${ctx.packageName}.fileprovider", file)
+    val intent = Intent(Intent.ACTION_VIEW).apply {
+        setDataAndType(uri, "text/x-vcard")
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+    ctx.startActivity(intent)
+}
+
 actual fun openAppSettings(context: PlatformContext) {
     val ctx = (context as AndroidContext).context
     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {

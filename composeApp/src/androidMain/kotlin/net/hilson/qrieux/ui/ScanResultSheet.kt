@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import net.hilson.qrieux.R
 import net.hilson.qrieux.util.QrContentType
 import net.hilson.qrieux.AndroidContext
+import net.hilson.qrieux.addContact
 import net.hilson.qrieux.connectToWifi
 import net.hilson.qrieux.copyToClipboard
 import net.hilson.qrieux.dialPhone
@@ -42,6 +43,12 @@ fun ScanResultOverlay(
         is QrContentType.Email -> contentType.email
         is QrContentType.Phone -> contentType.phone
         is QrContentType.Wifi -> contentType.ssid
+        is QrContentType.Contact -> buildString {
+            append(contentType.fullName)
+            if (contentType.phone.isNotEmpty()) append("\n${contentType.phone}")
+            if (contentType.email.isNotEmpty()) append("\n${contentType.email}")
+            if (contentType.organization.isNotEmpty()) append("\n${contentType.organization}")
+        }
         is QrContentType.Text -> contentType.text
     }
 
@@ -92,6 +99,7 @@ fun ScanResultOverlay(
                 is QrContentType.Email -> EmailActions(contentType.email, onDismiss, context)
                 is QrContentType.Phone -> PhoneActions(contentType.phone, onDismiss, context)
                 is QrContentType.Wifi -> WifiActions(contentType, onDismiss, context)
+                is QrContentType.Contact -> ContactActions(contentType, onDismiss, context)
                 is QrContentType.Text -> TextActions(contentType.text, onDismiss, context)
             }
         }
@@ -189,6 +197,34 @@ private fun WifiActions(wifi: QrContentType.Wifi, onDismiss: () -> Unit, context
         }
         ActionButton(stringResource(R.string.action_share), Icons.Default.Share) {
             shareText(platformContext, wifi.ssid, shareTitle)
+        }
+        SecondaryButton(stringResource(R.string.action_scan_again), Icons.Default.QrCodeScanner, onDismiss)
+    }
+}
+
+@Composable
+private fun ContactActions(contact: QrContentType.Contact, onDismiss: () -> Unit, context: android.content.Context) {
+    val toastCopied = stringResource(R.string.toast_copied)
+    val clipboardLabel = stringResource(R.string.clipboard_label_qr)
+    val shareTitle = stringResource(R.string.action_share)
+    val platformContext = AndroidContext(context)
+
+    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        ActionButton(stringResource(R.string.action_add_contact), Icons.Default.PersonAdd) {
+            addContact(platformContext, contact.rawVCard)
+        }
+        if (contact.phone.isNotEmpty()) {
+            ActionButton(stringResource(R.string.action_call), Icons.Default.Phone) {
+                dialPhone(platformContext, contact.phone)
+            }
+        }
+        if (contact.email.isNotEmpty()) {
+            ActionButton(stringResource(R.string.action_send_email), Icons.AutoMirrored.Filled.Send) {
+                sendEmail(platformContext, contact.email)
+            }
+        }
+        ActionButton(stringResource(R.string.action_share), Icons.Default.Share) {
+            shareText(platformContext, contact.rawVCard, shareTitle)
         }
         SecondaryButton(stringResource(R.string.action_scan_again), Icons.Default.QrCodeScanner, onDismiss)
     }

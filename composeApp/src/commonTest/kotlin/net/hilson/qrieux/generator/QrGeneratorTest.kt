@@ -2,6 +2,7 @@ package net.hilson.qrieux.generator
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertNull
 import net.hilson.qrieux.util.QrContentType
 
@@ -172,6 +173,58 @@ class QrGeneratorTest {
         val result = buildQrPayload(QrGeneratorType.Text, QrGeneratorFormData(text = sharedText))
 
         assertEquals(sharedText, result.payload)
+        assertNull(result.error)
+    }
+
+    @Test
+    fun `vcard qr is parsed as contact`() {
+        val vcard = "BEGIN:VCARD\r\nVERSION:3.0\r\nFN:John Doe\r\nTEL:+1234567890\r\nEMAIL:john@example.com\r\nORG:Acme Inc\r\nEND:VCARD"
+        val result = QrContentType.fromRawValue(vcard)
+
+        assertIs<QrContentType.Contact>(result)
+        val contact = result as QrContentType.Contact
+        assertEquals("John Doe", contact.fullName)
+        assertEquals("+1234567890", contact.phone)
+        assertEquals("john@example.com", contact.email)
+        assertEquals("Acme Inc", contact.organization)
+        assertEquals(vcard, contact.rawVCard)
+    }
+
+    @Test
+    fun `vcard with typed fields is parsed correctly`() {
+        val vcard = "BEGIN:VCARD\nVERSION:3.0\nFN:Jane Smith\nTEL;TYPE=CELL:+9876543210\nEMAIL;TYPE=WORK:jane@corp.com\nEND:VCARD"
+        val result = QrContentType.fromRawValue(vcard)
+
+        assertIs<QrContentType.Contact>(result)
+        val contact = result as QrContentType.Contact
+        assertEquals("Jane Smith", contact.fullName)
+        assertEquals("+9876543210", contact.phone)
+        assertEquals("jane@corp.com", contact.email)
+    }
+
+    @Test
+    fun `vcard with only name is parsed as contact`() {
+        val vcard = "BEGIN:VCARD\nVERSION:3.0\nFN:Solo Name\nEND:VCARD"
+        val result = QrContentType.fromRawValue(vcard)
+
+        assertIs<QrContentType.Contact>(result)
+        assertEquals("Solo Name", (result as QrContentType.Contact).fullName)
+    }
+
+    @Test
+    fun `empty vcard falls back to text`() {
+        val vcard = "BEGIN:VCARD\nVERSION:3.0\nEND:VCARD"
+        val result = QrContentType.fromRawValue(vcard)
+
+        assertIs<QrContentType.Text>(result)
+    }
+
+    @Test
+    fun `vcard content produces valid text payload`() {
+        val vcard = "BEGIN:VCARD\r\nVERSION:3.0\r\nFN:John Doe\r\nTEL:+1234567890\r\nEMAIL:john@example.com\r\nEND:VCARD"
+        val result = buildQrPayload(QrGeneratorType.Text, QrGeneratorFormData(text = vcard))
+
+        assertEquals(vcard, result.payload)
         assertNull(result.error)
     }
 

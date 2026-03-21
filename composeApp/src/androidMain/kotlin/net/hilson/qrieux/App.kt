@@ -63,7 +63,8 @@ fun App(
     sharedImageUri: Uri? = null,
     shareTimestamp: Long = 0L,
     screenshotContent: String? = null,
-    screenshotBackground: String? = null
+    screenshotBackground: String? = null,
+    sharedText: String? = null
 ) {
     QRieuxTheme {
         // Screenshot mode: launched via adb with SCREENSHOT_CONTENT intent extra
@@ -130,9 +131,9 @@ fun App(
         var scannedContent by remember { mutableStateOf<QrContentType?>(null) }
         val snackbarHostState = remember { SnackbarHostState() }
         val noQrFoundMessage = stringResource(R.string.gallery_no_qr_found)
-        var appMode by remember { mutableStateOf(AppMode.Scan) }
+        var appMode by remember { mutableStateOf(if (sharedText != null) AppMode.Generate else AppMode.Scan) }
         var showOnboarding by remember {
-            mutableStateOf(sharedImageUri == null && !isOnboardingCompleted(platformContext))
+            mutableStateOf(sharedImageUri == null && sharedText == null && !isOnboardingCompleted(platformContext))
         }
 
         LaunchedEffect(shareTimestamp) {
@@ -171,7 +172,8 @@ fun App(
                 QrGeneratorScreen(
                     platformContext = platformContext,
                     onBack = { appMode = AppMode.Scan },
-                    modifier = Modifier.padding(paddingValues)
+                    modifier = Modifier.padding(paddingValues),
+                    initialText = sharedText
                 )
             } else if (showOnboarding) {
                 OnboardingScreen(onFinish = {

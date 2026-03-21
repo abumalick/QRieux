@@ -123,6 +123,21 @@ actual fun connectToWifi(context: PlatformContext, ssid: String, password: Strin
     }
 }
 
+@OptIn(ExperimentalForeignApi::class)
+actual fun addContact(context: PlatformContext, vCardData: String) {
+    val nsData = vCardData.encodeToByteArray().toNSData()
+    val contacts = platform.Contacts.CNContactVCardSerialization.contactsWithData(nsData, error = null)
+    val contact = contacts?.firstOrNull() as? platform.Contacts.CNContact ?: return
+
+    val vc = platform.ContactsUI.CNContactViewController.viewControllerForUnknownContact(contact)
+    vc.contactStore = platform.Contacts.CNContactStore()
+    vc.allowsEditing = true
+    vc.allowsActions = true
+
+    val nav = platform.UIKit.UINavigationController(rootViewController = vc)
+    getRootViewController()?.presentViewController(nav, animated = true, completion = null)
+}
+
 actual fun openAppSettings(context: PlatformContext) {
     NSURL.URLWithString("app-settings:")?.let { nsUrl ->
         UIApplication.sharedApplication.openURL(nsUrl, emptyMap<Any?, Any>()) { _ -> }
