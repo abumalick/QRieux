@@ -72,7 +72,7 @@ private enum class AppMode {
 
 @OptIn(ExperimentalForeignApi::class)
 @Composable
-fun App(sharedImage: UIImage? = null) {
+fun App(sharedImage: UIImage? = null, sharedText: String? = null) {
     QRieuxTheme {
         val screenshotContent = NSProcessInfo.processInfo.environment["SCREENSHOT_CONTENT"] as? String
         if (screenshotContent != null) {
@@ -159,9 +159,9 @@ fun App(sharedImage: UIImage? = null) {
         var cameraPermissionGranted by remember { mutableStateOf(false) }
         var showRationale by remember { mutableStateOf(false) }
         val snackbarHostState = remember { SnackbarHostState() }
-        var appMode by remember { mutableStateOf(AppMode.Scan) }
+        var appMode by remember { mutableStateOf(if (sharedText != null) AppMode.Generate else AppMode.Scan) }
         var showOnboarding by remember {
-            mutableStateOf(sharedImage == null && !isOnboardingCompleted(platformContext))
+            mutableStateOf(sharedImage == null && sharedText == null && !isOnboardingCompleted(platformContext))
         }
 
         var showPhotoPicker by remember { mutableStateOf(false) }
@@ -191,7 +191,8 @@ fun App(sharedImage: UIImage? = null) {
             if (appMode == AppMode.Generate) {
                 QrGeneratorScreen(
                     platformContext = platformContext,
-                    onBack = { appMode = AppMode.Scan }
+                    onBack = { appMode = AppMode.Scan },
+                    initialText = sharedText
                 )
             } else if (showOnboarding) {
                 OnboardingScreen(onFinish = {

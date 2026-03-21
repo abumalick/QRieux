@@ -4,7 +4,7 @@ Funzionalità:
 • Scansione istantanea di codici QR e codici a barre
 • Crea codici QR — genera codici QR per siti web, email, numeri di telefono, Wi-Fi e testo
 • Scansiona dalla galleria — scegli qualsiasi immagine con un codice QR
-• Condividi immagini con l'app — scansiona codici QR condivisi da altre app
+• Condividi testo, URL o immagini con l'app — crea o scansiona codici QR all'istante
 • Azioni con un tocco: apri URL, chiama, invia email
 • Copia e condividi facilmente i contenuti scansionati
 • Supporto flash/torcia per la scansione in condizioni di scarsa luce

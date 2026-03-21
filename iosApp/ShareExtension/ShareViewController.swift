@@ -6,13 +6,12 @@ class ShareViewController: UIViewController {
     // Keep in sync with iOSApp
     private let appGroupID = "group.net.hilson.qrieux"
     private let sharedImageName = "shared-image.jpg"
-    private let appURLScheme = "qrieux://shared-image"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
         view.isOpaque = false
-        processSharedImage()
+        processSharedContent()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -31,11 +30,9 @@ class ShareViewController: UIViewController {
         view.window?.rootViewController?.view.backgroundColor = .clear
     }
 
-    private func processSharedImage() {
+    private func processSharedContent() {
         guard let item = extensionContext?.inputItems.first as? NSExtensionItem,
-              let provider = item.attachments?.first(where: {
-                  $0.hasItemConformingToTypeIdentifier(UTType.image.identifier)
-              }) else {
+              let attachments = item.attachments, !attachments.isEmpty else {
             showAlert(
                 title: NSLocalizedString("share_error", comment: ""),
                 message: NSLocalizedString("share_error_read", comment: "")
@@ -43,14 +40,37 @@ class ShareViewController: UIViewController {
             return
         }
 
-        provider.loadItem(forTypeIdentifier: UTType.image.identifier) { [weak self] data, _ in
-            DispatchQueue.main.async {
-                self?.handleLoadedItem(data)
+        // Try image first, then URL, then text
+        if let imageProvider = attachments.first(where: { $0.hasItemConformingToTypeIdentifier(UTType.image.identifier) }) {
+            imageProvider.loadItem(forTypeIdentifier: UTType.image.identifier) { [weak self] data, _ in
+                DispatchQueue.main.async { self?.handleLoadedImage(data) }
             }
+        } else if let urlProvider = attachments.first(where: { $0.hasItemConformingToTypeIdentifier(UTType.url.identifier) }) {
+            urlProvider.loadItem(forTypeIdentifier: UTType.url.identifier) { [weak self] data, _ in
+                DispatchQueue.main.async {
+                    if let url = data as? URL {
+                        self?.openAppWithText(url.absoluteString)
+                    } else {
+                        self?.showError()
+                    }
+                }
+            }
+        } else if let textProvider = attachments.first(where: { $0.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) }) {
+            textProvider.loadItem(forTypeIdentifier: UTType.plainText.identifier) { [weak self] data, _ in
+                DispatchQueue.main.async {
+                    if let text = data as? String {
+                        self?.openAppWithText(text)
+                    } else {
+                        self?.showError()
+                    }
+                }
+            }
+        } else {
+            showError()
         }
     }
 
-    private func handleLoadedItem(_ data: NSSecureCoding?) {
+    private func handleLoadedImage(_ data: NSSecureCoding?) {
         var image: UIImage?
         if let url = data as? URL {
             image = UIImage(contentsOfFile: url.path)
@@ -65,17 +85,14 @@ class ShareViewController: UIViewController {
               let containerURL = FileManager.default.containerURL(
                   forSecurityApplicationGroupIdentifier: appGroupID
               ) else {
-            showAlert(
-                title: NSLocalizedString("share_error", comment: ""),
-                message: NSLocalizedString("share_error_process", comment: "")
-            )
+            showError()
             return
         }
 
         let fileURL = containerURL.appendingPathComponent(sharedImageName)
         do {
             try jpegData.write(to: fileURL)
-            openContainingApp()
+            openApp(urlString: "qrieux://shared-image")
         } catch {
             showAlert(
                 title: NSLocalizedString("share_error", comment: ""),
@@ -84,8 +101,20 @@ class ShareViewController: UIViewController {
         }
     }
 
-    private func openContainingApp() {
-        guard let url = URL(string: appURLScheme) else {
+    private func openAppWithText(_ text: String) {
+        var components = URLComponents()
+        components.scheme = "qrieux"
+        components.host = "create"
+        components.queryItems = [URLQueryItem(name: "text", value: text)]
+        guard let urlString = components.string else {
+            showError()
+            return
+        }
+        openApp(urlString: urlString)
+    }
+
+    private func openApp(urlString: String) {
+        guard let url = URL(string: urlString) else {
             extensionContext?.completeRequest(returningItems: nil)
             return
         }
@@ -108,6 +137,13 @@ class ShareViewController: UIViewController {
         showAlert(
             title: NSLocalizedString("share_image_shared", comment: ""),
             message: NSLocalizedString("share_open_app", comment: "")
+        )
+    }
+
+    private func showError() {
+        showAlert(
+            title: NSLocalizedString("share_error", comment: ""),
+            message: NSLocalizedString("share_error_process", comment: "")
         )
     }
 

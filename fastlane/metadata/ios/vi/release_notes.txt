@@ -1,3 +1,4 @@
 • Mới: Tạo mã QR cho trang web, email, số điện thoại, Wi-Fi và văn bản
+• Chia sẻ văn bản hoặc URL vào QRieux để tạo mã QR ngay lập tức
 • Chia sẻ hình ảnh vào QRieux giờ sẽ mở ứng dụng trực tiếp
 • Cập nhật ảnh chụp màn hình

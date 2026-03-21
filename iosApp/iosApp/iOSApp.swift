@@ -9,6 +9,7 @@ struct iOSApp: App {
 
     @Environment(\.scenePhase) private var scenePhase
     @State private var sharedImage: UIImage?
+    @State private var sharedText: String?
 
     init() {
         UIView.appearance().backgroundColor = .clear
@@ -16,13 +17,26 @@ struct iOSApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView(sharedImage: $sharedImage)
+            ContentView(sharedImage: $sharedImage, sharedText: $sharedText)
                 .preferredColorScheme(.dark)
                 .onChange(of: scenePhase) { phase in
                     if phase == .active {
                         loadSharedImage()
                     }
                 }
+                .onOpenURL { url in
+                    handleURL(url)
+                }
+        }
+    }
+
+    private func handleURL(_ url: URL) {
+        if url.host == "shared-image" {
+            loadSharedImage()
+        } else if url.host == "create",
+                  let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+                  let text = components.queryItems?.first(where: { $0.name == "text" })?.value {
+            sharedText = text
         }
     }
 

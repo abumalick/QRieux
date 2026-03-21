@@ -4,7 +4,7 @@ Fitur:
 • Pemindaian kode QR dan barcode secara instan
 • Buat kode QR — buat kode QR untuk situs web, email, nomor telepon, Wi-Fi, dan teks
 • Pindai dari galeri — pilih gambar apa pun yang berisi kode QR
-• Bagikan gambar ke aplikasi — pindai kode QR yang dibagikan dari aplikasi lain
+• Bagikan teks, URL, atau gambar ke aplikasi — buat atau pindai kode QR secara instan
 • Aksi satu ketuk: buka URL, telepon, kirim email
 • Salin dan bagikan konten hasil pemindaian dengan mudah
 • Dukungan flash/senter untuk memindai di tempat gelap

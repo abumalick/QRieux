@@ -1,3 +1,4 @@
 • Baru: Buat kode QR untuk situs web, email, nomor telepon, Wi-Fi, dan teks
+• Bagikan teks atau URL ke QRieux untuk langsung membuat kode QR
 • Berbagi gambar ke QRieux kini langsung membuka aplikasi
 • Screenshot diperbarui

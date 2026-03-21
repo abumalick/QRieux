@@ -108,15 +108,30 @@ fun QrGeneratorScreen(
     platformContext: PlatformContext,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
-    screenshotPayload: String? = null
+    screenshotPayload: String? = null,
+    initialText: String? = null
 ) {
+    val initialContent = screenshotPayload ?: initialText
+    val isUrl = initialContent != null &&
+            (initialContent.startsWith("http://", ignoreCase = true) ||
+                    initialContent.startsWith("https://", ignoreCase = true))
+
     var selectedType by remember {
-        mutableStateOf(if (screenshotPayload != null) QrGeneratorType.Website else QrGeneratorType.Text)
+        mutableStateOf(
+            when {
+                screenshotPayload != null || isUrl -> QrGeneratorType.Website
+                initialText != null -> QrGeneratorType.Text
+                else -> QrGeneratorType.Text
+            }
+        )
     }
     var form by remember {
         mutableStateOf(
-            if (screenshotPayload != null) QrGeneratorFormData(website = screenshotPayload)
-            else QrGeneratorFormData()
+            when {
+                screenshotPayload != null || isUrl -> QrGeneratorFormData(website = initialContent!!)
+                initialText != null -> QrGeneratorFormData(text = initialText)
+                else -> QrGeneratorFormData()
+            }
         )
     }
     var generatedQr by remember { mutableStateOf<net.hilson.qrieux.GeneratedQrCode?>(null) }

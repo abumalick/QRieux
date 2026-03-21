@@ -156,4 +156,33 @@ class QrGeneratorTest {
         assertNull(result.payload)
         assertEquals(QrGeneratorValidationError.BlankText, result.error)
     }
+
+    @Test
+    fun `shared url produces valid website payload`() {
+        val sharedUrl = "https://example.com/page?q=hello&lang=en"
+        val result = buildQrPayload(QrGeneratorType.Website, QrGeneratorFormData(website = sharedUrl))
+
+        assertEquals(sharedUrl, result.payload)
+        assertNull(result.error)
+    }
+
+    @Test
+    fun `shared text with special chars produces valid payload`() {
+        val sharedText = "Hello & welcome! Check: https://example.com"
+        val result = buildQrPayload(QrGeneratorType.Text, QrGeneratorFormData(text = sharedText))
+
+        assertEquals(sharedText, result.payload)
+        assertNull(result.error)
+    }
+
+    @Test
+    fun `website normalizes http url from share`() {
+        val result = buildQrPayload(
+            QrGeneratorType.Website,
+            QrGeneratorFormData(website = "http://example.com")
+        )
+
+        assertEquals("http://example.com", result.payload)
+        assertNull(result.error)
+    }
 }

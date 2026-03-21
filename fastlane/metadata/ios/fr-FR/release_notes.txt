@@ -1,3 +1,4 @@
 • Nouveau : Créez des codes QR pour les sites web, e-mails, numéros de téléphone, Wi-Fi et texte
+• Partagez du texte ou des URLs vers QRieux pour créer un code QR instantanément
 • Partager une image vers QRieux ouvre maintenant l'app directement
 • Captures d'écran mises à jour
