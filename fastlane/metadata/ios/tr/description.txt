@@ -2,6 +2,7 @@ QRieux, herkes için tasarlanmış basit ve hızlı bir QR kod ve barkod tarayı
 
 Özellikler:
 • Anında QR kod ve barkod tarama
+• QR kod oluşturun — web siteleri, e-postalar, telefon numaraları, Wi-Fi ve metin için QR kod oluşturun
 • Galeriden tarayın — QR kod içeren herhangi bir resmi seçin
 • Uygulamaya resim paylaşın — diğer uygulamalardan paylaşılan QR kodları tarayın
 • Tek dokunuşla işlem: URL aç, ara, e-posta gönder

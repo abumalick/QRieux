@@ -6,6 +6,7 @@ class ShareViewController: UIViewController {
     // Keep in sync with iOSApp
     private let appGroupID = "group.net.hilson.qrieux"
     private let sharedImageName = "shared-image.jpg"
+    private let appURLScheme = "qrieux://shared-image"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,16 +75,40 @@ class ShareViewController: UIViewController {
         let fileURL = containerURL.appendingPathComponent(sharedImageName)
         do {
             try jpegData.write(to: fileURL)
-            showAlert(
-                title: NSLocalizedString("share_image_shared", comment: ""),
-                message: NSLocalizedString("share_open_app", comment: "")
-            )
+            openContainingApp()
         } catch {
             showAlert(
                 title: NSLocalizedString("share_error", comment: ""),
                 message: NSLocalizedString("share_error_save", comment: "")
             )
         }
+    }
+
+    private func openContainingApp() {
+        guard let url = URL(string: appURLScheme) else {
+            extensionContext?.completeRequest(returningItems: nil)
+            return
+        }
+
+        // Walk the UIResponder chain to find a responder that handles openURL:.
+        // Share extensions can't access UIApplication directly.
+        let selector = sel_registerName("openURL:")
+        var responder: UIResponder? = self
+        while let r = responder {
+            if r.responds(to: selector) {
+                r.perform(selector, with: url)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+                    self?.extensionContext?.completeRequest(returningItems: nil)
+                }
+                return
+            }
+            responder = r.next
+        }
+
+        showAlert(
+            title: NSLocalizedString("share_image_shared", comment: ""),
+            message: NSLocalizedString("share_open_app", comment: "")
+        )
     }
 
     private func showAlert(title: String, message: String) {

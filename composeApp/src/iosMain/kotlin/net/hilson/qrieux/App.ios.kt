@@ -9,11 +9,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.HelpOutline
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.FlashOn
 import androidx.compose.material.icons.filled.PhotoLibrary
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
@@ -82,7 +89,6 @@ fun App(sharedImage: UIImage? = null) {
                         )
                     }
                     if (screenshotContent == "__SCANNER__") {
-                        // Mirror CameraPreview: force LTR for button positions, restore original for AutoMirrored icons
                         val originalDirection = LocalLayoutDirection.current
                         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
                             Box(Modifier.fillMaxSize()) {
@@ -110,8 +116,32 @@ fun App(sharedImage: UIImage? = null) {
                                     modifier = Modifier.align(Alignment.BottomStart).padding(24.dp).size(64.dp),
                                     colors = btnColors
                                 ) { Icon(Icons.Default.PhotoLibrary, null, Modifier.size(32.dp)) }
+                                Button(
+                                    onClick = {},
+                                    modifier = Modifier
+                                        .align(Alignment.BottomEnd)
+                                        .padding(24.dp)
+                                        .height(net.hilson.qrieux.ui.theme.QRieuxUiConfig.controlHeight),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color.Black.copy(alpha = 0.6f),
+                                        contentColor = Color.White
+                                    )
+                                ) {
+                                    Icon(Icons.Default.Add, null, Modifier.size(28.dp))
+                                    Spacer(Modifier.width(10.dp))
+                                    Text(
+                                        text = org.jetbrains.compose.resources.stringResource(Res.string.action_create_qr),
+                                        fontSize = net.hilson.qrieux.ui.theme.QRieuxUiConfig.buttonSize
+                                    )
+                                }
                             }
                         }
+                    } else if (screenshotContent == "__GENERATOR__") {
+                        QrGeneratorScreen(
+                            platformContext = IosContext(),
+                            onBack = {},
+                            screenshotPayload = "https://www.wikipedia.org"
+                        )
                     } else {
                         ScanResultOverlay(
                             contentType = QrContentType.fromRawValue(screenshotContent),

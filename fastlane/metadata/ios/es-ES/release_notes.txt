@@ -1,1 +1,3 @@
-• Ahora disponible en 20 idiomas
+• Nuevo: Crea códigos QR para sitios web, correos, números de teléfono, Wi-Fi y texto
+• Compartir una imagen con QRieux ahora abre la app directamente
+• Capturas de pantalla actualizadas

@@ -1,1 +1,3 @@
-• Artık 20 dilde kullanılabilir
+• Yeni: Web siteleri, e-postalar, telefon numaraları, Wi-Fi ve metin için QR kod oluşturun
+• QRieux'e resim paylaşmak artık uygulamayı doğrudan açıyor
+• Güncellenmiş ekran görüntüleri

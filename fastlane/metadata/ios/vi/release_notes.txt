@@ -1,1 +1,3 @@
-• Hiện có sẵn bằng 20 ngôn ngữ
+• Mới: Tạo mã QR cho trang web, email, số điện thoại, Wi-Fi và văn bản
+• Chia sẻ hình ảnh vào QRieux giờ sẽ mở ứng dụng trực tiếp
+• Cập nhật ảnh chụp màn hình

@@ -53,6 +53,7 @@ SCREENSHOTS=(
   "url|2_url_result|https://www.wikipedia.org"
   "wifi|3_wifi_result|__WIFI__"
   "phone|4_phone_result|__PHONE__"
+  "generator|5_create_qr|__GENERATOR__"
 )
 
 # Locale configs: lang|locale|dir

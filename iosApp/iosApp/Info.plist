@@ -36,9 +36,9 @@
     <key>CFBundlePackageType</key>
     <string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.5.0</string>
+    <string>1.6.0</string>
     <key>CFBundleVersion</key>
-    <string>15</string>
+    <string>16</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>CADisableMinimumFrameDurationOnPhone</key>
@@ -54,6 +54,15 @@
         <key>UIApplicationSupportsMultipleScenes</key>
         <false/>
     </dict>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>qrieux</string>
+            </array>
+        </dict>
+    </array>
     <key>UILaunchScreen</key>
     <dict>
         <key>UIColorName</key>

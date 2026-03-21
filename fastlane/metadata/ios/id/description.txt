@@ -2,6 +2,7 @@ QRieux adalah pemindai kode QR dan barcode yang sederhana dan cepat, dirancang u
 
 Fitur:
 • Pemindaian kode QR dan barcode secara instan
+• Buat kode QR — buat kode QR untuk situs web, email, nomor telepon, Wi-Fi, dan teks
 • Pindai dari galeri — pilih gambar apa pun yang berisi kode QR
 • Bagikan gambar ke aplikasi — pindai kode QR yang dibagikan dari aplikasi lain
 • Aksi satu ketuk: buka URL, telepon, kirim email

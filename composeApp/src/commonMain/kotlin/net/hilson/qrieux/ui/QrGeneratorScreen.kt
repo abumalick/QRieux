@@ -107,10 +107,18 @@ import qr_scanner.composeapp.generated.resources.generator_wifi_security_wpa
 fun QrGeneratorScreen(
     platformContext: PlatformContext,
     onBack: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    screenshotPayload: String? = null
 ) {
-    var selectedType by remember { mutableStateOf(QrGeneratorType.Text) }
-    var form by remember { mutableStateOf(QrGeneratorFormData()) }
+    var selectedType by remember {
+        mutableStateOf(if (screenshotPayload != null) QrGeneratorType.Website else QrGeneratorType.Text)
+    }
+    var form by remember {
+        mutableStateOf(
+            if (screenshotPayload != null) QrGeneratorFormData(website = screenshotPayload)
+            else QrGeneratorFormData()
+        )
+    }
     var generatedQr by remember { mutableStateOf<net.hilson.qrieux.GeneratedQrCode?>(null) }
     var isGenerating by remember { mutableStateOf(false) }
 

@@ -19,7 +19,8 @@ just android-debug              # Build debug APK
 just android-release            # Build release bundle (requires key.properties)
 just ios-framework-debug        # Build iOS debug framework for simulator
 just ios-framework-release      # Build iOS release framework
-just ios-build                  # Build iOS app
+just ios-build                  # Build iOS app (App Store)
+just ios-run                    # Build + install on connected iPhone
 just ios-beta                   # Build + upload to TestFlight
 just gen-android-screenshots    # Generate Android screenshots (--skip-build, --locale=xx)
 just gen-ios-screenshots        # Generate iOS screenshots (--skip-build, --locale=xx)
