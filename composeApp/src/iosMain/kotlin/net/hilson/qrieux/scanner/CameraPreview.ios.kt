@@ -2,9 +2,13 @@ package net.hilson.qrieux.scanner
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -22,8 +26,11 @@ import qr_scanner.composeapp.generated.resources.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FlashOn
 import androidx.compose.material.icons.filled.FlashOff
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.PhotoLibrary
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
@@ -38,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.readValue
 import net.hilson.qrieux.IosContext
+import net.hilson.qrieux.ui.theme.QRieuxUiConfig
 import net.hilson.qrieux.vibrate
 import platform.AVFoundation.*
 import platform.Foundation.NSNotificationCenter
@@ -57,6 +65,7 @@ fun CameraPreview(
     onQrCodeDetected: (String) -> Unit,
     isScanning: Boolean,
     onGalleryClick: () -> Unit,
+    onCreateQrClick: () -> Unit,
     onHelpClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -164,6 +173,29 @@ fun CameraPreview(
                     imageVector = Icons.Default.PhotoLibrary,
                     contentDescription = stringResource(Res.string.gallery_pick_photo),
                     modifier = Modifier.size(32.dp)
+                )
+            }
+
+            Button(
+                onClick = onCreateQrClick,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(24.dp)
+                    .height(QRieuxUiConfig.controlHeight),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Black.copy(alpha = 0.6f),
+                    contentColor = Color.White
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = null,
+                    modifier = Modifier.size(28.dp)
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(
+                    text = stringResource(Res.string.action_create_qr),
+                    fontSize = QRieuxUiConfig.buttonSize
                 )
             }
         }
@@ -310,22 +342,47 @@ internal fun ScanOverlay() {
             )
         }
 
-        Text(
-            text = stringResource(Res.string.scan_instruction),
+        Column(
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(top = 380.dp, start = 32.dp, end = 32.dp),
-            style = TextStyle(
-                color = Color.White,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                shadow = Shadow(
-                    color = Color.Black,
-                    offset = Offset(2f, 2f),
-                    blurRadius = 4f
+                .padding(top = 420.dp, start = 32.dp, end = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            val textShadow = Shadow(
+                color = Color.Black,
+                offset = Offset(2f, 2f),
+                blurRadius = 4f
+            )
+            Text(
+                text = stringResource(Res.string.scan_instruction),
+                style = TextStyle(
+                    color = Color.White,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
+                    shadow = textShadow
                 )
             )
-        )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = stringResource(Res.string.scan_tip_formats),
+                style = TextStyle(
+                    color = Color.White.copy(alpha = 0.7f),
+                    fontSize = 16.sp,
+                    textAlign = TextAlign.Center,
+                    shadow = textShadow
+                )
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = stringResource(Res.string.scan_tip_gallery),
+                style = TextStyle(
+                    color = Color.White.copy(alpha = 0.7f),
+                    fontSize = 16.sp,
+                    textAlign = TextAlign.Center,
+                    shadow = textShadow
+                )
+            )
+        }
     }
 }

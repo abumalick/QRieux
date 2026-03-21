@@ -21,9 +21,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import net.hilson.qrieux.R
+import net.hilson.qrieux.ui.theme.QRieuxUiConfig
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import qr_scanner.composeapp.generated.resources.Res
@@ -81,7 +81,7 @@ fun OnboardingScreen(onFinish: () -> Unit) {
                     Text(
                         text = stringResource(steps[page].titleRes),
                         color = Color.White,
-                        fontSize = 28.sp,
+                        fontSize = QRieuxUiConfig.titleSize,
                         textAlign = TextAlign.Center
                     )
 
@@ -90,7 +90,7 @@ fun OnboardingScreen(onFinish: () -> Unit) {
                     Text(
                         text = stringResource(steps[page].descRes),
                         color = Color.White.copy(alpha = 0.8f),
-                        fontSize = 20.sp,
+                        fontSize = QRieuxUiConfig.bodySize,
                         textAlign = TextAlign.Center
                     )
                 }
@@ -125,8 +125,8 @@ fun OnboardingScreen(onFinish: () -> Unit) {
                 },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(72.dp),
-                shape = RoundedCornerShape(16.dp),
+                    .height(QRieuxUiConfig.controlHeight),
+                shape = RoundedCornerShape(QRieuxUiConfig.controlCornerRadius),
                 colors = ButtonDefaults.buttonColors(
                     containerColor = MaterialTheme.colorScheme.primary
                 )
@@ -136,7 +136,7 @@ fun OnboardingScreen(onFinish: () -> Unit) {
                         if (isLastStep) R.string.onboarding_get_started
                         else R.string.onboarding_next
                     ),
-                    fontSize = 22.sp
+                    fontSize = QRieuxUiConfig.buttonSize
                 )
             }
 
@@ -146,7 +146,7 @@ fun OnboardingScreen(onFinish: () -> Unit) {
                 Text(
                     text = stringResource(R.string.onboarding_skip),
                     color = Color.White.copy(alpha = 0.6f),
-                    fontSize = 18.sp
+                    fontSize = QRieuxUiConfig.supportingSize
                 )
             }
         }

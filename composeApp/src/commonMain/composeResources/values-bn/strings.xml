@@ -2,7 +2,7 @@
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">ক্যামেরা অনুমতি প্রয়োজন</string>
     <string name="permission_camera_required_desc">QR কোড স্ক্যান করতে এই অ্যাপের ক্যামেরা অ্যাক্সেস প্রয়োজন।</string>
-    <string name="permission_allow_camera">ক্যামেরা অনুমতি দিন</string>
+    <string name="permission_continue">চালিয়ে যান</string>
     <string name="permission_open_settings">সেটিংস খুলুন</string>
 
     <!-- Scan Result -->
@@ -27,6 +27,8 @@
     <string name="flash_turn_off">ফ্ল্যাশ বন্ধ করুন</string>
     <string name="flash_turn_on">ফ্ল্যাশ চালু করুন</string>
     <string name="scan_instruction">QR কোড ফ্রেমের ভিতরে রাখুন</string>
+    <string name="scan_tip_formats">QR কোড, বারকোড এবং আরও অনেক কিছু সমর্থন করে</string>
+    <string name="scan_tip_gallery">গ্যালারি থেকে স্ক্যান করতে ছবির আইকনে ট্যাপ করুন</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">গ্যালারি থেকে ছবি বাছুন</string>

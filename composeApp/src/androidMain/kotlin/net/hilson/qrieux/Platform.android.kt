@@ -4,6 +4,8 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.net.wifi.WifiNetworkSuggestion
 import android.os.Build
@@ -12,6 +14,14 @@ import android.os.Vibrator
 import android.os.VibratorManager
 import android.provider.Settings
 import android.widget.Toast
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.core.content.FileProvider
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.EncodeHintType
+import com.google.zxing.MultiFormatWriter
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
+import java.io.ByteArrayOutputStream
+import java.io.File
 
 class AndroidContext(val context: Context) : PlatformContext
 
@@ -64,6 +74,24 @@ actual fun shareText(context: PlatformContext, text: String, title: String) {
     } catch (_: Exception) {}
 }
 
+actual fun shareImage(context: PlatformContext, pngData: ByteArray, title: String) {
+    val ctx = (context as AndroidContext).context
+    try {
+        val shareDir = File(ctx.cacheDir, "shared_qr").apply { mkdirs() }
+        val shareFile = File(shareDir, "qr-${System.currentTimeMillis()}.png")
+        shareFile.outputStream().use { it.write(pngData) }
+
+        val uri = FileProvider.getUriForFile(ctx, "${ctx.packageName}.fileprovider", shareFile)
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "image/png"
+            putExtra(Intent.EXTRA_STREAM, uri)
+            clipData = ClipData.newUri(ctx.contentResolver, title, uri)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        ctx.startActivity(Intent.createChooser(intent, title))
+    } catch (_: Exception) {}
+}
+
 actual fun copyToClipboard(context: PlatformContext, text: String, label: String) {
     val ctx = (context as AndroidContext).context
     val clipboard = ctx.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -74,6 +102,8 @@ actual fun showToast(context: PlatformContext, message: String) {
     val ctx = (context as AndroidContext).context
     Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show()
 }
+
+actual fun dismissPlatformInput(context: PlatformContext) = Unit
 
 actual fun connectToWifi(context: PlatformContext, ssid: String, password: String, authType: String, hidden: Boolean, onResult: (Boolean) -> Unit) {
     val ctx = (context as AndroidContext).context
@@ -135,4 +165,35 @@ actual fun setOnboardingCompleted(context: PlatformContext) {
     val ctx = (context as AndroidContext).context
     ctx.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         .edit().putBoolean("onboarding_completed", true).apply()
+}
+
+actual fun generateQrCode(content: String, size: Int): GeneratedQrCode? {
+    return try {
+        val hints = mapOf(
+            EncodeHintType.ERROR_CORRECTION to ErrorCorrectionLevel.M,
+            EncodeHintType.MARGIN to 2
+        )
+        val matrix = MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, size, size, hints)
+        val pixels = IntArray(size * size)
+        for (y in 0 until size) {
+            for (x in 0 until size) {
+                pixels[y * size + x] = if (matrix[x, y]) Color.BLACK else Color.WHITE
+            }
+        }
+
+        val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        bitmap.setPixels(pixels, 0, size, 0, 0, size, size)
+
+        val pngBytes = ByteArrayOutputStream().use { output ->
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
+            output.toByteArray()
+        }
+
+        GeneratedQrCode(
+            image = bitmap.asImageBitmap(),
+            pngData = pngBytes
+        )
+    } catch (_: Exception) {
+        null
+    }
 }

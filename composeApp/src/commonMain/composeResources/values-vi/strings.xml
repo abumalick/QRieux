@@ -2,7 +2,7 @@
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">Cần quyền truy cập camera</string>
     <string name="permission_camera_required_desc">Ứng dụng cần truy cập camera để quét mã QR.</string>
-    <string name="permission_allow_camera">Cho phép camera</string>
+    <string name="permission_continue">Tiếp tục</string>
     <string name="permission_open_settings">Mở cài đặt</string>
 
     <!-- Scan Result -->
@@ -27,6 +27,8 @@
     <string name="flash_turn_off">Tắt đèn flash</string>
     <string name="flash_turn_on">Bật đèn flash</string>
     <string name="scan_instruction">Đặt mã QR vào trong khung</string>
+    <string name="scan_tip_formats">Hỗ trợ mã QR, mã vạch và nhiều loại khác</string>
+    <string name="scan_tip_gallery">Nhấn biểu tượng ảnh để quét từ thư viện</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">Chọn ảnh từ thư viện</string>

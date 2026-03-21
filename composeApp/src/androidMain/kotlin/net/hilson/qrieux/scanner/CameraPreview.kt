@@ -9,9 +9,14 @@ import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
@@ -46,13 +51,19 @@ import net.hilson.qrieux.R
 import net.hilson.qrieux.vibrate
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.HelpOutline
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.PhotoLibrary
+import org.jetbrains.compose.resources.stringResource as sharedStringResource
+import net.hilson.qrieux.ui.theme.QRieuxUiConfig
+import qr_scanner.composeapp.generated.resources.Res
+import qr_scanner.composeapp.generated.resources.action_create_qr
 
 @Composable
 fun CameraPreview(
     onQrCodeDetected: (String) -> Unit,
     isScanning: Boolean,
     onGalleryClick: () -> Unit,
+    onCreateQrClick: () -> Unit,
     onHelpClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -200,6 +211,29 @@ fun CameraPreview(
                     modifier = Modifier.size(32.dp)
                 )
             }
+
+            Button(
+                onClick = onCreateQrClick,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(24.dp)
+                    .height(QRieuxUiConfig.controlHeight),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Black.copy(alpha = 0.6f),
+                    contentColor = Color.White
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = null,
+                    modifier = Modifier.size(28.dp)
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(
+                    text = sharedStringResource(Res.string.action_create_qr),
+                    fontSize = QRieuxUiConfig.buttonSize
+                )
+            }
         }
     }
 }
@@ -251,4 +285,3 @@ internal fun ScanOverlay() {
         )
     }
 }
-

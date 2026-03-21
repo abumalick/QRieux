@@ -2,7 +2,7 @@
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">Izin Kamera Diperlukan</string>
     <string name="permission_camera_required_desc">Aplikasi ini memerlukan akses kamera untuk memindai kode QR.</string>
-    <string name="permission_allow_camera">Izinkan Kamera</string>
+    <string name="permission_continue">Lanjutkan</string>
     <string name="permission_open_settings">Buka Pengaturan</string>
 
     <!-- Scan Result -->
@@ -27,6 +27,8 @@
     <string name="flash_turn_off">Matikan flash</string>
     <string name="flash_turn_on">Nyalakan flash</string>
     <string name="scan_instruction">Tempatkan kode QR di dalam bingkai</string>
+    <string name="scan_tip_formats">Mendukung kode QR, barcode, dan lainnya</string>
+    <string name="scan_tip_gallery">Ketuk ikon foto untuk memindai dari galeri</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">Pilih foto dari galeri</string>

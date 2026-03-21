@@ -39,6 +39,7 @@ kotlin {
             implementation(libs.androidx.camera.view)
             implementation(libs.mlkit.barcode.scanning)
             implementation(libs.accompanist.permissions)
+            implementation(libs.zxing.core)
         }
         commonMain.dependencies {
             implementation(libs.compose.runtime)
@@ -116,4 +117,3 @@ android {
 dependencies {
     debugImplementation(libs.compose.uiTooling)
 }
-

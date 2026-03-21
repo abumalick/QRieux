@@ -2,7 +2,7 @@
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">ต้องการสิทธิ์กล้อง</string>
     <string name="permission_camera_required_desc">แอปนี้ต้องเข้าถึงกล้องเพื่อสแกนคิวอาร์โค้ด</string>
-    <string name="permission_allow_camera">อนุญาตกล้อง</string>
+    <string name="permission_continue">ดำเนินการต่อ</string>
     <string name="permission_open_settings">เปิดการตั้งค่า</string>
 
     <!-- Scan Result -->
@@ -27,6 +27,8 @@
     <string name="flash_turn_off">ปิดแฟลช</string>
     <string name="flash_turn_on">เปิดแฟลช</string>
     <string name="scan_instruction">วางคิวอาร์โค้ดไว้ในกรอบ</string>
+    <string name="scan_tip_formats">รองรับคิวอาร์โค้ด บาร์โค้ด และอื่นๆ</string>
+    <string name="scan_tip_gallery">แตะไอคอนรูปภาพเพื่อสแกนจากแกลเลอรี</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">เลือกรูปจากแกลเลอรี</string>

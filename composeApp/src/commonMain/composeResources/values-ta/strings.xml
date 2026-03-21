@@ -2,7 +2,7 @@
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">கேமரா அனுமதி தேவை</string>
     <string name="permission_camera_required_desc">QR குறியீடுகளை ஸ்கேன் செய்ய இந்த பயன்பாட்டிற்கு கேமரா அணுகல் தேவை.</string>
-    <string name="permission_allow_camera">கேமராவை அனுமதி</string>
+    <string name="permission_continue">தொடரவும்</string>
     <string name="permission_open_settings">அமைப்புகளைத் திற</string>
 
     <!-- Scan Result -->
@@ -27,6 +27,8 @@
     <string name="flash_turn_off">ஃபிளாஷ் அணை</string>
     <string name="flash_turn_on">ஃபிளாஷ் இயக்கு</string>
     <string name="scan_instruction">QR குறியீட்டை சட்டத்தினுள் வைக்கவும்</string>
+    <string name="scan_tip_formats">QR குறியீடுகள், பார்கோடுகள் மற்றும் பலவற்றை ஆதரிக்கிறது</string>
+    <string name="scan_tip_gallery">கேலரியிலிருந்து ஸ்கேன் செய்ய புகைப்பட ஐகானைத் தட்டவும்</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">கேலரியிலிருந்து புகைப்படம் தேர்வு செய்</string>

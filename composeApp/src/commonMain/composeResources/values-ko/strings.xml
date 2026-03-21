@@ -2,7 +2,7 @@
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">카메라 권한 필요</string>
     <string name="permission_camera_required_desc">QR 코드를 스캔하려면 카메라 접근 권한이 필요합니다.</string>
-    <string name="permission_allow_camera">카메라 허용</string>
+    <string name="permission_continue">계속</string>
     <string name="permission_open_settings">설정 열기</string>
 
     <!-- Scan Result -->
@@ -27,6 +27,8 @@
     <string name="flash_turn_off">플래시 끄기</string>
     <string name="flash_turn_on">플래시 켜기</string>
     <string name="scan_instruction">QR 코드를 프레임 안에 맞추세요</string>
+    <string name="scan_tip_formats">QR 코드, 바코드 등을 지원합니다</string>
+    <string name="scan_tip_gallery">사진 아이콘을 눌러 갤러리에서 스캔</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">갤러리에서 사진 선택</string>

@@ -40,6 +40,7 @@ import net.hilson.qrieux.scanner.ScanOverlay
 import net.hilson.qrieux.scanner.scanBarcodeFromImage
 import net.hilson.qrieux.ui.OnboardingScreen
 import net.hilson.qrieux.ui.PermissionScreen
+import net.hilson.qrieux.ui.QrGeneratorScreen
 import net.hilson.qrieux.ui.ScanResultOverlay
 import net.hilson.qrieux.ui.theme.QRieuxTheme
 import net.hilson.qrieux.util.QrContentType
@@ -56,6 +57,11 @@ import platform.UIKit.UIImage
 import platform.UIKit.UIImagePNGRepresentation
 import platform.darwin.dispatch_async
 import platform.darwin.dispatch_get_main_queue
+
+private enum class AppMode {
+    Scan,
+    Generate
+}
 
 @OptIn(ExperimentalForeignApi::class)
 @Composable
@@ -123,6 +129,7 @@ fun App(sharedImage: UIImage? = null) {
         var cameraPermissionGranted by remember { mutableStateOf(false) }
         var showRationale by remember { mutableStateOf(false) }
         val snackbarHostState = remember { SnackbarHostState() }
+        var appMode by remember { mutableStateOf(AppMode.Scan) }
         var showOnboarding by remember {
             mutableStateOf(sharedImage == null && !isOnboardingCompleted(platformContext))
         }
@@ -151,7 +158,12 @@ fun App(sharedImage: UIImage? = null) {
             snackbarHost = { SnackbarHost(snackbarHostState) },
             containerColor = Color.Black
         ) { _ ->
-            if (showOnboarding) {
+            if (appMode == AppMode.Generate) {
+                QrGeneratorScreen(
+                    platformContext = platformContext,
+                    onBack = { appMode = AppMode.Scan }
+                )
+            } else if (showOnboarding) {
                 OnboardingScreen(onFinish = {
                     setOnboardingCompleted(platformContext)
                     showOnboarding = false
@@ -164,6 +176,7 @@ fun App(sharedImage: UIImage? = null) {
                         },
                         isScanning = scannedContent == null,
                         onGalleryClick = { showPhotoPicker = true },
+                        onCreateQrClick = { appMode = AppMode.Generate },
                         onHelpClick = { showOnboarding = true },
                         modifier = Modifier.fillMaxSize()
                     )
@@ -181,6 +194,7 @@ fun App(sharedImage: UIImage? = null) {
             } else {
                 PermissionScreen(
                     showRationale = showRationale,
+                    onCreateQr = { appMode = AppMode.Generate },
                     onRequestPermission = {
                         AVCaptureDevice.requestAccessForMediaType(AVMediaTypeVideo) { granted ->
                             dispatch_async(dispatch_get_main_queue()) {

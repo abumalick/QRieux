@@ -2,7 +2,7 @@
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">کیمرے کی اجازت درکار ہے</string>
     <string name="permission_camera_required_desc">QR کوڈز اسکین کرنے کے لیے اس ایپ کو کیمرے تک رسائی چاہیے۔</string>
-    <string name="permission_allow_camera">کیمرے کی اجازت دیں</string>
+    <string name="permission_continue">جاری رکھیں</string>
     <string name="permission_open_settings">سیٹنگز کھولیں</string>
 
     <!-- Scan Result -->
@@ -27,6 +27,8 @@
     <string name="flash_turn_off">فلیش بند کریں</string>
     <string name="flash_turn_on">فلیش چالو کریں</string>
     <string name="scan_instruction">QR کوڈ کو فریم میں رکھیں</string>
+    <string name="scan_tip_formats">QR کوڈز، بار کوڈز اور مزید کو سپورٹ کرتا ہے</string>
+    <string name="scan_tip_gallery">گیلری سے اسکین کرنے کے لیے تصویر کا آئیکن دبائیں</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">گیلری سے تصویر چنیں</string>

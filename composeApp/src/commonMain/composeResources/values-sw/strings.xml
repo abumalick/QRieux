@@ -2,7 +2,7 @@
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">Ruhusa ya Kamera Inahitajika</string>
     <string name="permission_camera_required_desc">Programu hii inahitaji ufikiaji wa kamera ili kuchanganua misimbo ya QR.</string>
-    <string name="permission_allow_camera">Ruhusu Kamera</string>
+    <string name="permission_continue">Endelea</string>
     <string name="permission_open_settings">Fungua Mipangilio</string>
 
     <!-- Scan Result -->
@@ -27,6 +27,8 @@
     <string name="flash_turn_off">Zima tochi</string>
     <string name="flash_turn_on">Washa tochi</string>
     <string name="scan_instruction">Weka msimbo wa QR ndani ya fremu</string>
+    <string name="scan_tip_formats">Inasoma misimbo ya QR, barcode na zaidi</string>
+    <string name="scan_tip_gallery">Gonga ikoni ya picha kuchanganua kutoka galeria</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">Chagua picha kutoka galeria</string>

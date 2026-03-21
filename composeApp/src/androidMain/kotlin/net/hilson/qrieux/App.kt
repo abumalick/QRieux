@@ -46,10 +46,16 @@ import net.hilson.qrieux.scanner.ScanOverlay
 import net.hilson.qrieux.scanner.scanBarcodeFromUri
 import net.hilson.qrieux.ui.OnboardingScreen
 import net.hilson.qrieux.ui.PermissionScreen
+import net.hilson.qrieux.ui.QrGeneratorScreen
 import net.hilson.qrieux.ui.ScanResultOverlay
 import net.hilson.qrieux.ui.theme.QRieuxTheme
 import net.hilson.qrieux.util.QrContentType
 import net.hilson.qrieux.vibrate
+
+private enum class AppMode {
+    Scan,
+    Generate
+}
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -124,6 +130,7 @@ fun App(
         var scannedContent by remember { mutableStateOf<QrContentType?>(null) }
         val snackbarHostState = remember { SnackbarHostState() }
         val noQrFoundMessage = stringResource(R.string.gallery_no_qr_found)
+        var appMode by remember { mutableStateOf(AppMode.Scan) }
         var showOnboarding by remember {
             mutableStateOf(sharedImageUri == null && !isOnboardingCompleted(platformContext))
         }
@@ -160,7 +167,13 @@ fun App(
         Scaffold(
             snackbarHost = { SnackbarHost(snackbarHostState) }
         ) { paddingValues ->
-            if (showOnboarding) {
+            if (appMode == AppMode.Generate) {
+                QrGeneratorScreen(
+                    platformContext = platformContext,
+                    onBack = { appMode = AppMode.Scan },
+                    modifier = Modifier.padding(paddingValues)
+                )
+            } else if (showOnboarding) {
                 OnboardingScreen(onFinish = {
                     setOnboardingCompleted(platformContext)
                     showOnboarding = false
@@ -175,6 +188,7 @@ fun App(
                         onGalleryClick = {
                             pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
                         },
+                        onCreateQrClick = { appMode = AppMode.Generate },
                         onHelpClick = { showOnboarding = true },
                         modifier = Modifier.fillMaxSize()
                     )
@@ -189,7 +203,8 @@ fun App(
             } else {
                 PermissionScreen(
                     showRationale = cameraPermissionState.status.shouldShowRationale,
-                    onRequestPermission = { cameraPermissionState.launchPermissionRequest() }
+                    onRequestPermission = { cameraPermissionState.launchPermissionRequest() },
+                    onCreateQr = { appMode = AppMode.Generate }
                 )
             }
         }

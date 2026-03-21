@@ -2,7 +2,7 @@
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">Kamera İzni Gerekli</string>
     <string name="permission_camera_required_desc">Bu uygulama QR kodları taramak için kamera erişimine ihtiyaç duyar.</string>
-    <string name="permission_allow_camera">Kameraya İzin Ver</string>
+    <string name="permission_continue">Devam</string>
     <string name="permission_open_settings">Ayarları Aç</string>
 
     <!-- Scan Result -->
@@ -27,6 +27,8 @@
     <string name="flash_turn_off">Flaşı kapat</string>
     <string name="flash_turn_on">Flaşı aç</string>
     <string name="scan_instruction">QR kodu çerçevenin içine yerleştirin</string>
+    <string name="scan_tip_formats">QR kodları, barkodları ve daha fazlasını destekler</string>
+    <string name="scan_tip_gallery">Galeriden taramak için fotoğraf simgesine dokunun</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">Galeriden fotoğraf seç</string>

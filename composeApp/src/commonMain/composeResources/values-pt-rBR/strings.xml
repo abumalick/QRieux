@@ -2,7 +2,7 @@
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">Permissão de câmera necessária</string>
     <string name="permission_camera_required_desc">Este aplicativo precisa de acesso à câmera para escanear códigos QR.</string>
-    <string name="permission_allow_camera">Permitir câmera</string>
+    <string name="permission_continue">Continuar</string>
     <string name="permission_open_settings">Abrir configurações</string>
 
     <!-- Scan Result -->
@@ -27,6 +27,8 @@
     <string name="flash_turn_off">Desligar flash</string>
     <string name="flash_turn_on">Ligar flash</string>
     <string name="scan_instruction">Posicione o código QR dentro da moldura</string>
+    <string name="scan_tip_formats">Compatível com códigos QR, códigos de barras e mais</string>
+    <string name="scan_tip_gallery">Toque no ícone de foto para escanear da galeria</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">Escolher foto da galeria</string>

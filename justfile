@@ -18,9 +18,26 @@ ios-framework-debug:
 ios-framework-release:
     ./gradlew :composeApp:linkReleaseFrameworkIosArm64
 
-# Build iOS app
+# Build iOS app (App Store)
 ios-build:
     bundle exec fastlane ios build
+
+# Build + install on connected iPhone
+ios-run:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "Building for iOS device..."
+    xcodebuild -scheme iosApp -project iosApp/iosApp.xcodeproj \
+        -destination 'generic/platform=iOS' -allowProvisioningUpdates \
+        -configuration Debug build 2>&1 | tail -3
+    APP_PATH=$(xcodebuild -scheme iosApp -project iosApp/iosApp.xcodeproj \
+        -destination 'generic/platform=iOS' -configuration Debug \
+        -showBuildSettings 2>/dev/null \
+        | grep -m1 "BUILT_PRODUCTS_DIR" | awk '{print $3}')
+    DCTL_ID=$(xcrun devicectl list devices 2>&1 | grep iPhone | awk '{print $3}')
+    if [ -z "$DCTL_ID" ]; then echo "No iPhone found"; exit 1; fi
+    echo "Installing on iPhone..."
+    xcrun devicectl device install app --device "$DCTL_ID" "$APP_PATH/iosApp.app"
 
 # Build + upload to TestFlight
 ios-beta:

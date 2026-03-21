@@ -2,7 +2,7 @@
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">Kameraberechtigung erforderlich</string>
     <string name="permission_camera_required_desc">Diese App benötigt Kamerazugriff zum Scannen von QR-Codes.</string>
-    <string name="permission_allow_camera">Kamera erlauben</string>
+    <string name="permission_continue">Weiter</string>
     <string name="permission_open_settings">Einstellungen öffnen</string>
 
     <!-- Scan Result -->
@@ -27,6 +27,8 @@
     <string name="flash_turn_off">Blitz ausschalten</string>
     <string name="flash_turn_on">Blitz einschalten</string>
     <string name="scan_instruction">QR-Code im Rahmen platzieren</string>
+    <string name="scan_tip_formats">Unterstützt QR-Codes, Barcodes und mehr</string>
+    <string name="scan_tip_gallery">Tippen Sie auf das Foto-Symbol, um aus der Galerie zu scannen</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">Foto aus der Galerie wählen</string>

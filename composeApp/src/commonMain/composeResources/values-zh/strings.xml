@@ -2,7 +2,7 @@
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">需要相机权限</string>
     <string name="permission_camera_required_desc">此应用需要使用相机来扫描二维码。</string>
-    <string name="permission_allow_camera">允许使用相机</string>
+    <string name="permission_continue">继续</string>
     <string name="permission_open_settings">打开设置</string>
 
     <!-- Scan Result -->
@@ -27,6 +27,8 @@
     <string name="flash_turn_off">关闭闪光灯</string>
     <string name="flash_turn_on">打开闪光灯</string>
     <string name="scan_instruction">将二维码放在框内</string>
+    <string name="scan_tip_formats">支持二维码、条形码等多种格式</string>
+    <string name="scan_tip_gallery">点击照片图标从相册扫描</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">从相册选择照片</string>

@@ -2,7 +2,7 @@
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">مطلوب إذن الكاميرا</string>
     <string name="permission_camera_required_desc">يحتاج هذا التطبيق إلى الوصول إلى الكاميرا لمسح رموز QR.</string>
-    <string name="permission_allow_camera">السماح بالكاميرا</string>
+    <string name="permission_continue">متابعة</string>
     <string name="permission_open_settings">فتح الإعدادات</string>
 
     <!-- Scan Result -->
@@ -27,6 +27,8 @@
     <string name="flash_turn_off">إيقاف الفلاش</string>
     <string name="flash_turn_on">تشغيل الفلاش</string>
     <string name="scan_instruction">ضع رمز QR داخل الإطار</string>
+    <string name="scan_tip_formats">يدعم رموز QR والباركود والمزيد</string>
+    <string name="scan_tip_gallery">اضغط على أيقونة الصورة للمسح من المعرض</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">اختيار صورة من المعرض</string>

@@ -24,7 +24,8 @@ import net.hilson.qrieux.openAppSettings
 @Composable
 fun PermissionScreen(
     showRationale: Boolean,
-    onRequestPermission: () -> Unit
+    onRequestPermission: () -> Unit,
+    onCreateQr: () -> Unit
 ) {
     val platformContext = IosContext()
 
@@ -67,15 +68,35 @@ fun PermissionScreen(
                 )
             ) {
                 Text(
-                    text = stringResource(Res.string.permission_allow_camera),
+                    text = stringResource(Res.string.permission_continue),
                     fontSize = 22.sp
                 )
+            }
+
+            if (showRationale) {
+                Spacer(modifier = Modifier.height(16.dp))
+
+                OutlinedButton(
+                    onClick = { openAppSettings(platformContext) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(72.dp),
+                    shape = RoundedCornerShape(16.dp),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = Color.White
+                    )
+                ) {
+                    Text(
+                        text = stringResource(Res.string.permission_open_settings),
+                        fontSize = 22.sp
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
             OutlinedButton(
-                onClick = { openAppSettings(platformContext) },
+                onClick = onCreateQr,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(72.dp),
@@ -85,7 +106,7 @@ fun PermissionScreen(
                 )
             ) {
                 Text(
-                    text = stringResource(Res.string.permission_open_settings),
+                    text = stringResource(Res.string.action_create_qr),
                     fontSize = 22.sp
                 )
             }

@@ -2,7 +2,7 @@
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">Требуется разрешение камеры</string>
     <string name="permission_camera_required_desc">Для сканирования QR-кодов приложению нужен доступ к камере.</string>
-    <string name="permission_allow_camera">Разрешить камеру</string>
+    <string name="permission_continue">Продолжить</string>
     <string name="permission_open_settings">Открыть настройки</string>
 
     <!-- Scan Result -->
@@ -27,6 +27,8 @@
     <string name="flash_turn_off">Выключить вспышку</string>
     <string name="flash_turn_on">Включить вспышку</string>
     <string name="scan_instruction">Поместите QR-код в рамку</string>
+    <string name="scan_tip_formats">Поддерживает QR-коды, штрих-коды и другие</string>
+    <string name="scan_tip_gallery">Нажмите на значок фото для сканирования из галереи</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">Выбрать фото из галереи</string>
