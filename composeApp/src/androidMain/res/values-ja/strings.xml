@@ -10,6 +10,7 @@
     <string name="action_open_browser">ブラウザで開く</string>
     <string name="action_copy">コピー</string>
     <string name="action_share">共有</string>
+    <string name="action_add_contact">連絡先に追加</string>
     <string name="action_scan_again">もう一度スキャン</string>
     <string name="action_send_email">メールを送信</string>
     <string name="action_call">電話をかける</string>

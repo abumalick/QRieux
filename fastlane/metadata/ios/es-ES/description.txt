@@ -4,8 +4,8 @@ Características:
 • Escaneo instantáneo de códigos QR y códigos de barras
 • Crea códigos QR — genera códigos QR para sitios web, correos, números de teléfono, Wi-Fi y texto
 • Escanea desde la galería — elige cualquier imagen con un código QR
-• Comparte texto, URLs o imágenes con la app — crea o escanea códigos QR al instante
-• Acciones con un toque: abrir URLs, llamar, enviar correos
+• Comparte texto, URLs, contactos o imágenes con la app — crea o escanea códigos QR al instante
+• Acciones con un toque: abrir URLs, llamar, enviar correos, añadir contactos
 • Copia y comparte el contenido escaneado fácilmente
 • Soporte de flash/linterna para escanear con poca luz
 • Interfaz limpia y fácil de usar con botones grandes

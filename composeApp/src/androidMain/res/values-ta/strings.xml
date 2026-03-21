@@ -10,6 +10,7 @@
     <string name="action_open_browser">உலாவியில் திற</string>
     <string name="action_copy">நகலெடு</string>
     <string name="action_share">பகிர்</string>
+    <string name="action_add_contact">தொடர்புகளில் சேர்</string>
     <string name="action_scan_again">மீண்டும் ஸ்கேன் செய்</string>
     <string name="action_send_email">மின்னஞ்சல் அனுப்பு</string>
     <string name="action_call">அழை</string>

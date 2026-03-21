@@ -4,8 +4,8 @@ Funktionen:
 • Sofortiges Scannen von QR-Codes und Barcodes
 • QR-Codes erstellen — QR-Codes für Websites, E-Mails, Telefonnummern, WLAN und Text generieren
 • Aus der Galerie scannen — wähle ein beliebiges Bild mit QR-Code
-• Text, URLs oder Bilder an die App teilen — QR-Codes sofort erstellen oder scannen
-• Ein-Tipp-Aktionen: URLs öffnen, anrufen, E-Mails senden
+• Text, URLs, Kontakte oder Bilder an die App teilen — QR-Codes sofort erstellen oder scannen
+• Ein-Tipp-Aktionen: URLs öffnen, anrufen, E-Mails senden, Kontakte hinzufügen
 • Gescannte Inhalte einfach kopieren und teilen
 • Blitz-/Taschenlampenmodus für schlechte Lichtverhältnisse
 • Übersichtliche, einfach zu bedienende Oberfläche mit großen Tasten

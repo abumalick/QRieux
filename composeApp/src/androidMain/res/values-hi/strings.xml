@@ -10,6 +10,7 @@
     <string name="action_open_browser">ब्राउज़र में खोलें</string>
     <string name="action_copy">कॉपी करें</string>
     <string name="action_share">शेयर करें</string>
+    <string name="action_add_contact">संपर्कों में जोड़ें</string>
     <string name="action_scan_again">फिर से स्कैन करें</string>
     <string name="action_send_email">ईमेल भेजें</string>
     <string name="action_call">कॉल करें</string>

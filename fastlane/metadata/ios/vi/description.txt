@@ -4,8 +4,8 @@ Tính năng:
 • Quét mã QR và mã vạch tức thì
 • Tạo mã QR — tạo mã QR cho trang web, email, số điện thoại, Wi-Fi và văn bản
 • Quét từ thư viện ảnh — chọn bất kỳ hình ảnh nào có mã QR
-• Chia sẻ văn bản, URL hoặc hình ảnh vào ứng dụng — tạo hoặc quét mã QR ngay lập tức
-• Thao tác một chạm: mở URL, gọi điện, gửi email
+• Chia sẻ văn bản, URL, danh bạ hoặc hình ảnh vào ứng dụng — tạo hoặc quét mã QR ngay lập tức
+• Thao tác một chạm: mở URL, gọi điện, gửi email, thêm danh bạ
 • Sao chép và chia sẻ nội dung đã quét dễ dàng
 • Hỗ trợ đèn flash để quét trong điều kiện thiếu sáng
 • Giao diện sạch sẽ, dễ sử dụng với các nút lớn

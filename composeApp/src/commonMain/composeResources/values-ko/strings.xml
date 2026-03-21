@@ -10,6 +10,7 @@
     <string name="action_open_browser">브라우저에서 열기</string>
     <string name="action_copy">복사</string>
     <string name="action_share">공유</string>
+    <string name="action_add_contact">연락처에 추가</string>
     <string name="action_scan_again">다시 스캔</string>
     <string name="action_send_email">이메일 보내기</string>
     <string name="action_call">전화 걸기</string>

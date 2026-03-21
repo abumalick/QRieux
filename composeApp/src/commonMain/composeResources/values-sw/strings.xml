@@ -10,6 +10,7 @@
     <string name="action_open_browser">Fungua kwenye Kivinjari</string>
     <string name="action_copy">Nakili</string>
     <string name="action_share">Shiriki</string>
+    <string name="action_add_contact">Ongeza kwenye Anwani</string>
     <string name="action_scan_again">Changanua Tena</string>
     <string name="action_send_email">Tuma Barua Pepe</string>
     <string name="action_call">Piga Simu</string>

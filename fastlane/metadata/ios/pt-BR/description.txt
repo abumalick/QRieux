@@ -4,8 +4,8 @@ Recursos:
 • Leitura instantânea de QR codes e códigos de barras
 • Crie QR codes — gere QR codes para sites, e-mails, números de telefone, Wi-Fi e texto
 • Escaneie da galeria — escolha qualquer imagem com um QR code
-• Compartilhe texto, URLs ou imagens com o app — crie ou escaneie QR codes instantaneamente
-• Ações com um toque: abrir links, ligar, enviar e-mails
+• Compartilhe texto, URLs, contatos ou imagens com o app — crie ou escaneie QR codes instantaneamente
+• Ações com um toque: abrir links, ligar, enviar e-mails, adicionar contatos
 • Copie e compartilhe o conteúdo escaneado facilmente
 • Suporte a flash/lanterna para escanear com pouca luz
 • Interface limpa e fácil de usar com botões grandes

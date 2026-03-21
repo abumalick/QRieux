@@ -10,6 +10,7 @@
     <string name="action_open_browser">Открыть в браузере</string>
     <string name="action_copy">Копировать</string>
     <string name="action_share">Поделиться</string>
+    <string name="action_add_contact">Добавить в контакты</string>
     <string name="action_scan_again">Сканировать снова</string>
     <string name="action_send_email">Отправить письмо</string>
     <string name="action_call">Позвонить</string>

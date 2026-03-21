@@ -10,6 +10,7 @@
     <string name="action_open_browser">Tarayıcıda Aç</string>
     <string name="action_copy">Kopyala</string>
     <string name="action_share">Paylaş</string>
+    <string name="action_add_contact">Kişilere Ekle</string>
     <string name="action_scan_again">Tekrar Tara</string>
     <string name="action_send_email">E-posta Gönder</string>
     <string name="action_call">Ara</string>

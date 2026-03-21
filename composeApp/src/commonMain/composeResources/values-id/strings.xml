@@ -10,6 +10,7 @@
     <string name="action_open_browser">Buka di Browser</string>
     <string name="action_copy">Salin</string>
     <string name="action_share">Bagikan</string>
+    <string name="action_add_contact">Tambah ke Kontak</string>
     <string name="action_scan_again">Pindai Lagi</string>
     <string name="action_send_email">Kirim Email</string>
     <string name="action_call">Telepon</string>

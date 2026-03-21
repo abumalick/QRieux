@@ -10,6 +10,7 @@
     <string name="action_open_browser">فتح في المتصفح</string>
     <string name="action_copy">نسخ</string>
     <string name="action_share">مشاركة</string>
+    <string name="action_add_contact">إضافة إلى جهات الاتصال</string>
     <string name="action_scan_again">مسح مرة أخرى</string>
     <string name="action_send_email">إرسال بريد إلكتروني</string>
     <string name="action_call">اتصال</string>
