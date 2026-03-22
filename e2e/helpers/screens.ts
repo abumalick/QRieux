@@ -54,9 +54,20 @@ export async function waitForScanResult(): Promise<void> {
   await title.waitForExist({ timeout: 15_000 });
 }
 
+export async function getScanResultText(): Promise<string> {
+  // Uses testTag="scan_result_content" set on the content Text in ScanResultSheet
+  const el = await $('android=new UiSelector().description("scan_result_content")');
+  if (await el.isExisting()) {
+    return el.getText();
+  }
+  return '';
+}
+
 export async function assertScanResultContains(expected: string): Promise<void> {
-  const el = await $(`android=new UiSelector().textContains("${expected}")`);
-  await el.waitForExist({ timeout: 5_000 });
+  const text = await getScanResultText();
+  if (!text.includes(expected)) {
+    throw new Error(`Scan result "${text}" does not contain "${expected}"`);
+  }
 }
 
 export async function isActionButtonVisible(label: string): Promise<boolean> {

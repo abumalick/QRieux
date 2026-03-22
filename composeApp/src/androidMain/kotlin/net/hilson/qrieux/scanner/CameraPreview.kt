@@ -8,11 +8,12 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.material3.Button
@@ -198,6 +199,7 @@ fun CameraPreview(
                 onClick = onGalleryClick,
                 modifier = Modifier
                     .align(Alignment.BottomStart)
+                    .navigationBarsPadding()
                     .padding(24.dp)
                     .size(64.dp),
                 colors = IconButtonDefaults.filledIconButtonColors(
@@ -216,6 +218,7 @@ fun CameraPreview(
                 onClick = onCreateQrClick,
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
+                    .navigationBarsPadding()
                     .padding(24.dp)
                     .height(QRieuxUiConfig.controlHeight),
                 colors = ButtonDefaults.buttonColors(
