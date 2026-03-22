@@ -30,7 +30,8 @@ just e2e-install                # Install E2E dependencies (bun)
 just e2e-android                # Run E2E tests on Android (pass wdio args)
 just e2e-ios                    # Run E2E tests on iOS (pass wdio args)
 just e2e-android-full           # Build APK + run E2E tests
-# Example: just e2e-android --spec specs/qr-generator.spec.ts
+just e2e-clean                  # Remove E2E artifacts and logs
+# Example: just e2e-android --spec specs/scan-from-gallery.spec.ts
 ```
 
 **Version bump** (must update both platforms):
@@ -118,6 +119,7 @@ Appium + WebdriverIO v9 (TypeScript) in `e2e/`. Requires running emulator/simula
 - On failure: screenshot, page source XML, device logs auto-saved to `e2e/artifacts/<timestamp>-<platform>/<test>/`
 - Appium/wdio logs: `e2e/logs/`
 - Env overrides: `E2E_APP_PATH`, `E2E_DEVICE_NAME`, `E2E_PLATFORM_VERSION`
+- Selectors use text/label matching — `testTagsAsResourceId` doesn't work in Compose Multiplatform
 
 ## Fastlane
 

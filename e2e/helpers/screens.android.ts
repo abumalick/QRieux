@@ -1,10 +1,10 @@
 // Screen interaction helpers for Android (UiSelector syntax)
+// Compose Multiplatform doesn't support testTagsAsResourceId — uses text/description selectors
 
 export async function dismissOnboarding(): Promise<void> {
   const skipBtn = await $('android=new UiSelector().text("Skip")');
   if (await skipBtn.isExisting()) {
     await skipBtn.click();
-    // Wait for scanner to appear after dismissing
     const instruction = await $('android=new UiSelector().text("Place QR code inside the frame")');
     await instruction.waitForExist({ timeout: 10_000 });
   }
@@ -22,11 +22,8 @@ export async function tapGalleryButton(): Promise<void> {
 }
 
 export async function pickImageFromGallery(): Promise<void> {
-  // Android system photo picker runs in a separate process.
-  // Wait for picker UI to load.
   await browser.pause(3000);
 
-  // Try selectors for the photo picker grid items:
   const selectors = [
     'android=new UiSelector().resourceIdMatches(".*icon_thumbnail.*").instance(0)',
     'android=new UiSelector().checkable(true).instance(0)',

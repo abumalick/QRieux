@@ -1,14 +1,14 @@
-// Thin screen interaction helpers for iOS (XCUITest selectors)
+// Screen interaction helpers for iOS (XCUITest selectors)
+// Uses label predicates and accessibility identifiers
 
 export async function dismissOnboarding(): Promise<void> {
-  // Dismiss onboarding if showing
   const skipBtn = await $('-ios predicate string:label == "Skip"');
   if (await skipBtn.isExisting()) {
     await skipBtn.click();
     await browser.pause(1000);
   }
 
-  // Handle app's own permission screen (shows before system alert)
+  // Handle app's own permission screen
   const continueBtn = await $('-ios predicate string:label == "Continue"');
   if (await continueBtn.isExisting()) {
     await continueBtn.click();
@@ -32,26 +32,11 @@ export async function tapGalleryButton(): Promise<void> {
 }
 
 export async function pickImageFromGallery(): Promise<void> {
-  // iOS PHPickerViewController: wait for picker to load
   await browser.pause(3000);
 
-  // Dismiss the "Private Access to Photos" banner if showing
-  const dismissBanner = await $('-ios predicate string:name == "PXGSingleViewContainerView_AX"');
-  if (await dismissBanner.isExisting()) {
-    // Tap the X button on the banner
-    const closeBanner = await $('-ios predicate string:label == "Close"');
-    if (await closeBanner.isExisting()) {
-      await closeBanner.click();
-      await browser.pause(500);
-    }
-  }
-
-  // Tap the first photo in the grid. PHPicker renders photos as XCUIElementTypeOther
-  // without individual accessibility labels, so we tap by coordinate.
-  // The grid starts below the nav bar + banner area.
   const { width } = await browser.getWindowSize();
-  const gridX = Math.floor(width / 6); // center of first column (3-column grid)
-  const gridY = 450; // below nav bar + "Private Access" banner
+  const gridX = Math.floor(width / 6);
+  const gridY = 450;
 
   await driver.performActions([{
     type: 'pointer',
