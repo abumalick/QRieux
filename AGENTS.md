@@ -26,6 +26,11 @@ just gen-android-screenshots    # Generate Android screenshots (--skip-build, --
 just gen-ios-screenshots        # Generate iOS screenshots (--skip-build, --locale=xx)
 just test                       # Run all unit tests
 just test-class <fully.qualified.ClassName>  # Run single test class
+just e2e-install                # Install E2E dependencies (bun)
+just e2e-android                # Run E2E tests on Android (pass wdio args)
+just e2e-ios                    # Run E2E tests on iOS (pass wdio args)
+just e2e-android-full           # Build APK + run E2E tests
+# Example: just e2e-android --spec specs/qr-generator.spec.ts
 ```
 
 **Version bump** (must update both platforms):
@@ -102,6 +107,16 @@ Codes: (default=en), `ar`, `bn`, `de`, `es`, `fr`, `hi`, `in` (Indonesian), `it`
 ### Manual Testing
 
 Open `examples/test-qr-codes.md` to test all supported QR types (URLs, emails, phones, text).
+
+### E2E Tests
+
+Appium + WebdriverIO v9 (TypeScript) in `e2e/`. Requires running emulator/simulator + built app.
+
+- Config: `e2e/wdio.shared.conf.ts` (shared), `wdio.android.conf.ts`, `wdio.ios.conf.ts`
+- Specs: `e2e/specs/`
+- On failure: screenshot, page source XML, device logs auto-saved to `e2e/artifacts/<timestamp>-<platform>/<test>/`
+- Appium/wdio logs: `e2e/logs/`
+- Env overrides: `E2E_APP_PATH`, `E2E_DEVICE_NAME`, `E2E_PLATFORM_VERSION`
 
 ## Fastlane
 

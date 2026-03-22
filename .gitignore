@@ -44,3 +44,7 @@ fastlane/AuthKey_*.p8
 fastlane/api_key.json
 
 .playwright-cli/
+
+# E2E tests
+e2e/artifacts/
+e2e/logs/

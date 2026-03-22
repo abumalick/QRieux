@@ -87,6 +87,28 @@ gen-android-screenshots *args:
 gen-ios-screenshots *args:
     ./scripts/generate_ios_screenshots.sh {{args}}
 
+# E2E tests
+
+# Install E2E test dependencies
+e2e-install:
+    cd e2e && bun install
+
+# Run E2E tests on Android (requires running emulator + debug APK)
+e2e-android *args:
+    cd e2e && bunx wdio run wdio.android.conf.ts {{args}}
+
+# Run E2E tests on iOS (requires running simulator + built app)
+e2e-ios *args:
+    cd e2e && bunx wdio run wdio.ios.conf.ts {{args}}
+
+# Build debug APK then run Android E2E tests
+e2e-android-full *args: android-debug
+    cd e2e && bunx wdio run wdio.android.conf.ts {{args}}
+
+# Clean E2E artifacts and logs
+e2e-clean:
+    rm -rf e2e/artifacts e2e/logs
+
 # Dependencies
 
 # Install fastlane and ruby dependencies
