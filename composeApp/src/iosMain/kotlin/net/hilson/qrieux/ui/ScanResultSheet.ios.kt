@@ -21,6 +21,8 @@ import qr_scanner.composeapp.generated.resources.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.statusBars
@@ -94,6 +96,7 @@ fun ScanResultOverlay(
                 Text(
                     text = rawValue,
                     modifier = Modifier
+                        .semantics { testTag = "scan_result_content" }
                         .verticalScroll(rememberScrollState())
                         .padding(20.dp),
                     fontSize = 20.sp,

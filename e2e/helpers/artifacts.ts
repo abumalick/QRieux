@@ -12,7 +12,10 @@ export function getArtifactBaseDir(): string {
 }
 
 export async function captureFailureArtifacts(testName: string): Promise<void> {
-  if (!artifactBaseDir) return;
+  if (!artifactBaseDir) {
+    console.warn('artifactBaseDir not set — skipping failure artifact capture');
+    return;
+  }
 
   const sanitized = testName.replace(/[^a-zA-Z0-9_-]/g, '-').replace(/-+/g, '-').toLowerCase();
   const dir = path.join(artifactBaseDir, sanitized);

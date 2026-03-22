@@ -34,7 +34,7 @@ just e2e-android-full
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `E2E_APP_PATH` | Override app path | `/path/to/app.apk` or `/path/to/app.app` |
+| `E2E_APP_PATH` | Override app/apk path | `/path/to/app.apk` or `/path/to/iosApp.app` |
 | `E2E_DEVICE_NAME` | iOS simulator name | `iPhone 16 Pro` |
 | `E2E_PLATFORM_VERSION` | iOS version | `18.5` |
 
@@ -55,22 +55,31 @@ Run directories are timestamped: `artifacts/2026-03-22T10-30-00-android/test-nam
 
 ## Limitations
 
-- **Camera/QR scanning**: cannot be tested without image injection. Tests focus on app launch and UI.
+- **Camera/QR scanning**: live camera can't be tested via Appium. Gallery scan uses pushed QR fixture images.
+- **iOS gallery scan**: PHPicker + Vision on simulator doesn't reliably detect QR from picked images. Gallery scan tests run on Android only.
 - **iOS real device**: requires signing config. Use simulator for now.
-- **iOS app path**: DerivedData paths vary. Set `E2E_APP_PATH` if the default doesn't work.
+- **iOS app path**: auto-detected from `xcodebuild -showBuildSettings`. Override with `E2E_APP_PATH` if needed.
 - **Video recording**: captures screenshots per command, can slightly slow tests. Only saved for failures.
 
 ## Project Structure
 
 ```
 e2e/
-├── wdio.shared.conf.ts    # Shared config (hooks, reporters, timeouts, appium service)
-├── wdio.android.conf.ts   # Android capabilities
-├── wdio.ios.conf.ts       # iOS capabilities
+├── wdio.shared.conf.ts      # Shared config (hooks, reporters, timeouts, appium service)
+├── wdio.android.conf.ts     # Android capabilities
+├── wdio.ios.conf.ts         # iOS capabilities (auto-detects app path)
 ├── helpers/
-│   └── artifacts.ts       # Failure artifact capture (screenshot, page source, logs)
+│   ├── screens.ts           # Platform dispatcher (routes to android/ios)
+│   ├── screens.android.ts   # Android UiSelector helpers
+│   ├── screens.ios.ts       # iOS XCUITest predicate helpers
+│   ├── qr-fixtures.ts       # Push QR images to device/simulator
+│   └── artifacts.ts         # Failure artifact capture
 ├── specs/
-│   └── app-launch.spec.ts # Sample smoke test
-├── artifacts/             # Failure artifacts (gitignored)
-└── logs/                  # Appium + wdio logs (gitignored)
+│   ├── app-launch.spec.ts        # App launch + onboarding (Android + iOS)
+│   └── scan-from-gallery.spec.ts # Gallery scan flow (Android only)
+├── fixtures/                # Pre-generated QR code PNGs
+├── scripts/
+│   └── generate-fixtures.ts # Regenerate QR fixture images
+├── artifacts/               # Failure artifacts (gitignored)
+└── logs/                    # Appium + wdio logs (gitignored)
 ```

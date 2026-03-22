@@ -15,9 +15,9 @@ async function main() {
   for (const [filename, content] of Object.entries(fixtures)) {
     const filepath = path.join(outDir, filename);
     await QRCode.toFile(filepath, content, {
-      width: 400,
-      margin: 2,
-      errorCorrectionLevel: 'M',
+      width: 800,
+      margin: 4,
+      errorCorrectionLevel: 'H',
     });
     console.log(`Generated ${filename} → "${content}"`);
   }

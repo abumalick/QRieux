@@ -113,7 +113,8 @@ Open `examples/test-qr-codes.md` to test all supported QR types (URLs, emails, p
 Appium + WebdriverIO v9 (TypeScript) in `e2e/`. Requires running emulator/simulator + built app.
 
 - Config: `e2e/wdio.shared.conf.ts` (shared), `wdio.android.conf.ts`, `wdio.ios.conf.ts`
-- Specs: `e2e/specs/`
+- Helpers: `e2e/helpers/screens.ts` (dispatcher), `screens.android.ts`, `screens.ios.ts`
+- Specs: `e2e/specs/` — Android runs all, iOS runs app-launch only (gallery scan blocked by PHPicker+Vision simulator limitations)
 - On failure: screenshot, page source XML, device logs auto-saved to `e2e/artifacts/<timestamp>-<platform>/<test>/`
 - Appium/wdio logs: `e2e/logs/`
 - Env overrides: `E2E_APP_PATH`, `E2E_DEVICE_NAME`, `E2E_PLATFORM_VERSION`

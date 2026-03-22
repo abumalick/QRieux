@@ -1,86 +1,36 @@
-// Thin screen interaction helpers for Android
-// All selectors are Android UiSelector syntax — iOS will need separate helpers.
+// Platform dispatcher — routes to Android or iOS helpers based on driver
 
-export async function dismissOnboarding(): Promise<void> {
-  const skipBtn = await $('android=new UiSelector().text("Skip")');
-  if (await skipBtn.isExisting()) {
-    await skipBtn.click();
-    // Wait for scanner to appear after dismissing
-    const instruction = await $('android=new UiSelector().text("Place QR code inside the frame")');
-    await instruction.waitForExist({ timeout: 10_000 });
-  }
-}
+import * as android from './screens.android.js';
+import * as ios from './screens.ios.js';
 
-export async function waitForScanner(): Promise<void> {
-  const instruction = await $('android=new UiSelector().text("Place QR code inside the frame")');
-  await instruction.waitForExist({ timeout: 10_000 });
-}
+const useAndroid = () => driver.isAndroid;
 
-export async function tapGalleryButton(): Promise<void> {
-  const btn = await $('~Pick photo from gallery');
-  await btn.waitForExist({ timeout: 5_000 });
-  await btn.click();
-}
+export const dismissOnboarding = () =>
+  useAndroid() ? android.dismissOnboarding() : ios.dismissOnboarding();
 
-export async function pickImageFromGallery(): Promise<void> {
-  // Android system photo picker runs in a separate process.
-  // Wait for picker UI to load.
-  await browser.pause(3000);
+export const waitForScanner = () =>
+  useAndroid() ? android.waitForScanner() : ios.waitForScanner();
 
-  // Try selectors for the photo picker grid items:
-  const selectors = [
-    'android=new UiSelector().resourceIdMatches(".*icon_thumbnail.*").instance(0)',
-    'android=new UiSelector().checkable(true).instance(0)',
-    'android=new UiSelector().packageName("com.google.android.providers.media.module").className("android.widget.ImageView").instance(0)',
-  ];
+export const tapGalleryButton = () =>
+  useAndroid() ? android.tapGalleryButton() : ios.tapGalleryButton();
 
-  for (const sel of selectors) {
-    const image = await $(sel);
-    if (await image.isExisting()) {
-      await image.click();
-      await browser.pause(1000);
-      return;
-    }
-  }
+export const pickImageFromGallery = () =>
+  useAndroid() ? android.pickImageFromGallery() : ios.pickImageFromGallery();
 
-  throw new Error(
-    'Could not find any image in the photo picker. ' +
-    'Ensure QR fixtures were pushed to the device before running this test.'
-  );
-}
+export const waitForScanResult = () =>
+  useAndroid() ? android.waitForScanResult() : ios.waitForScanResult();
 
-export async function waitForScanResult(): Promise<void> {
-  const title = await $('android=new UiSelector().text("Scanned Result")');
-  await title.waitForExist({ timeout: 15_000 });
-}
+export const getScanResultText = () =>
+  useAndroid() ? android.getScanResultText() : ios.getScanResultText();
 
-export async function getScanResultText(): Promise<string> {
-  // Uses testTag="scan_result_content" set on the content Text in ScanResultSheet
-  const el = await $('android=new UiSelector().description("scan_result_content")');
-  if (await el.isExisting()) {
-    return el.getText();
-  }
-  return '';
-}
+export const assertScanResultContains = (expected: string) =>
+  useAndroid() ? android.assertScanResultContains(expected) : ios.assertScanResultContains(expected);
 
-export async function assertScanResultContains(expected: string): Promise<void> {
-  const text = await getScanResultText();
-  if (!text.includes(expected)) {
-    throw new Error(`Scan result "${text}" does not contain "${expected}"`);
-  }
-}
+export const isActionButtonVisible = (label: string) =>
+  useAndroid() ? android.isActionButtonVisible(label) : ios.isActionButtonVisible(label);
 
-export async function isActionButtonVisible(label: string): Promise<boolean> {
-  const btn = await $(`android=new UiSelector().text("${label}")`);
-  return btn.isExisting();
-}
+export const tapActionButton = (label: string) =>
+  useAndroid() ? android.tapActionButton(label) : ios.tapActionButton(label);
 
-export async function tapActionButton(label: string): Promise<void> {
-  const btn = await $(`android=new UiSelector().text("${label}")`);
-  await btn.waitForExist({ timeout: 5_000 });
-  await btn.click();
-}
-
-export async function tapScanAgain(): Promise<void> {
-  await tapActionButton('Scan Again');
-}
+export const tapScanAgain = () =>
+  useAndroid() ? android.tapScanAgain() : ios.tapScanAgain();
