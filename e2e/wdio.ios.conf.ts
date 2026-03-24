@@ -22,8 +22,7 @@ function findIosAppPath(): string {
 export const config: WebdriverIO.Config = {
   ...sharedConfig,
 
-  // Gallery scan tests don't work on iOS simulator yet (PHPicker + Vision limitations)
-  specs: ['./specs/app-launch.spec.ts'],
+  specs: ['./specs/app-launch.spec.ts', './specs/qr-creation.spec.ts', './specs/scan-from-gallery.spec.ts', './specs/scan-from-share.spec.ts'],
 
   capabilities: [{
     platformName: 'iOS',
@@ -36,4 +35,15 @@ export const config: WebdriverIO.Config = {
     'appium:newCommandTimeout': 240,
     'appium:noReset': false,
   }],
+
+  onPrepare() {
+    if (typeof sharedConfig.onPrepare === 'function') sharedConfig.onPrepare({} as any, [] as any);
+    // Grant full photo library access before tests start so
+    // UIImagePickerController shows all photos without the limited-access banner
+    // Also grant for .dev suffix (debug builds)
+    for (const bundleId of ['net.hilson.qrieux', 'net.hilson.qrieux.dev']) {
+      try { execSync(`xcrun simctl privacy booted grant photos ${bundleId}`); }
+      catch (e) { console.warn(`[ios] Failed to grant photo access for ${bundleId}: ${e}`); }
+    }
+  },
 };

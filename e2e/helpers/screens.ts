@@ -34,3 +34,40 @@ export const tapActionButton = (label: string) =>
 
 export const tapScanAgain = () =>
   useAndroid() ? android.tapScanAgain() : ios.tapScanAgain();
+
+// --- QR Creation ---
+
+export const tapCreateButton = () =>
+  useAndroid() ? android.tapCreateButton() : ios.tapCreateButton();
+
+export const waitForGeneratorScreen = () =>
+  useAndroid() ? android.waitForGeneratorScreen() : ios.waitForGeneratorScreen();
+
+export const selectQrType = (typeName: string) =>
+  useAndroid() ? android.selectQrType(typeName) : ios.selectQrType(typeName);
+
+export const enterTextInField = (label: string, value: string) =>
+  useAndroid() ? android.enterTextInField(label, value) : ios.enterTextInField(label, value);
+
+export const clearField = (label: string) =>
+  useAndroid() ? android.clearField(label) : ios.clearField(label);
+
+export const isShareQrButtonEnabled = () =>
+  useAndroid() ? android.isShareQrButtonEnabled() : ios.isShareQrButtonEnabled();
+
+export const isPreviewHintVisible = () =>
+  useAndroid() ? android.isPreviewHintVisible() : ios.isPreviewHintVisible();
+
+export const isValidationErrorVisible = (errorText: string) =>
+  useAndroid() ? android.isValidationErrorVisible(errorText) : ios.isValidationErrorVisible(errorText);
+
+export const tapBackToScan = () =>
+  useAndroid() ? android.tapBackToScan() : ios.tapBackToScan();
+
+export const waitForQrGenerated = () =>
+  useAndroid() ? android.waitForQrGenerated() : ios.waitForQrGenerated();
+
+// --- Share from external app ---
+
+export const shareImageToApp = (fixtureName: string) =>
+  useAndroid() ? android.shareImageToApp(fixtureName) : ios.shareImageToApp(fixtureName);

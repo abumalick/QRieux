@@ -1,6 +1,38 @@
 // Screen interaction helpers for Android (UiSelector syntax)
 // Compose Multiplatform doesn't support testTagsAsResourceId — uses text/description selectors
 
+import { execSync } from 'child_process';
+
+export async function shareImageToApp(fixtureName: string): Promise<void> {
+  // Query MediaStore for the content URI by display name (with retry for media scanner lag)
+  let mediaId: string | null = null;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const output = execSync(
+      `adb shell content query --uri content://media/external/images/media --projection _id --where "\\"_display_name='${fixtureName}.png'\\""`,
+    ).toString().trim();
+    const match = output.match(/_id=(\d+)/);
+    if (match) {
+      mediaId = match[1];
+      break;
+    }
+    await browser.pause(1000);
+  }
+  if (!mediaId) {
+    throw new Error(`Could not find media URI for ${fixtureName}.png — ensure fixtures are pushed`);
+  }
+
+  const contentUri = `content://media/external/images/media/${mediaId}`;
+  // Flags: NEW_TASK | SINGLE_TOP | GRANT_READ_URI_PERMISSION = 0x30000001
+  // -d sets the data URI so FLAG_GRANT_READ_URI_PERMISSION creates a URI permission grant;
+  // --eu sets EXTRA_STREAM which the app reads — same URI, so the grant covers it
+  execSync(
+    `adb shell am start -a android.intent.action.SEND -t image/png -f 0x30000001 ` +
+    `-d '${contentUri}' --eu android.intent.extra.STREAM '${contentUri}' ` +
+    `-n net.hilson.qrieux.dev/net.hilson.qrieux.MainActivity`,
+  );
+  await browser.pause(2000);
+}
+
 export async function dismissOnboarding(): Promise<void> {
   const skipBtn = await $('android=new UiSelector().text("Skip")');
   if (await skipBtn.isExisting()) {
@@ -51,7 +83,9 @@ export async function waitForScanResult(): Promise<void> {
 }
 
 export async function getScanResultText(): Promise<string> {
-  const el = await $('android=new UiSelector().description("scan_result_content")');
+  // testTag doesn't map to contentDescription in Compose Multiplatform;
+  // the result text renders as a ScrollView with text content
+  const el = await $('android=new UiSelector().className("android.widget.ScrollView").textMatches(".+")');
   await el.waitForExist({ timeout: 10_000 });
   return el.getText();
 }
@@ -76,4 +110,118 @@ export async function tapActionButton(label: string): Promise<void> {
 
 export async function tapScanAgain(): Promise<void> {
   await tapActionButton('Scan Again');
+}
+
+// --- QR Creation helpers ---
+
+async function scrollToShareButton() {
+  // Share QR button is below the fold — scroll into view
+  await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("Share QR"))');
+  // The Compose Button renders as a clickable View parent with a child TextView.
+  // Check enabled on the parent View, not the child TextView.
+  const btn = await $('android=new UiSelector().clickable(true).childSelector(new UiSelector().text("Share QR"))');
+  await btn.waitForExist({ timeout: 5_000 });
+  return btn;
+}
+
+async function scrollToTop(): Promise<void> {
+  await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollToBeginning(3)');
+  await browser.pause(300);
+}
+
+export async function tapCreateButton(): Promise<void> {
+  const btn = await $('android=new UiSelector().text("Create")');
+  await btn.waitForExist({ timeout: 5_000 });
+  await btn.click();
+}
+
+export async function waitForGeneratorScreen(): Promise<void> {
+  const title = await $('android=new UiSelector().text("Create QR Code")');
+  await title.waitForExist({ timeout: 10_000 });
+}
+
+export async function selectQrType(typeName: string): Promise<void> {
+  await scrollToTop();
+  // Dropdown is the first EditText (ExposedDropdownMenuBox)
+  const dropdown = await $('android=new UiSelector().className("android.widget.EditText").instance(0)');
+  await dropdown.waitForExist({ timeout: 5_000 });
+  await dropdown.click();
+  await browser.pause(500);
+
+  const option = await $(`android=new UiSelector().text("${typeName}")`);
+  await option.waitForExist({ timeout: 3_000 });
+  await option.click();
+  await browser.pause(500);
+}
+
+export async function enterTextInField(label: string, value: string): Promise<void> {
+  // Scroll to beginning first, then forward to the label (scrollIntoView only scrolls forward)
+  await scrollToTop();
+  await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("${label}").className("android.widget.TextView"))`);
+
+  const labelEl = await $(`android=new UiSelector().text("${label}").className("android.widget.TextView")`);
+  await labelEl.waitForExist({ timeout: 5_000 });
+  await labelEl.click();
+  await browser.pause(300);
+
+  const editText = await $('android=new UiSelector().focused(true).className("android.widget.EditText")');
+  await editText.waitForExist({ timeout: 3_000 });
+  await editText.clearValue();
+  if (value) {
+    await editText.setValue(value);
+  }
+  await driver.pressKeyCode(4);
+  await browser.pause(300);
+}
+
+export async function clearField(label: string): Promise<void> {
+  await scrollToTop();
+  await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("${label}").className("android.widget.TextView"))`);
+
+  const labelEl = await $(`android=new UiSelector().text("${label}").className("android.widget.TextView")`);
+  await labelEl.waitForExist({ timeout: 5_000 });
+  await labelEl.click();
+  await browser.pause(300);
+
+  const editText = await $('android=new UiSelector().focused(true).className("android.widget.EditText")');
+  await editText.waitForExist({ timeout: 3_000 });
+  await editText.clearValue();
+  await driver.pressKeyCode(4);
+  await browser.pause(300);
+}
+
+export async function isShareQrButtonEnabled(): Promise<boolean> {
+  await scrollToShareButton();
+  // The Compose Button is a clickable View with enabled=false when disabled.
+  // Check if a disabled parent with "Share QR" child exists.
+  const disabledBtn = await $('android=new UiSelector().enabled(false).childSelector(new UiSelector().text("Share QR"))');
+  return !(await disabledBtn.isExisting());
+}
+
+export async function isPreviewHintVisible(): Promise<boolean> {
+  const hint = await $('android=new UiSelector().textContains("Fill in the form")');
+  return hint.isExisting();
+}
+
+export async function isValidationErrorVisible(errorText: string): Promise<boolean> {
+  const err = await $(`android=new UiSelector().text("${errorText}")`);
+  return err.isExisting();
+}
+
+export async function tapBackToScan(): Promise<void> {
+  await scrollToTop();
+  const btn = await $('~Back to Scan');
+  await btn.waitForExist({ timeout: 5_000 });
+  await btn.click();
+}
+
+export async function waitForQrGenerated(): Promise<void> {
+  await browser.waitUntil(
+    async () => {
+      await scrollToShareButton();
+      const disabledBtn = await $('android=new UiSelector().enabled(false).childSelector(new UiSelector().text("Share QR"))');
+      return !(await disabledBtn.isExisting());
+    },
+    { timeout: 10_000, timeoutMsg: 'QR code was not generated in time' }
+  );
 }
