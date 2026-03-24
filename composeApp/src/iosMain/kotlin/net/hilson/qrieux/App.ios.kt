@@ -188,11 +188,13 @@ fun App(sharedImage: UIImage? = null, sharedText: String? = null) {
             containerColor = Color.Black
         ) { _ ->
             if (appMode == AppMode.Generate) {
-                QrGeneratorScreen(
-                    platformContext = platformContext,
-                    onBack = { appMode = AppMode.Scan },
-                    initialText = sharedText
-                )
+                key(sharedText) {
+                    QrGeneratorScreen(
+                        platformContext = platformContext,
+                        onBack = { appMode = AppMode.Scan },
+                        initialText = sharedText
+                    )
+                }
             } else if (showOnboarding) {
                 OnboardingScreen(onFinish = {
                     setOnboardingCompleted(platformContext)

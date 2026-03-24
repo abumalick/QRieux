@@ -65,13 +65,21 @@ class MainActivity : ComponentActivity() {
                     intent.getParcelableExtra(Intent.EXTRA_STREAM)
                 }
                 uri?.let {
-                    sharedText.value = readAndStripVCard(it)
-                    shareTextTimestamp.longValue = System.currentTimeMillis()
+                    try {
+                        val text = readAndStripVCard(it)
+                        if (text != null) {
+                            sharedText.value = text
+                            shareTextTimestamp.longValue = System.currentTimeMillis()
+                        }
+                    } catch (_: Exception) { }
                 }
             }
             mimeType.startsWith("text/") -> {
-                sharedText.value = intent.getStringExtra(Intent.EXTRA_TEXT)
-                shareTextTimestamp.longValue = System.currentTimeMillis()
+                val text = intent.getStringExtra(Intent.EXTRA_TEXT)
+                if (text != null) {
+                    sharedText.value = text
+                    shareTextTimestamp.longValue = System.currentTimeMillis()
+                }
             }
         }
     }

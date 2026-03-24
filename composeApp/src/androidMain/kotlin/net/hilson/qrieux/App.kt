@@ -176,12 +176,14 @@ fun App(
             snackbarHost = { SnackbarHost(snackbarHostState) }
         ) { paddingValues ->
             if (appMode == AppMode.Generate) {
-                QrGeneratorScreen(
-                    platformContext = platformContext,
-                    onBack = { appMode = AppMode.Scan },
-                    modifier = Modifier.padding(paddingValues),
-                    initialText = sharedText
-                )
+                key(shareTextTimestamp) {
+                    QrGeneratorScreen(
+                        platformContext = platformContext,
+                        onBack = { appMode = AppMode.Scan },
+                        modifier = Modifier.padding(paddingValues),
+                        initialText = sharedText
+                    )
+                }
             } else if (showOnboarding) {
                 OnboardingScreen(onFinish = {
                     setOnboardingCompleted(platformContext)

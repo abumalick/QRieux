@@ -39,8 +39,17 @@ fun scanBarcodeFromImage(image: UIImage): String? {
 
     // Fallback: CIDetector is CPU-based and works on simulator where
     // Vision's ML inference context may not be available
+    println("Vision found no barcode, trying CIDetector fallback")
     val ciImage = CIImage(cGImage = cgImage)
     val detector = CIDetector.detectorOfType(CIDetectorTypeQRCode, context = null, options = null)
-    val features = detector?.featuresInImage(ciImage) ?: return null
+    if (detector == null) {
+        println("CIDetector creation failed")
+        return null
+    }
+    val features = detector.featuresInImage(ciImage)
+    if (features.isEmpty()) {
+        println("CIDetector found no features in image")
+        return null
+    }
     return (features.firstOrNull() as? CIQRCodeFeature)?.messageString
 }

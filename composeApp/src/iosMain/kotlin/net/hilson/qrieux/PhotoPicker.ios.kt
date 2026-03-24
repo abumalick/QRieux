@@ -47,6 +47,7 @@ fun PhotoPickerLauncher(
             picker.delegate = delegate
             rootVC.presentViewController(picker, animated = true, completion = null)
         } else {
+            println("PhotoPicker: rootViewController is null, cannot present picker")
             dispatch_async(dispatch_get_main_queue()) { currentOnDismiss() }
         }
 

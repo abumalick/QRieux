@@ -53,6 +53,7 @@ class ShareViewController: UIViewController {
             }
         } else if let (vcardProvider, vcardTypeId) = findVCardProvider(in: attachments) {
             vcardProvider.loadItem(forTypeIdentifier: vcardTypeId) { [weak self] data, error in
+                if let error = error { print("vCard load failed: \(error.localizedDescription)") }
                 DispatchQueue.main.async { self?.handleLoadedVCard(data) }
             }
         } else if let urlProvider = attachments.first(where: { $0.hasItemConformingToTypeIdentifier(UTType.url.identifier) }) {
@@ -243,7 +244,7 @@ class ShareViewController: UIViewController {
 
     private func openApp(urlString: String) {
         guard let url = URL(string: urlString) else {
-            extensionContext?.completeRequest(returningItems: nil)
+            showError()
             return
         }
 

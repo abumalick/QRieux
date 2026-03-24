@@ -34,7 +34,9 @@ export async function shareImageToApp(fixtureName: string): Promise<void> {
 }
 
 export async function shareTextToApp(text: string): Promise<void> {
-  const escaped = text.replace(/'/g, "'\\''");
+  // Escape for inner single-quotes (device shell), then outer double-quotes (host shell)
+  const innerEscaped = text.replace(/'/g, "'\\''");
+  const escaped = innerEscaped.replace(/[\\$`"]/g, '\\$&');
   execSync(
     `adb shell "am start -a android.intent.action.SEND -t text/plain ` +
     `-f 0x30000000 --es android.intent.extra.TEXT '${escaped}' ` +
