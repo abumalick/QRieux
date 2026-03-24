@@ -9,16 +9,7 @@
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>NSExtensionActivationRule</key>
-			<dict>
-				<key>NSExtensionActivationSupportsImageWithMaxCount</key>
-				<integer>1</integer>
-				<key>NSExtensionActivationSupportsText</key>
-				<true/>
-				<key>NSExtensionActivationSupportsWebURLWithMaxCount</key>
-				<integer>1</integer>
-				<key>NSExtensionActivationSupportsFileWithMaxCount</key>
-				<integer>1</integer>
-			</dict>
+			<string>SUBQUERY(extensionItems, $item, SUBQUERY($item.attachments, $att, ANY $att.registeredTypeIdentifiers UTI-CONFORMS-TO "public.image").@count > 0).@count > 0 OR SUBQUERY(extensionItems, $item, SUBQUERY($item.attachments, $att, ANY $att.registeredTypeIdentifiers UTI-CONFORMS-TO "public.plain-text").@count > 0).@count > 0 OR SUBQUERY(extensionItems, $item, SUBQUERY($item.attachments, $att, ANY $att.registeredTypeIdentifiers UTI-CONFORMS-TO "public.url").@count > 0).@count > 0 OR SUBQUERY(extensionItems, $item, SUBQUERY($item.attachments, $att, ANY $att.registeredTypeIdentifiers UTI-CONFORMS-TO "public.vcard").@count > 0).@count > 0</string>
 		</dict>
 		<key>NSExtensionPrincipalClass</key>
 		<string>$(PRODUCT_MODULE_NAME).ShareViewController</string>

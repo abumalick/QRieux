@@ -30,7 +30,7 @@ just e2e-install                # Install E2E dependencies (bun)
 just e2e-android                # Run E2E tests on Android (pass wdio args)
 just e2e-ios                    # Run E2E tests on iOS (pass wdio args)
 just e2e-android-full           # Build APK + run E2E tests
-just e2e-clean                  # Remove E2E artifacts and logs
+just e2e-clean                  # Remove E2E artifacts and logs — always use this, not rm -rf
 # Example: just e2e-android --spec specs/scan-from-gallery.spec.ts
 ```
 
@@ -73,7 +73,7 @@ QR scanner app using Kotlin Multiplatform + Compose Multiplatform. Supports Andr
 - **App.ios.kt** - iOS root composable with AVFoundation camera permission handling
 - **scanner/CameraPreview.ios.kt** - AVCaptureSession preview with Vision barcode scanning
 - **scanner/GalleryScanner.ios.kt** - Vision framework barcode scanning for images
-- **PhotoPicker.ios.kt** - PHPickerViewController for photo selection
+- **PhotoPicker.ios.kt** - UIImagePickerController for photo selection
 
 ### Brand Color
 
@@ -96,7 +96,7 @@ Primary: `#4A90D9` (blue) — defined in `ui/theme/Theme.kt`, used in app icon a
 
 - AVFoundation for camera capture
 - Vision framework for barcode scanning (built-in, no extra dependencies)
-- PhotosUI for photo picker
+- UIImagePickerController (UIKit) for photo picker
 
 ### Localization
 
@@ -115,7 +115,7 @@ Appium + WebdriverIO v9 (TypeScript) in `e2e/`. Requires running emulator/simula
 
 - Config: `e2e/wdio.shared.conf.ts` (shared), `wdio.android.conf.ts`, `wdio.ios.conf.ts`
 - Helpers: `e2e/helpers/screens.ts` (dispatcher), `screens.android.ts`, `screens.ios.ts`
-- Specs: `e2e/specs/` — Android runs all, iOS runs app-launch only (gallery scan blocked by PHPicker+Vision simulator limitations)
+- Specs: `e2e/specs/` — all specs run on both platforms
 - On failure: screenshot, page source XML, device logs auto-saved to `e2e/artifacts/<timestamp>-<platform>/<test>/`
 - Appium/wdio logs: `e2e/logs/`
 - Env overrides: `E2E_APP_PATH`, `E2E_DEVICE_NAME`, `E2E_PLATFORM_VERSION`

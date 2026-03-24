@@ -23,6 +23,7 @@ struct iOSApp: App {
                 .onChange(of: scenePhase) { phase in
                     if phase == .active {
                         loadSharedImage()
+                        loadSharedText()
                     }
                 }
                 .onOpenURL { url in

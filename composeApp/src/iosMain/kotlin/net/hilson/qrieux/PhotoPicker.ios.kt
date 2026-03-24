@@ -2,7 +2,6 @@ package net.hilson.qrieux
 
 import androidx.compose.runtime.*
 import kotlinx.cinterop.ExperimentalForeignApi
-import platform.PhotosUI.*
 import platform.UIKit.*
 import platform.darwin.NSObject
 import platform.darwin.dispatch_async
@@ -27,7 +26,7 @@ fun PhotoPickerLauncher(
     val currentOnDismiss by rememberUpdatedState(onDismiss)
 
     val delegate = remember {
-        PhotoPickerDelegate(
+        ImagePickerDelegate(
             onResult = { image ->
                 dispatch_async(dispatch_get_main_queue()) {
                     if (image != null) {
@@ -41,47 +40,36 @@ fun PhotoPickerLauncher(
     }
 
     DisposableEffect(Unit) {
-        val configuration = PHPickerConfiguration()
-        configuration.filter = PHPickerFilter.imagesFilter
-        configuration.selectionLimit = 1
-
-        val picker = PHPickerViewController(configuration = configuration)
-        picker.delegate = delegate
-
-        getRootViewController()?.presentViewController(picker, animated = true, completion = null)
+        val rootVC = getRootViewController()
+        if (rootVC != null) {
+            val picker = UIImagePickerController()
+            picker.sourceType = UIImagePickerControllerSourceType.UIImagePickerControllerSourceTypePhotoLibrary
+            picker.delegate = delegate
+            rootVC.presentViewController(picker, animated = true, completion = null)
+        } else {
+            dispatch_async(dispatch_get_main_queue()) { currentOnDismiss() }
+        }
 
         onDispose {}
     }
 }
 
 @OptIn(ExperimentalForeignApi::class)
-private class PhotoPickerDelegate(
+private class ImagePickerDelegate(
     private val onResult: (UIImage?) -> Unit
-) : NSObject(), PHPickerViewControllerDelegateProtocol {
+) : NSObject(), UIImagePickerControllerDelegateProtocol, UINavigationControllerDelegateProtocol {
 
-    override fun picker(picker: PHPickerViewController, didFinishPicking: List<*>) {
+    override fun imagePickerController(
+        picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo: Map<Any?, *>
+    ) {
         picker.dismissViewControllerAnimated(true, null)
+        val image = didFinishPickingMediaWithInfo[UIImagePickerControllerOriginalImage] as? UIImage
+        onResult(image)
+    }
 
-        val result = didFinishPicking.firstOrNull() as? PHPickerResult
-        if (result == null) {
-            onResult(null)
-            return
-        }
-
-        val itemProvider = result.itemProvider
-        val typeIdentifier = "public.image"
-
-        if (itemProvider.hasItemConformingToTypeIdentifier(typeIdentifier)) {
-            itemProvider.loadDataRepresentationForTypeIdentifier(typeIdentifier) { data, error ->
-                if (error == null && data != null) {
-                    val image = UIImage(data = data)
-                    onResult(image)
-                } else {
-                    onResult(null)
-                }
-            }
-        } else {
-            onResult(null)
-        }
+    override fun imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        picker.dismissViewControllerAnimated(true, null)
+        onResult(null)
     }
 }

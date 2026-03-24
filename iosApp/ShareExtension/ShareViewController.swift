@@ -8,6 +8,12 @@ class ShareViewController: UIViewController {
     private let sharedImageName = "shared-image.jpg"
     private let sharedTextName = "shared-text.txt"
 
+    private let vcardIdentifiers = [
+        UTType.vCard.identifier,
+        "public.vcard",
+        "public.contact"
+    ]
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
@@ -45,8 +51,8 @@ class ShareViewController: UIViewController {
             imageProvider.loadItem(forTypeIdentifier: UTType.image.identifier) { [weak self] data, _ in
                 DispatchQueue.main.async { self?.handleLoadedImage(data) }
             }
-        } else if let vcardProvider = attachments.first(where: { $0.hasItemConformingToTypeIdentifier(UTType.vCard.identifier) }) {
-            vcardProvider.loadItem(forTypeIdentifier: UTType.vCard.identifier) { [weak self] data, _ in
+        } else if let (vcardProvider, vcardTypeId) = findVCardProvider(in: attachments) {
+            vcardProvider.loadItem(forTypeIdentifier: vcardTypeId) { [weak self] data, error in
                 DispatchQueue.main.async { self?.handleLoadedVCard(data) }
             }
         } else if let urlProvider = attachments.first(where: { $0.hasItemConformingToTypeIdentifier(UTType.url.identifier) }) {
@@ -70,8 +76,32 @@ class ShareViewController: UIViewController {
                 }
             }
         } else {
-            showError()
+            // No recognized type — try loading first attachment as data
+            let provider = attachments[0]
+            let typeId = provider.registeredTypeIdentifiers.first ?? UTType.data.identifier
+            provider.loadItem(forTypeIdentifier: typeId) { [weak self] data, _ in
+                DispatchQueue.main.async {
+                    // Try to interpret as vCard text
+                    if let vcardString = self?.extractString(from: data),
+                       vcardString.contains("BEGIN:VCARD") {
+                        self?.handleVCardString(vcardString)
+                    } else {
+                        self?.showError()
+                    }
+                }
+            }
         }
+    }
+
+    private func findVCardProvider(in attachments: [NSItemProvider]) -> (NSItemProvider, String)? {
+        for att in attachments {
+            for typeId in vcardIdentifiers {
+                if att.hasItemConformingToTypeIdentifier(typeId) {
+                    return (att, typeId)
+                }
+            }
+        }
+        return nil
     }
 
     // MARK: - Image handling
@@ -110,20 +140,33 @@ class ShareViewController: UIViewController {
     // MARK: - vCard handling
 
     private func handleLoadedVCard(_ data: NSSecureCoding?) {
-        var vcardString: String?
-        if let data = data as? Data {
-            vcardString = String(data: data, encoding: .utf8)
-        } else if let url = data as? URL {
-            vcardString = try? String(contentsOf: url, encoding: .utf8)
-        }
-
-        guard let vcard = vcardString else {
+        guard let vcardString = extractString(from: data), !vcardString.isEmpty else {
             showError()
             return
         }
+        handleVCardString(vcardString)
+    }
 
+    private func handleVCardString(_ vcard: String) {
         let stripped = stripVCard(vcard)
+        if stripped.isEmpty {
+            showError()
+            return
+        }
         saveTextAndOpenApp(stripped)
+    }
+
+    private func extractString(from data: NSSecureCoding?) -> String? {
+        if let data = data as? Data {
+            return String(data: data, encoding: .utf8) ?? String(data: data, encoding: .ascii)
+        } else if let url = data as? URL {
+            if let rawData = try? Data(contentsOf: url) {
+                return String(data: rawData, encoding: .utf8) ?? String(data: rawData, encoding: .ascii)
+            }
+        } else if let string = data as? String {
+            return string
+        }
+        return nil
     }
 
     /// Keep only QR-friendly fields: name, phone, email, org, title, address.
@@ -144,7 +187,6 @@ class ShareViewController: UIViewController {
             let trimmed = line.trimmingCharacters(in: .whitespaces)
             if trimmed.isEmpty { continue }
 
-            // Continuation lines (folded) start with space/tab
             if line.hasPrefix(" ") || line.hasPrefix("\t") {
                 if !skipContinuation {
                     result.append(line)
@@ -205,25 +247,21 @@ class ShareViewController: UIViewController {
             return
         }
 
-        // Walk the UIResponder chain to find a responder that handles openURL:.
-        // Share extensions can't access UIApplication directly.
-        let selector = sel_registerName("openURL:")
-        var responder: UIResponder? = self
-        while let r = responder {
-            if r.responds(to: selector) {
-                r.perform(selector, with: url)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-                    self?.extensionContext?.completeRequest(returningItems: nil)
-                }
-                return
-            }
-            responder = r.next
+        // Get UIApplication via NSClassFromString (not directly available in extensions)
+        let openSelector = NSSelectorFromString("openURL:")
+        guard let appClass = NSClassFromString("UIApplication") as? NSObject.Type,
+              let application = appClass.perform(NSSelectorFromString("sharedApplication"))?.takeUnretainedValue() as? NSObject else {
+            showAlert(
+                title: NSLocalizedString("share_image_shared", comment: ""),
+                message: NSLocalizedString("share_open_app", comment: "")
+            )
+            return
         }
 
-        showAlert(
-            title: NSLocalizedString("share_image_shared", comment: ""),
-            message: NSLocalizedString("share_open_app", comment: "")
-        )
+        _ = application.perform(openSelector, with: url)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+            self?.extensionContext?.completeRequest(returningItems: nil)
+        }
     }
 
     // MARK: - Alerts

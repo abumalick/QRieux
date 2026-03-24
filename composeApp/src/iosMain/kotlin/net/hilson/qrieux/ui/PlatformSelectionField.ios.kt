@@ -13,14 +13,7 @@ import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.readValue
 import net.hilson.qrieux.ui.theme.QRieuxUiConfig
 import platform.CoreGraphics.CGRectZero
-import platform.UIKit.UIColor
-import platform.UIKit.UIFont
-import platform.UIKit.UIPickerView
-import platform.UIKit.UIPickerViewDataSourceProtocol
-import platform.UIKit.UIPickerViewDelegateProtocol
-import platform.UIKit.UITextAlignmentLeft
-import platform.UIKit.UITextField
-import platform.UIKit.UIView
+import platform.UIKit.*
 import platform.darwin.NSObject
 
 @OptIn(ExperimentalForeignApi::class)
@@ -50,6 +43,8 @@ actual fun PlatformSelectionField(
                 layer.borderWidth = 1.0
                 layer.borderColor = UIColor.colorWithWhite(0.82, alpha = 1.0).CGColor
                 inputView = pickerView
+                isAccessibilityElement = true
+                accessibilityLabel = "selection_field"
             }
 
             coordinator.attach(

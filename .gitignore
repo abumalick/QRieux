@@ -48,3 +48,4 @@ fastlane/api_key.json
 # E2E tests
 e2e/artifacts/
 e2e/logs/
+compose-multiplatform-core

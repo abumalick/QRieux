@@ -57,7 +57,6 @@ import platform.AVFoundation.AVCaptureDevice
 import platform.AVFoundation.AVMediaTypeVideo
 import platform.AVFoundation.authorizationStatusForMediaType
 import platform.AVFoundation.requestAccessForMediaType
-import platform.PhotosUI.*
 import platform.Foundation.NSProcessInfo
 import platform.UIKit.UIApplication
 import platform.UIKit.UIImage
