@@ -64,6 +64,9 @@ export const isValidationErrorVisible = (errorText: string) =>
 export const tapBackToScan = () =>
   useAndroid() ? android.tapBackToScan() : ios.tapBackToScan();
 
+export const getSelectedType = () =>
+  useAndroid() ? android.getSelectedType() : ios.getSelectedType();
+
 export const waitForQrGenerated = () =>
   useAndroid() ? android.waitForQrGenerated() : ios.waitForQrGenerated();
 
@@ -71,3 +74,6 @@ export const waitForQrGenerated = () =>
 
 export const shareImageToApp = (fixtureName: string) =>
   useAndroid() ? android.shareImageToApp(fixtureName) : ios.shareImageToApp(fixtureName);
+
+export const shareTextToApp = (text: string) =>
+  useAndroid() ? android.shareTextToApp(text) : ios.shareTextToApp(text);

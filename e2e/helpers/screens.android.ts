@@ -33,6 +33,16 @@ export async function shareImageToApp(fixtureName: string): Promise<void> {
   await browser.pause(2000);
 }
 
+export async function shareTextToApp(text: string): Promise<void> {
+  const escaped = text.replace(/'/g, "'\\''");
+  execSync(
+    `adb shell "am start -a android.intent.action.SEND -t text/plain ` +
+    `-f 0x30000000 --es android.intent.extra.TEXT '${escaped}' ` +
+    `-n net.hilson.qrieux.dev/net.hilson.qrieux.MainActivity"`,
+  );
+  await browser.pause(2000);
+}
+
 export async function dismissOnboarding(): Promise<void> {
   const skipBtn = await $('android=new UiSelector().text("Skip")');
   if (await skipBtn.isExisting()) {
@@ -213,6 +223,12 @@ export async function tapBackToScan(): Promise<void> {
   const btn = await $('~Back to Scan');
   await btn.waitForExist({ timeout: 5_000 });
   await btn.click();
+}
+
+export async function getSelectedType(): Promise<string> {
+  const dropdown = await $('android=new UiSelector().className("android.widget.EditText").instance(0)');
+  await dropdown.waitForExist({ timeout: 5_000 });
+  return dropdown.getText();
 }
 
 export async function waitForQrGenerated(): Promise<void> {

@@ -19,6 +19,12 @@ export async function shareImageToApp(fixtureName: string): Promise<void> {
   await browser.pause(2000);
 }
 
+export async function shareTextToApp(text: string): Promise<void> {
+  const encoded = encodeURIComponent(text);
+  execSync(`xcrun simctl openurl booted 'qrieux://create?text=${encoded}'`);
+  await browser.pause(2000);
+}
+
 export async function dismissOnboarding(): Promise<void> {
   const skipBtn = await $('-ios predicate string:label == "Skip"');
   if (await skipBtn.isExisting()) {
@@ -254,6 +260,12 @@ export async function tapBackToScan(): Promise<void> {
   const btn = await $('~Back to Scan');
   await btn.waitForExist({ timeout: 5_000 });
   await btn.click();
+}
+
+export async function getSelectedType(): Promise<string> {
+  const field = await $('-ios predicate string:label == "selection_field"');
+  await field.waitForExist({ timeout: 5_000 });
+  return await field.getValue() as string;
 }
 
 export async function waitForQrGenerated(): Promise<void> {

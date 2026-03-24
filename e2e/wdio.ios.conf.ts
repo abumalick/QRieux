@@ -22,7 +22,7 @@ function findIosAppPath(): string {
 export const config: WebdriverIO.Config = {
   ...sharedConfig,
 
-  specs: ['./specs/app-launch.spec.ts', './specs/qr-creation.spec.ts', './specs/scan-from-gallery.spec.ts', './specs/scan-from-share.spec.ts'],
+  specs: ['./specs/app-launch.spec.ts', './specs/qr-creation.spec.ts', './specs/scan-from-gallery.spec.ts', './specs/scan-from-share.spec.ts', './specs/share-text-to-app.spec.ts'],
 
   capabilities: [{
     platformName: 'iOS',

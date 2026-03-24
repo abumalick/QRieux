@@ -16,6 +16,7 @@ class MainActivity : ComponentActivity() {
     private val sharedUri = mutableStateOf<Uri?>(null)
     private val shareTimestamp = mutableLongStateOf(0L)
     private val sharedText = mutableStateOf<String?>(null)
+    private val shareTextTimestamp = mutableLongStateOf(0L)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -31,7 +32,8 @@ class MainActivity : ComponentActivity() {
                 shareTimestamp = shareTimestamp.longValue,
                 screenshotContent = screenshotContent,
                 screenshotBackground = screenshotBg,
-                sharedText = sharedText.value
+                sharedText = sharedText.value,
+                shareTextTimestamp = shareTextTimestamp.longValue
             )
         }
     }
@@ -62,10 +64,14 @@ class MainActivity : ComponentActivity() {
                     @Suppress("DEPRECATION")
                     intent.getParcelableExtra(Intent.EXTRA_STREAM)
                 }
-                uri?.let { sharedText.value = readAndStripVCard(it) }
+                uri?.let {
+                    sharedText.value = readAndStripVCard(it)
+                    shareTextTimestamp.longValue = System.currentTimeMillis()
+                }
             }
             mimeType.startsWith("text/") -> {
                 sharedText.value = intent.getStringExtra(Intent.EXTRA_TEXT)
+                shareTextTimestamp.longValue = System.currentTimeMillis()
             }
         }
     }

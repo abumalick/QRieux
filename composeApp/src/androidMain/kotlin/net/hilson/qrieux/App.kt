@@ -64,7 +64,8 @@ fun App(
     shareTimestamp: Long = 0L,
     screenshotContent: String? = null,
     screenshotBackground: String? = null,
-    sharedText: String? = null
+    sharedText: String? = null,
+    shareTextTimestamp: Long = 0L
 ) {
     QRieuxTheme {
         // Screenshot mode: launched via adb with SCREENSHOT_CONTENT intent extra
@@ -148,6 +149,12 @@ fun App(
                         snackbarHostState.showSnackbar(noQrFoundMessage)
                     }
                 }
+            }
+        }
+
+        LaunchedEffect(shareTextTimestamp) {
+            if (shareTextTimestamp > 0L && sharedText != null) {
+                appMode = AppMode.Generate
             }
         }
 
