@@ -1,4 +1,4 @@
-• Nuevo: Crea códigos QR para sitios web, correos, números de teléfono, Wi-Fi y texto
-• Comparte texto o URLs con QRieux para crear un código QR al instante
-• Compartir una imagen con QRieux ahora abre la app directamente
-• Capturas de pantalla actualizadas
+• Nuevo: Comparte un contacto con QRieux para crear un código QR
+• Escanea códigos QR de contacto para ver nombre, teléfono, email y añadir a contactos
+• Mejora en la fiabilidad de la extensión de compartir
+• Botones del escáner corregidos en tablets

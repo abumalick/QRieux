@@ -1,4 +1,4 @@
-• Yeni: Web siteleri, e-postalar, telefon numaraları, Wi-Fi ve metin için QR kod oluşturun
-• QRieux'e metin veya URL paylaşarak anında QR kod oluşturun
-• QRieux'e resim paylaşmak artık uygulamayı doğrudan açıyor
-• Güncellenmiş ekran görüntüleri
+• Yeni: Bir kişiyi QRieux'e paylaşarak QR kod oluşturun
+• Kişi QR kodlarını tarayarak ad, telefon, e-posta görüntüleyin ve rehbere ekleyin
+• Paylaşım eklentisinin güvenilirliği artırıldı
+• Tabletlerde tarayıcı düğmelerinin kesilmesi düzeltildi

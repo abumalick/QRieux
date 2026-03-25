@@ -1,4 +1,4 @@
-• New: Create QR codes for websites, emails, phone numbers, Wi-Fi, and text
-• Share text or URLs to QRieux to instantly create a QR code
-• Sharing an image to QRieux now opens the app directly
-• Updated screenshots
+• New: Share a contact to QRieux to create a QR code for it
+• Scan contact QR codes to see name, phone, email and add to contacts
+• Improved share extension reliability
+• Fixed scanner buttons on tablets
