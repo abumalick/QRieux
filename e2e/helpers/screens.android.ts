@@ -339,6 +339,43 @@ export async function toggleWifiHidden(): Promise<void> {
   await browser.pause(300);
 }
 
+export async function shareVCardToApp(vcfContent: string): Promise<void> {
+  const filePath = '/sdcard/Download/test-contact.vcf';
+  // Clean up file and stale MediaStore entry from previous runs
+  execSync(`adb shell rm -f ${filePath}`);
+  execSync(
+    `adb shell content delete --uri content://media/external/file --where "\\"_display_name='test-contact.vcf'\\""`,
+  );
+  const b64 = Buffer.from(vcfContent).toString('base64');
+  execSync(`adb shell "echo '${b64}' | base64 -d > ${filePath}"`);
+  // Trigger media scan so MediaStore indexes the file
+  execSync(`adb shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d "file://${filePath}"`);
+  await browser.pause(2000);
+  // Query MediaStore for content URI
+  let mediaId: string | null = null;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const output = execSync(
+      `adb shell content query --uri content://media/external/file --projection _id --where "\\"_display_name='test-contact.vcf'\\""`,
+    ).toString().trim();
+    const match = output.match(/_id=(\d+)/);
+    if (match) {
+      mediaId = match[1];
+      break;
+    }
+    await browser.pause(1000);
+  }
+  if (!mediaId) {
+    throw new Error('Could not find media URI for test-contact.vcf');
+  }
+  const contentUri = `content://media/external/file/${mediaId}`;
+  execSync(
+    `adb shell am start -a android.intent.action.SEND -t text/x-vcard -f 0x30000001 ` +
+    `-d '${contentUri}' --eu android.intent.extra.STREAM '${contentUri}' ` +
+    `-n net.hilson.qrieux.dev/net.hilson.qrieux.MainActivity`,
+  );
+  await browser.pause(2000);
+}
+
 export async function reactivateApp(): Promise<void> {
   await driver.activateApp('net.hilson.qrieux.dev');
   await browser.pause(1000);

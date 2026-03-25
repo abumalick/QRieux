@@ -78,6 +78,9 @@ export const shareImageToApp = (fixtureName: string) =>
 export const shareTextToApp = (text: string) =>
   useAndroid() ? android.shareTextToApp(text) : ios.shareTextToApp(text);
 
+export const shareVCardToApp = (vcfContent: string) =>
+  useAndroid() ? android.shareVCardToApp(vcfContent) : ios.shareVCardToApp(vcfContent);
+
 // --- Toast / flash / help / share ---
 
 export const waitForToast = (text: string) =>

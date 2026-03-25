@@ -2,6 +2,7 @@
 // Uses label predicates and accessibility identifiers
 
 import { execSync } from 'child_process';
+import fs from 'fs';
 import path from 'path';
 
 const FIXTURES_DIR = path.join(__dirname, '..', 'fixtures');
@@ -391,6 +392,44 @@ export async function toggleWifiHidden(): Promise<void> {
   await toggle.waitForExist({ timeout: 5_000 });
   await toggle.click();
   await browser.pause(300);
+}
+
+export async function shareVCardToApp(vcfContent: string): Promise<void> {
+  const containerPath = execSync(
+    'xcrun simctl get_app_container booted net.hilson.qrieux group.net.hilson.qrieux',
+  ).toString().trim();
+
+  // Strip vCard to QR-friendly fields (simulates what ShareExtension does)
+  const stripped = stripVCardForTest(vcfContent);
+  const destPath = path.join(containerPath, 'shared-text.txt');
+  fs.writeFileSync(destPath, stripped, 'utf-8');
+
+  execSync('xcrun simctl openurl booted qrieux://shared-text');
+  await browser.pause(2000);
+}
+
+function stripVCardForTest(vcard: string): string {
+  const allowedPrefixes = [
+    'BEGIN:', 'END:', 'VERSION:', 'N:', 'N;', 'FN:', 'FN;',
+    'TEL:', 'TEL;', 'EMAIL:', 'EMAIL;', 'ORG:', 'ORG;',
+    'TITLE:', 'TITLE;', 'ADR:', 'ADR;', 'URL:', 'URL;',
+    'BDAY:', 'NOTE:',
+  ];
+  const lines = vcard.split(/\r?\n/);
+  const result: string[] = [];
+  let skipContinuation = false;
+  for (const line of lines) {
+    if (!line.trim()) continue;
+    if (line.startsWith(' ') || line.startsWith('\t')) {
+      if (!skipContinuation) result.push(line);
+      continue;
+    }
+    const upper = line.trim().toUpperCase();
+    const allowed = allowedPrefixes.some(p => upper.startsWith(p));
+    skipContinuation = !allowed;
+    if (allowed) result.push(line.trim());
+  }
+  return result.join('\r\n');
 }
 
 export async function reactivateApp(): Promise<void> {
