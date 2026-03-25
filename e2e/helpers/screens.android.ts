@@ -243,3 +243,103 @@ export async function waitForQrGenerated(): Promise<void> {
     { timeout: 10_000, timeoutMsg: 'QR code was not generated in time' }
   );
 }
+
+// --- Toast / flash / help / share helpers ---
+
+export async function waitForToast(_text: string): Promise<void> {
+  // Native Android toasts are invisible to UiAutomator2 on API 30+.
+  // Just pause to let the toast appear/dismiss — the tap itself is the real assertion.
+  console.warn(`[waitForToast] Android: skipped (UiAutomator2 limitation). Expected: "${_text}"`);
+  await browser.pause(1500);
+}
+
+export async function tapFlashButton(): Promise<void> {
+  const onBtn = await $('~Turn on flash');
+  if (await onBtn.isExisting()) {
+    await onBtn.click();
+    return;
+  }
+  const offBtn = await $('~Turn off flash');
+  await offBtn.waitForExist({ timeout: 5_000 });
+  await offBtn.click();
+}
+
+export async function getFlashButtonLabel(): Promise<string> {
+  const offBtn = await $('~Turn off flash');
+  if (await offBtn.isExisting()) return 'Turn off flash';
+  const onBtn = await $('~Turn on flash');
+  if (await onBtn.isExisting()) return 'Turn on flash';
+  throw new Error('Flash button not found');
+}
+
+export async function tapHelpButton(): Promise<void> {
+  const btn = await $('~Help');
+  await btn.waitForExist({ timeout: 5_000 });
+  await btn.click();
+}
+
+export async function isOnboardingVisible(): Promise<boolean> {
+  const el = await $('android=new UiSelector().text("What are QR Codes?")');
+  return el.isExisting();
+}
+
+export async function tapShareQrButton(): Promise<void> {
+  const btn = await scrollToShareButton();
+  await btn.click();
+}
+
+export async function dismissShareSheet(): Promise<void> {
+  await driver.pressKeyCode(4);
+  await browser.pause(1000);
+}
+
+export async function selectWifiSecurity(securityName: string): Promise<void> {
+  await scrollToTop();
+  await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("Security"))');
+  await browser.pause(300);
+
+  // Find the security dropdown by its current value text (it shows current selection like "WPA/WPA2")
+  // It's the EditText right after the "Security" label
+  const securityValues = ['WPA/WPA2', 'WEP', 'None'];
+  for (const val of securityValues) {
+    const dropdown = await $(`android=new UiSelector().className("android.widget.EditText").text("${val}")`);
+    if (await dropdown.isExisting()) {
+      await dropdown.click();
+      await browser.pause(500);
+      const option = await $(`android=new UiSelector().text("${securityName}")`);
+      await option.waitForExist({ timeout: 3_000 });
+      await option.click();
+      await browser.pause(500);
+      return;
+    }
+  }
+  throw new Error('Could not find Wi-Fi security dropdown');
+}
+
+export async function toggleWifiHidden(): Promise<void> {
+  await scrollToTop();
+  await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("Hidden network"))');
+  await browser.pause(300);
+  // Compose Switch renders as a clickable View, not android.widget.Switch.
+  // The "Hidden network" Row has the Switch as the first clickable element before the label.
+  // Find by scrolling to "Hidden network" text, then click the clickable View just before it.
+  const hiddenLabel = await $('android=new UiSelector().text("Hidden network")');
+  await hiddenLabel.waitForExist({ timeout: 5_000 });
+  // Get bounds of label to find the switch (to its left)
+  const location = await hiddenLabel.getLocation();
+  const size = await hiddenLabel.getSize();
+  // The Switch is to the left of the label text, at roughly the same Y
+  const switchX = Math.max(location.x - 50, 30);
+  const switchY = location.y + Math.floor(size.height / 2);
+  await driver.action('pointer', { parameters: { pointerType: 'touch' } })
+    .move({ x: switchX, y: switchY })
+    .down()
+    .up()
+    .perform();
+  await browser.pause(300);
+}
+
+export async function reactivateApp(): Promise<void> {
+  await driver.activateApp('net.hilson.qrieux.dev');
+  await browser.pause(1000);
+}

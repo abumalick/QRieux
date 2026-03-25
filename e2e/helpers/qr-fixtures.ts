@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 import path from 'path';
 
 const FIXTURES_DIR = path.join(__dirname, '..', 'fixtures');
-const FIXTURES = ['url-https.png', 'email-mailto.png', 'phone-tel.png', 'text-hello.png', 'wifi.png'];
+const FIXTURES = ['url-https.png', 'email-mailto.png', 'phone-tel.png', 'text-hello.png', 'wifi.png', 'vcard.png', 'no-qr.png'];
 
 // Android
 const DEVICE_DIR = '/sdcard/DCIM/QRieux-E2E';

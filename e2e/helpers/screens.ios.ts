@@ -279,3 +279,121 @@ export async function waitForQrGenerated(): Promise<void> {
     { timeout: 10_000, timeoutMsg: 'QR code was not generated in time' }
   );
 }
+
+// --- Toast / flash / help / share helpers ---
+
+export async function waitForToast(text: string): Promise<void> {
+  const toast = await $(`-ios predicate string:label CONTAINS "${text}"`);
+  await toast.waitForExist({ timeout: 5_000 });
+}
+
+export async function tapFlashButton(): Promise<void> {
+  const onBtn = await $('~Turn on flash');
+  if (await onBtn.isExisting()) {
+    await onBtn.click();
+    return;
+  }
+  const offBtn = await $('~Turn off flash');
+  await offBtn.waitForExist({ timeout: 5_000 });
+  await offBtn.click();
+}
+
+export async function getFlashButtonLabel(): Promise<string> {
+  const offBtn = await $('~Turn off flash');
+  if (await offBtn.isExisting()) return 'Turn off flash';
+  const onBtn = await $('~Turn on flash');
+  if (await onBtn.isExisting()) return 'Turn on flash';
+  throw new Error('Flash button not found');
+}
+
+export async function tapHelpButton(): Promise<void> {
+  const btn = await $('~Help');
+  await btn.waitForExist({ timeout: 5_000 });
+  await btn.click();
+}
+
+export async function isOnboardingVisible(): Promise<boolean> {
+  const el = await $('-ios predicate string:label == "What are QR Codes?"');
+  return el.isExisting();
+}
+
+export async function tapShareQrButton(): Promise<void> {
+  await iosScrollToShareButton();
+  const btn = await $('-ios predicate string:label == "Share QR"');
+  await btn.waitForExist({ timeout: 5_000 });
+  await btn.click();
+}
+
+export async function dismissShareSheet(): Promise<void> {
+  // iOS share sheet: swipe down to dismiss (tap on dimmed area is unreliable on iOS 26+)
+  const { width, height } = await browser.getWindowSize();
+  const centerX = Math.floor(width / 2);
+  const sheetTop = Math.floor(height * 0.4);
+  const sheetBottom = Math.floor(height * 0.9);
+
+  await driver.performActions([{
+    type: 'pointer', id: 'dismiss', parameters: { pointerType: 'touch' },
+    actions: [
+      { type: 'pointerMove', duration: 0, x: centerX, y: sheetTop },
+      { type: 'pointerDown', button: 0 },
+      { type: 'pointerMove', duration: 300, x: centerX, y: sheetBottom },
+      { type: 'pointerUp', button: 0 },
+    ],
+  }]);
+  await driver.releaseActions();
+  await browser.pause(1000);
+}
+
+export async function selectWifiSecurity(securityName: string): Promise<void> {
+  await iosDismissKeyboard();
+  await iosScrollToElement('Security');
+
+  // Tap the security selection_field (last one visible — type chooser may be scrolled away)
+  const fields = await $$('-ios predicate string:label == "selection_field"');
+  const count = await fields.length;
+  if (count < 1) {
+    throw new Error('Could not find Wi-Fi security selection field');
+  }
+  await fields[count - 1].click();
+  await browser.pause(500);
+
+  const picker = await $('-ios class chain:**/XCUIElementTypePickerWheel');
+  await picker.waitForExist({ timeout: 5_000 });
+
+  let found = false;
+  for (let i = 0; i < 5; i++) {
+    const current = await picker.getValue();
+    if (current === securityName) { found = true; break; }
+    await driver.execute('mobile: selectPickerWheelValue', {
+      element: picker.elementId,
+      order: 'next',
+      offset: 0.15,
+    });
+    await browser.pause(300);
+  }
+  if (!found) {
+    const final = await picker.getValue();
+    if (final !== securityName) {
+      throw new Error(`Could not select Wi-Fi security "${securityName}" — picker stuck on "${final}"`);
+    }
+  }
+
+  // Dismiss picker
+  const title = await $('-ios predicate string:label == "Create QR Code"');
+  await title.click();
+  await browser.pause(500);
+}
+
+export async function toggleWifiHidden(): Promise<void> {
+  await iosDismissKeyboard();
+  await iosScrollToElement('Hidden network');
+  const toggle = await $('-ios class chain:**/XCUIElementTypeSwitch');
+  await toggle.waitForExist({ timeout: 5_000 });
+  await toggle.click();
+  await browser.pause(300);
+}
+
+export async function reactivateApp(): Promise<void> {
+  await driver.activateApp('net.hilson.qrieux');
+  await browser.pause(1000);
+}

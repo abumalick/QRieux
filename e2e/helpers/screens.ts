@@ -77,3 +77,35 @@ export const shareImageToApp = (fixtureName: string) =>
 
 export const shareTextToApp = (text: string) =>
   useAndroid() ? android.shareTextToApp(text) : ios.shareTextToApp(text);
+
+// --- Toast / flash / help / share ---
+
+export const waitForToast = (text: string) =>
+  useAndroid() ? android.waitForToast(text) : ios.waitForToast(text);
+
+export const tapFlashButton = () =>
+  useAndroid() ? android.tapFlashButton() : ios.tapFlashButton();
+
+export const getFlashButtonLabel = () =>
+  useAndroid() ? android.getFlashButtonLabel() : ios.getFlashButtonLabel();
+
+export const tapHelpButton = () =>
+  useAndroid() ? android.tapHelpButton() : ios.tapHelpButton();
+
+export const isOnboardingVisible = () =>
+  useAndroid() ? android.isOnboardingVisible() : ios.isOnboardingVisible();
+
+export const tapShareQrButton = () =>
+  useAndroid() ? android.tapShareQrButton() : ios.tapShareQrButton();
+
+export const dismissShareSheet = () =>
+  useAndroid() ? android.dismissShareSheet() : ios.dismissShareSheet();
+
+export const selectWifiSecurity = (securityName: string) =>
+  useAndroid() ? android.selectWifiSecurity(securityName) : ios.selectWifiSecurity(securityName);
+
+export const toggleWifiHidden = () =>
+  useAndroid() ? android.toggleWifiHidden() : ios.toggleWifiHidden();
+
+export const reactivateApp = () =>
+  useAndroid() ? android.reactivateApp() : ios.reactivateApp();
