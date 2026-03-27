@@ -47,14 +47,15 @@ class ShareViewController: UIViewController {
             return
         }
 
-        if let imageProvider = attachments.first(where: { $0.hasItemConformingToTypeIdentifier(UTType.image.identifier) }) {
-            imageProvider.loadItem(forTypeIdentifier: UTType.image.identifier) { [weak self] data, _ in
-                DispatchQueue.main.async { self?.handleLoadedImage(data) }
-            }
-        } else if let (vcardProvider, vcardTypeId) = findVCardProvider(in: attachments) {
+        // Check vCard before image — contacts with photos conform to both types
+        if let (vcardProvider, vcardTypeId) = findVCardProvider(in: attachments) {
             vcardProvider.loadItem(forTypeIdentifier: vcardTypeId) { [weak self] data, error in
                 if let error = error { print("vCard load failed: \(error.localizedDescription)") }
                 DispatchQueue.main.async { self?.handleLoadedVCard(data) }
+            }
+        } else if let imageProvider = attachments.first(where: { $0.hasItemConformingToTypeIdentifier(UTType.image.identifier) }) {
+            imageProvider.loadItem(forTypeIdentifier: UTType.image.identifier) { [weak self] data, _ in
+                DispatchQueue.main.async { self?.handleLoadedImage(data) }
             }
         } else if let urlProvider = attachments.first(where: { $0.hasItemConformingToTypeIdentifier(UTType.url.identifier) }) {
             urlProvider.loadItem(forTypeIdentifier: UTType.url.identifier) { [weak self] data, _ in
@@ -248,21 +249,30 @@ class ShareViewController: UIViewController {
             return
         }
 
-        // Get UIApplication via NSClassFromString (not directly available in extensions)
-        let openSelector = NSSelectorFromString("openURL:")
-        guard let appClass = NSClassFromString("UIApplication") as? NSObject.Type,
-              let application = appClass.perform(NSSelectorFromString("sharedApplication"))?.takeUnretainedValue() as? NSObject else {
+        if openURLViaResponderChain(url) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
+                self?.extensionContext?.completeRequest(returningItems: nil)
+            }
+        } else {
             showAlert(
                 title: NSLocalizedString("share_image_shared", comment: ""),
                 message: NSLocalizedString("share_open_app", comment: "")
             )
-            return
         }
+    }
 
-        _ = application.perform(openSelector, with: url)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) { [weak self] in
-            self?.extensionContext?.completeRequest(returningItems: nil)
+    // Get UIApplication.shared via runtime and call the modern open(_:options:completionHandler:).
+    // The deprecated single-param openURL: is force-rejected since iOS 18.
+    @discardableResult
+    private func openURLViaResponderChain(_ url: URL) -> Bool {
+        guard let appClass = NSClassFromString("UIApplication") as? NSObject.Type,
+              let app = appClass.perform(NSSelectorFromString("sharedApplication"))?
+                  .takeUnretainedValue() as? NSObject else {
+            return false
         }
+        let openSel = NSSelectorFromString("openURL:options:completionHandler:")
+        app.perform(openSel, with: url, with: [:] as [String: Any])
+        return true
     }
 
     // MARK: - Alerts
