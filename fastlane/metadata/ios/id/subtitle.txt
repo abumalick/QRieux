@@ -1,1 +1,1 @@
-Pemindai barcode sederhana
+Pemindai QR & pembuat

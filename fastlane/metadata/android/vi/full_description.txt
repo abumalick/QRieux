@@ -2,13 +2,14 @@ QRieux là ứng dụng quét mã QR và mã vạch đơn giản, nhanh chóng, 
 
 Tính năng:
 • Quét mã QR và mã vạch tức thì
+• Tạo mã QR — tạo mã QR cho trang web, email, số điện thoại, Wi-Fi và văn bản
 • Quét từ thư viện ảnh — chọn bất kỳ hình ảnh nào có mã QR
-• Chia sẻ hình ảnh đến ứng dụng — quét mã QR được chia sẻ từ các ứng dụng khác
-• Thao tác một chạm: mở URL, gọi điện, gửi email, kết nối WiFi
+• Chia sẻ văn bản, URL, danh bạ hoặc hình ảnh đến ứng dụng — tạo hoặc quét mã QR ngay lập tức
+• Thao tác một chạm: mở URL, gọi điện, gửi email, thêm liên hệ, kết nối WiFi
 • Sao chép và chia sẻ nội dung đã quét dễ dàng
 • Hỗ trợ đèn flash để quét trong điều kiện thiếu sáng
 • Giao diện sạch sẽ, dễ sử dụng với nút bấm lớn
 
-Không quảng cáo. Không theo dõi. Hoạt động hoàn toàn ngoại tuyến. Chỉ cần quét.
+Không quảng cáo. Không theo dõi. Hoạt động hoàn toàn ngoại tuyến. Chỉ cần quét và tạo.
 
 QRieux là mã nguồn mở: https://github.com/abumalick/QRieux

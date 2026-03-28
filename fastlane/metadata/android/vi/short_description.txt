@@ -1,1 +1,1 @@
-Quét mã QR và mã vạch. Không quảng cáo, không theo dõi, hoạt động offline.
+Quét và tạo mã QR. Không quảng cáo, không theo dõi, hoạt động offline.

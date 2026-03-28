@@ -1,1 +1,1 @@
-Kolay QR ve barkod tarayıcı. Reklam yok, izleme yok, çevrimdışı çalışır.
+QR tarayıcı ve oluşturucu. Reklam yok, izleme yok, çevrimdışı çalışır.

@@ -1,1 +1,1 @@
-Scanner de codes-barres simple
+Scanner QR et créateur

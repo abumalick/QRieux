@@ -1,1 +1,1 @@
-Basit barkod tarayıcı
+QR tarayıcı ve oluşturucu

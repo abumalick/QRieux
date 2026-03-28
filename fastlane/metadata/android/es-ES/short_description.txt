@@ -1,1 +1,1 @@
-Escáner QR y códigos de barras. Sin anuncios, sin rastreo, funciona offline.
+Escáner y creador QR. Sin anuncios, sin rastreo, funciona offline.

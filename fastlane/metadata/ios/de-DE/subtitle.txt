@@ -1,1 +1,1 @@
-Einfacher Barcode-Scanner
+QR-Scanner & Ersteller

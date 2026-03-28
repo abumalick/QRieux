@@ -1,1 +1,1 @@
-Easy QR & barcode scanner. No ads, no tracking, works offline.
+QR scanner & creator. No ads, no tracking, works offline.
