@@ -24,8 +24,7 @@ import net.hilson.qrieux.openAppSettings
 @Composable
 fun PermissionScreen(
     showRationale: Boolean,
-    onRequestPermission: () -> Unit,
-    onCreateQr: () -> Unit
+    onRequestPermission: () -> Unit
 ) {
     val platformContext = IosContext()
 
@@ -93,23 +92,6 @@ fun PermissionScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            OutlinedButton(
-                onClick = onCreateQr,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(72.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = Color.White
-                )
-            ) {
-                Text(
-                    text = stringResource(Res.string.action_create_qr),
-                    fontSize = 22.sp
-                )
-            }
         }
     }
 }

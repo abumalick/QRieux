@@ -2,43 +2,98 @@ import UIKit
 import SwiftUI
 import ComposeApp
 
-struct ComposeView: UIViewControllerRepresentable {
+// MARK: - Tab-specific Compose hosts
+
+private struct ScanHost: UIViewControllerRepresentable {
     var sharedImage: UIImage?
-    var sharedText: String?
 
     func makeUIViewController(context: Context) -> UIViewController {
         if let image = sharedImage {
-            return MainViewControllerKt.MainViewControllerWithImage(image: image)
+            return MainViewControllerKt.makeScanViewControllerWithImage(image: image)
         }
-        if let text = sharedText {
-            return MainViewControllerKt.MainViewControllerWithText(text: text)
-        }
-        return MainViewControllerKt.MainViewController()
+        return MainViewControllerKt.makeScanViewController()
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
 
+private struct CreateHost: UIViewControllerRepresentable {
+    var sharedText: String?
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        if let text = sharedText {
+            return MainViewControllerKt.makeCreateViewControllerWithText(text: text)
+        }
+        return MainViewControllerKt.makeCreateViewController()
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}
+
+private struct HelpHost: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+        return MainViewControllerKt.makeHelpViewController()
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}
+
+// MARK: - Main TabView
+
+enum AppTab: Hashable {
+    case scan, create, help
+}
+
 struct ContentView: View {
     @Binding var sharedImage: UIImage?
     @Binding var sharedText: String?
+    @State private var selectedTab: AppTab = .scan
 
     var body: some View {
-        ZStack {
-            Color.black.ignoresSafeArea()
-            ComposeView(sharedImage: sharedImage, sharedText: sharedText)
+        TabView(selection: $selectedTab) {
+            ScanHost(sharedImage: sharedImage)
                 .ignoresSafeArea()
-                .id(viewId)
+                .tabItem {
+                    Label(NSLocalizedString("tab_scan", comment: ""), systemImage: "qrcode.viewfinder")
+                }
+                .tag(AppTab.scan)
+                .id(scanViewId)
+
+            CreateHost(sharedText: sharedText)
+                .ignoresSafeArea()
+                .tabItem {
+                    Label(NSLocalizedString("tab_create", comment: ""), systemImage: "plus.circle")
+                }
+                .tag(AppTab.create)
+                .id(createViewId)
+
+            HelpHost()
+                .ignoresSafeArea()
+                .tabItem {
+                    Label(NSLocalizedString("tab_help", comment: ""), systemImage: "questionmark.circle")
+                }
+                .tag(AppTab.help)
+        }
+        .onChange(of: sharedImage) { image in
+            if image != nil { selectedTab = .scan }
+        }
+        .onChange(of: sharedText) { text in
+            if text != nil { selectedTab = .create }
         }
     }
 
-    private var viewId: String {
+    // Recreate Compose views when shared content changes
+    private var scanViewId: String {
         if let image = sharedImage {
-            return "shared-image-\(ObjectIdentifier(image))"
+            return "scan-\(ObjectIdentifier(image))"
         }
+        return "scan-default"
+    }
+
+    private var createViewId: String {
         if let text = sharedText {
-            return "shared-text-\(text.hashValue)"
+            return "create-\(text.hashValue)"
         }
-        return "default"
+        return "create-default"
     }
 }

@@ -42,4 +42,19 @@
     <string name="onboarding_get_started">Bắt đầu</string>
     <string name="onboarding_skip">Bỏ qua</string>
     <string name="help">Trợ giúp</string>
+
+    <!--  Onboarding Step 4 -->
+    <string name="onboarding_step4_title">Tạo &amp; Chia sẻ mã QR</string>
+    <string name="onboarding_step4_desc">Tạo mã QR của riêng bạn cho trang web, danh bạ, WiFi và nhiều hơn nữa. Chia sẻ dễ dàng với bất kỳ ai.</string>
+
+    <!--  Tab Bar -->
+    <string name="tab_scan">Quét</string>
+    <string name="tab_create">Tạo</string>
+    <string name="tab_help">Trợ giúp</string>
+
+    <!--  Help Screen -->
+    <string name="help_screen_title">Cách sử dụng QRieux</string>
+    <string name="help_supported_formats_title">Định dạng được hỗ trợ</string>
+    <string name="help_supported_formats_desc">Mã QR, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec và Data Matrix.</string>
+    <string name="navigate_back">Quay lại</string>
 </resources>

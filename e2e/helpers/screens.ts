@@ -98,6 +98,17 @@ export const tapHelpButton = () =>
 export const isOnboardingVisible = () =>
   useAndroid() ? android.isOnboardingVisible() : ios.isOnboardingVisible();
 
+// --- Tab navigation ---
+
+export const tapScanTab = () =>
+  useAndroid() ? android.tapScanTab() : ios.tapScanTab();
+
+export const tapHelpTab = () =>
+  useAndroid() ? android.tapHelpTab() : ios.tapHelpTab();
+
+export const waitForHelpScreen = () =>
+  useAndroid() ? android.waitForHelpScreen() : ios.waitForHelpScreen();
+
 export const tapShareQrButton = () =>
   useAndroid() ? android.tapShareQrButton() : ios.tapShareQrButton();
 
@@ -112,3 +123,4 @@ export const toggleWifiHidden = () =>
 
 export const reactivateApp = () =>
   useAndroid() ? android.reactivateApp() : ios.reactivateApp();
+

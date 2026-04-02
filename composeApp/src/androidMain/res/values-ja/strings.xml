@@ -42,4 +42,19 @@
     <string name="onboarding_get_started">はじめる</string>
     <string name="onboarding_skip">スキップ</string>
     <string name="help">ヘルプ</string>
+
+    <!--  Onboarding Step 4 -->
+    <string name="onboarding_step4_title">QRコードを作成・共有</string>
+    <string name="onboarding_step4_desc">ウェブサイト、連絡先、WiFiなどのQRコードを作成できます。誰とでも簡単に共有できます。</string>
+
+    <!--  Tab Bar -->
+    <string name="tab_scan">スキャン</string>
+    <string name="tab_create">作成</string>
+    <string name="tab_help">ヘルプ</string>
+
+    <!--  Help Screen -->
+    <string name="help_screen_title">QRieuxの使い方</string>
+    <string name="help_supported_formats_title">対応フォーマット</string>
+    <string name="help_supported_formats_desc">QRコード、EAN-8、EAN-13、Code 128、Code 39、Code 93、UPC-E、PDF417、Aztec、Data Matrix。</string>
+    <string name="navigate_back">戻る</string>
 </resources>

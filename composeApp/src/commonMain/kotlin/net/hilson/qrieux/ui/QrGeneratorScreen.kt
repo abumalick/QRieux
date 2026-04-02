@@ -106,7 +106,7 @@ import qr_scanner.composeapp.generated.resources.generator_wifi_security_wpa
 @Composable
 fun QrGeneratorScreen(
     platformContext: PlatformContext,
-    onBack: () -> Unit,
+    onBack: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     screenshotPayload: String? = null,
     initialText: String? = null
@@ -163,19 +163,19 @@ fun QrGeneratorScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
-            TopAppBar(
-                title = { Text(stringResource(Res.string.generator_title)) },
-                navigationIcon = {
-                    IconButton(
-                        onClick = onBack
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(Res.string.action_back_to_scan)
-                        )
+            if (onBack != null) {
+                TopAppBar(
+                    title = { Text(stringResource(Res.string.generator_title)) },
+                    navigationIcon = {
+                        IconButton(onClick = onBack) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = stringResource(Res.string.action_back_to_scan)
+                            )
+                        }
                     }
-                }
-            )
+                )
+            }
         }
     ) { paddingValues ->
         Box(

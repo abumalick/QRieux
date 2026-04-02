@@ -46,4 +46,19 @@
     <string name="onboarding_get_started">شروع کریں</string>
     <string name="onboarding_skip">چھوڑیں</string>
     <string name="help">مدد</string>
+
+    <!--  Onboarding Step 4 -->
+    <string name="onboarding_step4_title">QR کوڈز بنائیں اور شیئر کریں</string>
+    <string name="onboarding_step4_desc">ویب سائٹس، رابطوں، WiFi اور مزید کے لیے اپنے QR کوڈز بنائیں۔ کسی کے ساتھ بھی آسانی سے شیئر کریں۔</string>
+
+    <!--  Tab Bar -->
+    <string name="tab_scan">اسکین</string>
+    <string name="tab_create">بنائیں</string>
+    <string name="tab_help">مدد</string>
+
+    <!--  Help Screen -->
+    <string name="help_screen_title">QRieux کیسے استعمال کریں</string>
+    <string name="help_supported_formats_title">معاون فارمیٹس</string>
+    <string name="help_supported_formats_desc">QR کوڈز، EAN-8، EAN-13، Code 128، Code 39، Code 93، UPC-E، PDF417، Aztec، اور Data Matrix۔</string>
+    <string name="navigate_back">واپس جائیں</string>
 </resources>

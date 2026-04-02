@@ -46,4 +46,19 @@
     <string name="onboarding_get_started">Começar</string>
     <string name="onboarding_skip">Pular</string>
     <string name="help">Ajuda</string>
+
+    <!--  Onboarding Step 4 -->
+    <string name="onboarding_step4_title">Criar e compartilhar códigos QR</string>
+    <string name="onboarding_step4_desc">Crie seus próprios códigos QR para sites, contatos, WiFi e muito mais. Compartilhe facilmente com qualquer pessoa.</string>
+
+    <!--  Tab Bar -->
+    <string name="tab_scan">Escanear</string>
+    <string name="tab_create">Criar</string>
+    <string name="tab_help">Ajuda</string>
+
+    <!--  Help Screen -->
+    <string name="help_screen_title">Como usar o QRieux</string>
+    <string name="help_supported_formats_title">Formatos suportados</string>
+    <string name="help_supported_formats_desc">Códigos QR, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec e Data Matrix.</string>
+    <string name="navigate_back">Voltar</string>
 </resources>

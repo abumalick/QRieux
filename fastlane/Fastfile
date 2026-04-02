@@ -154,9 +154,12 @@ platform :ios do
     deliver(
       api_key: api_key,
       skip_binary_upload: true,
+      skip_metadata: true,
+      skip_screenshots: true,
       submit_for_review: true,
       automatic_release: false,
-      force: true
+      force: true,
+      precheck_include_in_app_purchases: false
     )
   end
 end

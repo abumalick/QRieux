@@ -1,4 +1,4 @@
 • Baru: Bagikan kontak ke QRieux untuk membuat kode QR-nya
 • Pindai kode QR kontak untuk melihat nama, telepon, email dan menambahkannya ke kontak
-• Peningkatan keandalan ekstensi berbagi
+• Diperbaiki: Gambar dan kontak yang dibagikan sekarang membuka aplikasi secara otomatis
 • Perbaikan tombol pemindai di tablet

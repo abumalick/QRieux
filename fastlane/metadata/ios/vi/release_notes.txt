@@ -1,4 +1,4 @@
 • Mới: Chia sẻ danh bạ vào QRieux để tạo mã QR
 • Quét mã QR danh bạ để xem tên, số điện thoại, email và thêm vào danh bạ
-• Cải thiện độ ổn định của tiện ích chia sẻ
+• Đã sửa: Hình ảnh và danh bạ được chia sẻ giờ sẽ tự động mở ứng dụng
 • Sửa lỗi nút máy quét bị cắt trên máy tính bảng

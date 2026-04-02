@@ -42,4 +42,19 @@
     <string name="onboarding_get_started">Начать</string>
     <string name="onboarding_skip">Пропустить</string>
     <string name="help">Помощь</string>
+
+    <!--  Onboarding Step 4 -->
+    <string name="onboarding_step4_title">Создание и отправка QR-кодов</string>
+    <string name="onboarding_step4_desc">Создавайте собственные QR-коды для сайтов, контактов, WiFi и многого другого. Легко делитесь ими с кем угодно.</string>
+
+    <!--  Tab Bar -->
+    <string name="tab_scan">Сканер</string>
+    <string name="tab_create">Создать</string>
+    <string name="tab_help">Помощь</string>
+
+    <!--  Help Screen -->
+    <string name="help_screen_title">Как использовать QRieux</string>
+    <string name="help_supported_formats_title">Поддерживаемые форматы</string>
+    <string name="help_supported_formats_desc">QR-коды, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec и Data Matrix.</string>
+    <string name="navigate_back">Назад</string>
 </resources>

@@ -1,4 +1,4 @@
 • Neu: Einen Kontakt an QRieux teilen, um einen QR-Code dafür zu erstellen
 • Kontakt-QR-Codes scannen, um Name, Telefon, E-Mail zu sehen und zu den Kontakten hinzuzufügen
-• Verbesserte Zuverlässigkeit der Teilen-Erweiterung
+• Behoben: Geteilte Bilder und Kontakte öffnen die App jetzt automatisch
 • Scanner-Tasten auf Tablets korrigiert

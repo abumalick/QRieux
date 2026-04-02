@@ -42,4 +42,19 @@
     <string name="onboarding_get_started">தொடங்கு</string>
     <string name="onboarding_skip">தவிர்</string>
     <string name="help">உதவி</string>
+
+    <!--  Onboarding Step 4 -->
+    <string name="onboarding_step4_title">QR குறியீடுகளை உருவாக்கி பகிரவும்</string>
+    <string name="onboarding_step4_desc">இணையதளங்கள், தொடர்புகள், WiFi மற்றும் பலவற்றிற்கான உங்கள் சொந்த QR குறியீடுகளை உருவாக்கவும். எவரிடமும் எளிதாகப் பகிரவும்.</string>
+
+    <!--  Tab Bar -->
+    <string name="tab_scan">ஸ்கேன்</string>
+    <string name="tab_create">உருவாக்கு</string>
+    <string name="tab_help">உதவி</string>
+
+    <!--  Help Screen -->
+    <string name="help_screen_title">QRieux பயன்படுத்துவது எப்படி</string>
+    <string name="help_supported_formats_title">ஆதரிக்கப்படும் வடிவங்கள்</string>
+    <string name="help_supported_formats_desc">QR குறியீடுகள், EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec மற்றும் Data Matrix.</string>
+    <string name="navigate_back">பின்செல்</string>
 </resources>

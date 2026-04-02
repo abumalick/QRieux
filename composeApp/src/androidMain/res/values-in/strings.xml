@@ -42,4 +42,19 @@
     <string name="onboarding_get_started">Mulai</string>
     <string name="onboarding_skip">Lewati</string>
     <string name="help">Bantuan</string>
+
+    <!--  Onboarding Step 4 -->
+    <string name="onboarding_step4_title">Buat &amp; Bagikan Kode QR</string>
+    <string name="onboarding_step4_desc">Buat kode QR Anda sendiri untuk situs web, kontak, WiFi, dan lainnya. Bagikan dengan mudah kepada siapa saja.</string>
+
+    <!--  Tab Bar -->
+    <string name="tab_scan">Pindai</string>
+    <string name="tab_create">Buat</string>
+    <string name="tab_help">Bantuan</string>
+
+    <!--  Help Screen -->
+    <string name="help_screen_title">Cara Menggunakan QRieux</string>
+    <string name="help_supported_formats_title">Format yang Didukung</string>
+    <string name="help_supported_formats_desc">Kode QR, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec, dan Data Matrix.</string>
+    <string name="navigate_back">Kembali</string>
 </resources>

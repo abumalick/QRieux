@@ -42,4 +42,19 @@
     <string name="onboarding_get_started">시작하기</string>
     <string name="onboarding_skip">건너뛰기</string>
     <string name="help">도움말</string>
+
+    <!--  Onboarding Step 4 -->
+    <string name="onboarding_step4_title">QR 코드 만들기 &amp; 공유</string>
+    <string name="onboarding_step4_desc">웹사이트, 연락처, WiFi 등을 위한 나만의 QR 코드를 만드세요. 누구와도 쉽게 공유하세요.</string>
+
+    <!--  Tab Bar -->
+    <string name="tab_scan">스캔</string>
+    <string name="tab_create">만들기</string>
+    <string name="tab_help">도움말</string>
+
+    <!--  Help Screen -->
+    <string name="help_screen_title">QRieux 사용법</string>
+    <string name="help_supported_formats_title">지원 형식</string>
+    <string name="help_supported_formats_desc">QR 코드, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec, Data Matrix.</string>
+    <string name="navigate_back">뒤로</string>
 </resources>

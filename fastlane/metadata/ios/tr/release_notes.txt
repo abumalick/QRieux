@@ -1,4 +1,4 @@
 • Yeni: Bir kişiyi QRieux'e paylaşarak QR kod oluşturun
 • Kişi QR kodlarını tarayarak ad, telefon, e-posta görüntüleyin ve rehbere ekleyin
-• Paylaşım eklentisinin güvenilirliği artırıldı
+• Düzeltildi: Paylaşılan resimler ve kişiler artık uygulamayı otomatik olarak açıyor
 • Tabletlerde tarayıcı düğmelerinin kesilmesi düzeltildi

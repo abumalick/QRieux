@@ -22,14 +22,12 @@ import net.hilson.qrieux.R
 import net.hilson.qrieux.openAppSettings
 import org.jetbrains.compose.resources.stringResource as sharedStringResource
 import qr_scanner.composeapp.generated.resources.Res
-import qr_scanner.composeapp.generated.resources.action_create_qr
 import qr_scanner.composeapp.generated.resources.permission_continue
 
 @Composable
 fun PermissionScreen(
     showRationale: Boolean,
-    onRequestPermission: () -> Unit,
-    onCreateQr: () -> Unit
+    onRequestPermission: () -> Unit
 ) {
     val context = LocalContext.current
     val platformContext = AndroidContext(context)
@@ -96,23 +94,6 @@ fun PermissionScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            OutlinedButton(
-                onClick = onCreateQr,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(72.dp),
-                shape = RoundedCornerShape(16.dp),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = Color.White
-                )
-            ) {
-                Text(
-                    text = sharedStringResource(Res.string.action_create_qr),
-                    fontSize = 22.sp
-                )
-            }
         }
     }
 }

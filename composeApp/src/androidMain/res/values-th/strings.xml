@@ -42,4 +42,19 @@
     <string name="onboarding_get_started">เริ่มต้น</string>
     <string name="onboarding_skip">ข้าม</string>
     <string name="help">ช่วยเหลือ</string>
+
+    <!--  Onboarding Step 4 -->
+    <string name="onboarding_step4_title">สร้างและแชร์รหัส QR</string>
+    <string name="onboarding_step4_desc">สร้างรหัส QR ของคุณเองสำหรับเว็บไซต์ ผู้ติดต่อ WiFi และอื่นๆ แชร์ได้ง่ายกับทุกคน</string>
+
+    <!--  Tab Bar -->
+    <string name="tab_scan">สแกน</string>
+    <string name="tab_create">สร้าง</string>
+    <string name="tab_help">ช่วยเหลือ</string>
+
+    <!--  Help Screen -->
+    <string name="help_screen_title">วิธีใช้ QRieux</string>
+    <string name="help_supported_formats_title">รูปแบบที่รองรับ</string>
+    <string name="help_supported_formats_desc">รหัส QR, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec และ Data Matrix</string>
+    <string name="navigate_back">ย้อนกลับ</string>
 </resources>

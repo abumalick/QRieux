@@ -13,15 +13,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.FlashOn
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -44,6 +46,7 @@ import kotlinx.coroutines.launch
 import net.hilson.qrieux.scanner.CameraPreview
 import net.hilson.qrieux.scanner.ScanOverlay
 import net.hilson.qrieux.scanner.scanBarcodeFromUri
+import net.hilson.qrieux.ui.HelpScreen
 import net.hilson.qrieux.ui.OnboardingScreen
 import net.hilson.qrieux.ui.PermissionScreen
 import net.hilson.qrieux.ui.QrGeneratorScreen
@@ -51,10 +54,17 @@ import net.hilson.qrieux.ui.ScanResultOverlay
 import net.hilson.qrieux.ui.theme.QRieuxTheme
 import net.hilson.qrieux.util.QrContentType
 import net.hilson.qrieux.vibrate
+import androidx.compose.material.icons.filled.QrCodeScanner
+import androidx.compose.material.icons.filled.AddCircleOutline
+import androidx.compose.material.icons.automirrored.filled.HelpOutline
+import org.jetbrains.compose.resources.stringResource as sharedStringResource
+import qr_scanner.composeapp.generated.resources.Res
+import qr_scanner.composeapp.generated.resources.*
 
 private enum class AppMode {
     Scan,
-    Generate
+    Generate,
+    Help
 }
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -68,8 +78,7 @@ fun App(
     shareTextTimestamp: Long = 0L
 ) {
     QRieuxTheme {
-        // Screenshot mode: launched via adb with SCREENSHOT_CONTENT intent extra
-        // (see scripts/generate_android_screenshots.sh)
+        // Screenshot mode
         if (screenshotContent != null) {
             val bgBitmap = remember(screenshotBackground) {
                 screenshotBackground?.let { BitmapFactory.decodeFile(it)?.asImageBitmap() }
@@ -95,21 +104,12 @@ fun App(
                                 )
                                 FilledIconButton(
                                     onClick = {},
-                                    modifier = Modifier.align(Alignment.TopStart).padding(24.dp).size(64.dp),
-                                    colors = btnColors
-                                ) {
-                                    CompositionLocalProvider(LocalLayoutDirection provides originalDirection) {
-                                        Icon(Icons.AutoMirrored.Filled.HelpOutline, null, Modifier.size(32.dp))
-                                    }
-                                }
-                                FilledIconButton(
-                                    onClick = {},
                                     modifier = Modifier.align(Alignment.TopEnd).padding(24.dp).size(64.dp),
                                     colors = btnColors
                                 ) { Icon(Icons.Default.FlashOn, null, Modifier.size(32.dp)) }
                                 FilledIconButton(
                                     onClick = {},
-                                    modifier = Modifier.align(Alignment.BottomStart).padding(24.dp).size(64.dp),
+                                    modifier = Modifier.align(Alignment.TopStart).padding(24.dp).size(64.dp),
                                     colors = btnColors
                                 ) { Icon(Icons.Default.PhotoLibrary, null, Modifier.size(32.dp)) }
                             }
@@ -140,7 +140,8 @@ fun App(
         LaunchedEffect(shareTimestamp) {
             if (shareTimestamp > 0L) {
                 sharedImageUri?.let { uri ->
-                    delay(100) // ensure UI is ready
+                    appMode = AppMode.Scan
+                    delay(100)
                     val result = scanBarcodeFromUri(context, uri)
                     if (result != null) {
                         vibrate(AndroidContext(context))
@@ -173,50 +174,78 @@ fun App(
         }
 
         Scaffold(
-            snackbarHost = { SnackbarHost(snackbarHostState) }
-        ) { paddingValues ->
-            if (appMode == AppMode.Generate) {
-                key(shareTextTimestamp) {
-                    QrGeneratorScreen(
-                        platformContext = platformContext,
-                        onBack = { appMode = AppMode.Scan },
-                        modifier = Modifier.padding(paddingValues),
-                        initialText = sharedText
-                    )
-                }
-            } else if (showOnboarding) {
-                OnboardingScreen(onFinish = {
-                    setOnboardingCompleted(platformContext)
-                    showOnboarding = false
-                })
-            } else if (cameraPermissionState.status.isGranted) {
-                Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
-                    CameraPreview(
-                        onQrCodeDetected = { rawValue ->
-                            scannedContent = QrContentType.fromRawValue(rawValue)
-                        },
-                        isScanning = scannedContent == null,
-                        onGalleryClick = {
-                            pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
-                        },
-                        onCreateQrClick = { appMode = AppMode.Generate },
-                        onHelpClick = { showOnboarding = true },
-                        modifier = Modifier.fillMaxSize()
-                    )
-
-                    scannedContent?.let { content ->
-                        ScanResultOverlay(
-                            contentType = content,
-                            onDismiss = { scannedContent = null }
+            snackbarHost = { SnackbarHost(snackbarHostState) },
+            bottomBar = {
+                if (!showOnboarding) {
+                    NavigationBar {
+                        NavigationBarItem(
+                            selected = appMode == AppMode.Scan,
+                            onClick = { appMode = AppMode.Scan },
+                            icon = { Icon(Icons.Default.QrCodeScanner, contentDescription = null) },
+                            label = { Text(stringResource(R.string.tab_scan)) }
+                        )
+                        NavigationBarItem(
+                            selected = appMode == AppMode.Generate,
+                            onClick = { appMode = AppMode.Generate },
+                            icon = { Icon(Icons.Default.AddCircleOutline, contentDescription = null) },
+                            label = { Text(stringResource(R.string.tab_create)) }
+                        )
+                        NavigationBarItem(
+                            selected = appMode == AppMode.Help,
+                            onClick = { appMode = AppMode.Help },
+                            icon = { Icon(Icons.AutoMirrored.Filled.HelpOutline, contentDescription = null) },
+                            label = { Text(stringResource(R.string.tab_help)) }
                         )
                     }
                 }
-            } else {
-                PermissionScreen(
-                    showRationale = cameraPermissionState.status.shouldShowRationale,
-                    onRequestPermission = { cameraPermissionState.launchPermissionRequest() },
-                    onCreateQr = { appMode = AppMode.Generate }
-                )
+            }
+        ) { paddingValues ->
+            when {
+                showOnboarding -> {
+                    OnboardingScreen(onFinish = {
+                        setOnboardingCompleted(platformContext)
+                        showOnboarding = false
+                    })
+                }
+                appMode == AppMode.Generate -> {
+                    key(shareTextTimestamp) {
+                        QrGeneratorScreen(
+                            platformContext = platformContext,
+                            modifier = Modifier.padding(paddingValues),
+                            initialText = sharedText
+                        )
+                    }
+                }
+                appMode == AppMode.Help -> {
+                    HelpScreen(modifier = Modifier.padding(paddingValues))
+                }
+                cameraPermissionState.status.isGranted -> {
+                    Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
+                        CameraPreview(
+                            onQrCodeDetected = { rawValue ->
+                                scannedContent = QrContentType.fromRawValue(rawValue)
+                            },
+                            isScanning = scannedContent == null,
+                            onGalleryClick = {
+                                pickMedia.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+                            },
+                            modifier = Modifier.fillMaxSize()
+                        )
+
+                        scannedContent?.let { content ->
+                            ScanResultOverlay(
+                                contentType = content,
+                                onDismiss = { scannedContent = null }
+                            )
+                        }
+                    }
+                }
+                else -> {
+                    PermissionScreen(
+                        showRationale = cameraPermissionState.status.shouldShowRationale,
+                        onRequestPermission = { cameraPermissionState.launchPermissionRequest() }
+                    )
+                }
             }
         }
     }

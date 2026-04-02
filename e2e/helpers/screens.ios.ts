@@ -151,8 +151,8 @@ export async function tapCreateButton(): Promise<void> {
 }
 
 export async function waitForGeneratorScreen(): Promise<void> {
-  const title = await $('-ios predicate string:label == "Create QR Code"');
-  await title.waitForExist({ timeout: 10_000 });
+  const desc = await $('-ios predicate string:label CONTAINS "Choose what you want to share"');
+  await desc.waitForExist({ timeout: 10_000 });
 }
 
 export async function selectQrType(typeName: string): Promise<void> {
@@ -184,9 +184,9 @@ export async function selectQrType(typeName: string): Promise<void> {
     await browser.pause(300);
   }
 
-  // Dismiss picker by tapping title area
-  const title = await $('-ios predicate string:label == "Create QR Code"');
-  await title.click();
+  // Dismiss picker by tapping description area
+  const desc = await $('-ios predicate string:label CONTAINS "Choose what you want to share"');
+  await desc.click();
   await browser.pause(500);
 }
 
@@ -256,11 +256,23 @@ export async function isValidationErrorVisible(errorText: string): Promise<boole
   return err.isExisting();
 }
 
-export async function tapBackToScan(): Promise<void> {
-  await iosScrollUp();
-  const btn = await $('~Back to Scan');
+export async function tapScanTab(): Promise<void> {
+  const btn = await $('-ios predicate string:label == "Scan"');
   await btn.waitForExist({ timeout: 5_000 });
   await btn.click();
+}
+
+export const tapBackToScan = tapScanTab;
+
+export async function tapHelpTab(): Promise<void> {
+  const btn = await $('-ios predicate string:label == "Help"');
+  await btn.waitForExist({ timeout: 5_000 });
+  await btn.click();
+}
+
+export async function waitForHelpScreen(): Promise<void> {
+  const title = await $('-ios predicate string:label == "How to Use QRieux"');
+  await title.waitForExist({ timeout: 10_000 });
 }
 
 export async function getSelectedType(): Promise<string> {

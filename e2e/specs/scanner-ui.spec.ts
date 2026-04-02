@@ -3,8 +3,9 @@ import {
   waitForScanner,
   tapFlashButton,
   getFlashButtonLabel,
-  tapHelpButton,
-  isOnboardingVisible,
+  tapHelpTab,
+  waitForHelpScreen,
+  tapScanTab,
 } from '../helpers/screens.js';
 
 describe('Scanner UI', () => {
@@ -21,14 +22,13 @@ describe('Scanner UI', () => {
     expect(await getFlashButtonLabel()).toBe('Turn on flash');
   });
 
-  it('help button shows onboarding', async () => {
-    await tapHelpButton();
-    await browser.pause(1000);
-    expect(await isOnboardingVisible()).toBe(true);
+  it('help tab shows help screen', async () => {
+    await tapHelpTab();
+    await waitForHelpScreen();
   });
 
-  it('can dismiss onboarding and return to scanner', async () => {
-    await dismissOnboarding();
+  it('can return to scanner from help tab', async () => {
+    await tapScanTab();
     await waitForScanner();
   });
 });

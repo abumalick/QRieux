@@ -42,4 +42,19 @@
     <string name="onboarding_get_started">ابدأ الآن</string>
     <string name="onboarding_skip">تخطي</string>
     <string name="help">مساعدة</string>
+
+    <!--  Onboarding Step 4 -->
+    <string name="onboarding_step4_title">أنشئ وشارك رموز QR</string>
+    <string name="onboarding_step4_desc">أنشئ رموز QR خاصة بك للمواقع وجهات الاتصال وشبكات WiFi والمزيد. شاركها بسهولة مع أي شخص.</string>
+
+    <!--  Tab Bar -->
+    <string name="tab_scan">مسح</string>
+    <string name="tab_create">إنشاء</string>
+    <string name="tab_help">مساعدة</string>
+
+    <!--  Help Screen -->
+    <string name="help_screen_title">كيفية استخدام QRieux</string>
+    <string name="help_supported_formats_title">الصيغ المدعومة</string>
+    <string name="help_supported_formats_desc">رموز QR، EAN-8، EAN-13، Code 128، Code 39، Code 93، UPC-E، PDF417، Aztec، وData Matrix.</string>
+    <string name="navigate_back">رجوع</string>
 </resources>

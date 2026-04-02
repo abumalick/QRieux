@@ -39,6 +39,7 @@ private val steps = listOf(
     OnboardingStep(Res.string.onboarding_step1_title, Res.string.onboarding_step1_desc, Res.drawable.onboarding_qr_codes),
     OnboardingStep(Res.string.onboarding_step2_title, Res.string.onboarding_step2_desc, Res.drawable.onboarding_scan),
     OnboardingStep(Res.string.onboarding_step3_title, Res.string.onboarding_step3_desc, Res.drawable.onboarding_gallery),
+    OnboardingStep(Res.string.onboarding_step4_title, Res.string.onboarding_step4_desc, Res.drawable.onboarding_create_qr),
 )
 
 @Composable

@@ -2,11 +2,13 @@ package net.hilson.qrieux.scanner
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
+
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -27,11 +29,7 @@ import qr_scanner.composeapp.generated.resources.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FlashOn
 import androidx.compose.material.icons.filled.FlashOff
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.PhotoLibrary
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
@@ -66,8 +64,6 @@ fun CameraPreview(
     onQrCodeDetected: (String) -> Unit,
     isScanning: Boolean,
     onGalleryClick: () -> Unit,
-    onCreateQrClick: () -> Unit,
-    onHelpClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var flashEnabled by remember { mutableStateOf(false) }
@@ -117,26 +113,6 @@ fun CameraPreview(
             ScanOverlay()
 
             FilledIconButton(
-                onClick = onHelpClick,
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(top = 56.dp, start = 24.dp)
-                    .size(64.dp),
-                colors = IconButtonDefaults.filledIconButtonColors(
-                    containerColor = Color.Black.copy(alpha = 0.5f),
-                    contentColor = Color.White
-                )
-            ) {
-                CompositionLocalProvider(LocalLayoutDirection provides originalLayoutDirection) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.HelpOutline,
-                        contentDescription = stringResource(Res.string.help),
-                        modifier = Modifier.size(32.dp)
-                    )
-                }
-            }
-
-            FilledIconButton(
                 onClick = {
                     flashEnabled = !flashEnabled
                     cameraView.setFlash(flashEnabled)
@@ -162,9 +138,8 @@ fun CameraPreview(
             FilledIconButton(
                 onClick = onGalleryClick,
                 modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .navigationBarsPadding()
-                    .padding(24.dp)
+                    .align(Alignment.TopStart)
+                    .padding(top = 56.dp, start = 24.dp)
                     .size(64.dp),
                 colors = IconButtonDefaults.filledIconButtonColors(
                     containerColor = Color.Black.copy(alpha = 0.5f),
@@ -178,29 +153,6 @@ fun CameraPreview(
                 )
             }
 
-            Button(
-                onClick = onCreateQrClick,
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .navigationBarsPadding()
-                    .padding(24.dp)
-                    .height(QRieuxUiConfig.controlHeight),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black.copy(alpha = 0.6f),
-                    contentColor = Color.White
-                )
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = null,
-                    modifier = Modifier.size(28.dp)
-                )
-                Spacer(modifier = Modifier.width(10.dp))
-                Text(
-                    text = stringResource(Res.string.action_create_qr),
-                    fontSize = QRieuxUiConfig.buttonSize
-                )
-            }
         }
     }
 }
@@ -319,19 +271,22 @@ private class MetadataDelegate(
 
 @Composable
 internal fun ScanOverlay() {
-    Box(modifier = Modifier.fillMaxSize()) {
+    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+        val frameSize = minOf(maxWidth, maxHeight) * 0.7f
+        val frameTopOffset = (maxHeight - frameSize) / 2
+
         Canvas(modifier = Modifier.fillMaxSize()) {
             val overlayColor = Color.Black.copy(alpha = 0.6f)
-            val frameSize = size.minDimension * 0.7f
-            val frameLeft = (size.width - frameSize) / 2
-            val frameTop = (size.height - frameSize) / 2
+            val frameSizePx = size.minDimension * 0.7f
+            val frameLeft = (size.width - frameSizePx) / 2
+            val frameTop = (size.height - frameSizePx) / 2
 
             drawRect(color = overlayColor)
 
             drawRoundRect(
                 color = Color.Transparent,
                 topLeft = Offset(frameLeft, frameTop),
-                size = Size(frameSize, frameSize),
+                size = Size(frameSizePx, frameSizePx),
                 cornerRadius = CornerRadius(24.dp.toPx()),
                 blendMode = BlendMode.Clear
             )
@@ -339,25 +294,28 @@ internal fun ScanOverlay() {
             drawRoundRect(
                 color = Color.White,
                 topLeft = Offset(frameLeft, frameTop),
-                size = Size(frameSize, frameSize),
+                size = Size(frameSizePx, frameSizePx),
                 cornerRadius = CornerRadius(24.dp.toPx()),
                 style = Stroke(width = 4.dp.toPx())
             )
         }
 
-        Column(
+        val textShadow = Shadow(
+            color = Color.Black,
+            offset = Offset(2f, 2f),
+            blurRadius = 4f
+        )
+
+        Box(
             modifier = Modifier
-                .align(Alignment.Center)
-                .padding(top = 420.dp, start = 32.dp, end = 32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxWidth()
+                .height(frameTopOffset)
+                .padding(horizontal = 32.dp),
+            contentAlignment = Alignment.BottomCenter
         ) {
-            val textShadow = Shadow(
-                color = Color.Black,
-                offset = Offset(2f, 2f),
-                blurRadius = 4f
-            )
             Text(
                 text = stringResource(Res.string.scan_instruction),
+                modifier = Modifier.padding(bottom = 16.dp),
                 style = TextStyle(
                     color = Color.White,
                     fontSize = 24.sp,
@@ -366,7 +324,14 @@ internal fun ScanOverlay() {
                     shadow = textShadow
                 )
             )
-            Spacer(modifier = Modifier.height(16.dp))
+        }
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = frameTopOffset + frameSize + 16.dp, start = 32.dp, end = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Text(
                 text = stringResource(Res.string.scan_tip_formats),
                 style = TextStyle(

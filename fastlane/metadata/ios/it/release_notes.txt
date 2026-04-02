@@ -1,4 +1,4 @@
 • Novità: Condividi un contatto con QRieux per creare un codice QR
 • Scansiona codici QR dei contatti per vedere nome, telefono, email e aggiungere ai contatti
-• Maggiore affidabilità dell'estensione di condivisione
+• Corretto: Le immagini e i contatti condivisi ora aprono l'app automaticamente
 • Corretti i pulsanti dello scanner sui tablet

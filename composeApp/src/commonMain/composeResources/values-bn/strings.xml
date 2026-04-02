@@ -46,4 +46,19 @@
     <string name="onboarding_get_started">শুরু করুন</string>
     <string name="onboarding_skip">এড়িয়ে যান</string>
     <string name="help">সাহায্য</string>
+
+    <!--  Onboarding Step 4 -->
+    <string name="onboarding_step4_title">QR কোড তৈরি ও শেয়ার করুন</string>
+    <string name="onboarding_step4_desc">ওয়েবসাইট, পরিচিতি, WiFi এবং আরও অনেক কিছুর জন্য নিজের QR কোড তৈরি করুন। যে কারো সাথে সহজে শেয়ার করুন।</string>
+
+    <!--  Tab Bar -->
+    <string name="tab_scan">স্ক্যান</string>
+    <string name="tab_create">তৈরি</string>
+    <string name="tab_help">সাহায্য</string>
+
+    <!--  Help Screen -->
+    <string name="help_screen_title">QRieux কীভাবে ব্যবহার করবেন</string>
+    <string name="help_supported_formats_title">সমর্থিত ফরম্যাট</string>
+    <string name="help_supported_formats_desc">QR কোড, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec এবং Data Matrix।</string>
+    <string name="navigate_back">পিছনে যান</string>
 </resources>

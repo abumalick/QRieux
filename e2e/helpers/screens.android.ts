@@ -148,8 +148,8 @@ export async function tapCreateButton(): Promise<void> {
 }
 
 export async function waitForGeneratorScreen(): Promise<void> {
-  const title = await $('android=new UiSelector().text("Create QR Code")');
-  await title.waitForExist({ timeout: 10_000 });
+  const desc = await $('android=new UiSelector().textContains("Choose what you want to share")');
+  await desc.waitForExist({ timeout: 10_000 });
 }
 
 export async function selectQrType(typeName: string): Promise<void> {
@@ -220,11 +220,23 @@ export async function isValidationErrorVisible(errorText: string): Promise<boole
   return err.isExisting();
 }
 
-export async function tapBackToScan(): Promise<void> {
-  await scrollToTop();
-  const btn = await $('~Back to Scan');
+export async function tapScanTab(): Promise<void> {
+  const btn = await $('android=new UiSelector().text("Scan")');
   await btn.waitForExist({ timeout: 5_000 });
   await btn.click();
+}
+
+export const tapBackToScan = tapScanTab;
+
+export async function tapHelpTab(): Promise<void> {
+  const btn = await $('android=new UiSelector().text("Help")');
+  await btn.waitForExist({ timeout: 5_000 });
+  await btn.click();
+}
+
+export async function waitForHelpScreen(): Promise<void> {
+  const title = await $('android=new UiSelector().text("How to Use QRieux")');
+  await title.waitForExist({ timeout: 10_000 });
 }
 
 export async function getSelectedType(): Promise<string> {

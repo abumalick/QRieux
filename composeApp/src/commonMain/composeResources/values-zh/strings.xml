@@ -46,4 +46,19 @@
     <string name="onboarding_get_started">开始使用</string>
     <string name="onboarding_skip">跳过</string>
     <string name="help">帮助</string>
+
+    <!--  Onboarding Step 4 -->
+    <string name="onboarding_step4_title">创建和分享二维码</string>
+    <string name="onboarding_step4_desc">为网站、联系人、WiFi等创建自己的二维码。轻松与任何人分享。</string>
+
+    <!--  Tab Bar -->
+    <string name="tab_scan">扫描</string>
+    <string name="tab_create">创建</string>
+    <string name="tab_help">帮助</string>
+
+    <!--  Help Screen -->
+    <string name="help_screen_title">如何使用 QRieux</string>
+    <string name="help_supported_formats_title">支持的格式</string>
+    <string name="help_supported_formats_desc">二维码、EAN-8、EAN-13、Code 128、Code 39、Code 93、UPC-E、PDF417、Aztec 和 Data Matrix。</string>
+    <string name="navigate_back">返回</string>
 </resources>
