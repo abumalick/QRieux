@@ -18,11 +18,11 @@
     <string name="toast_copied">Panoya kopyalandı</string>
     <string name="toast_cannot_share">Paylaşılamıyor</string>
     <string name="clipboard_label_qr">QR Kod</string>
-    <string name="action_connect_wifi">WiFi\'ye Bağlan</string>
+    <string name="action_connect_wifi">WiFi'ye Bağlan</string>
     <string name="wifi_copy_password">Şifreyi Kopyala</string>
     <string name="wifi_connecting">Bağlanıyor…</string>
-    <string name="toast_wifi_connected">WiFi\'ye bağlandı</string>
-    <string name="toast_wifi_failed">WiFi\'ye bağlanılamadı, şifreyi kontrol edip tekrar deneyin</string>
+    <string name="toast_wifi_connected">WiFi'ye bağlandı</string>
+    <string name="toast_wifi_failed">WiFi'ye bağlanılamadı, şifreyi kontrol edip tekrar deneyin</string>
 
     <!-- Camera Preview -->
     <string name="flash_turn_off">Flaşı kapat</string>

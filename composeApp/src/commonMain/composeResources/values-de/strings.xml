@@ -43,7 +43,7 @@
     <string name="onboarding_step3_title">Aus Fotos scannen</string>
     <string name="onboarding_step3_desc">Sie können auch QR-Codes aus gespeicherten Fotos scannen. Tippen Sie auf das Foto-Symbol auf dem Kamerabildschirm, um ein Bild aus der Galerie zu wählen.</string>
     <string name="onboarding_next">Weiter</string>
-    <string name="onboarding_get_started">Los geht\'s</string>
+    <string name="onboarding_get_started">Los geht's</string>
     <string name="onboarding_skip">Überspringen</string>
     <string name="help">Hilfe</string>
 

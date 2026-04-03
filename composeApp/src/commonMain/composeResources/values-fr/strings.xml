@@ -1,7 +1,7 @@
 <resources>
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">Autorisation caméra requise</string>
-    <string name="permission_camera_required_desc">Cette application a besoin d\'accéder à la caméra pour scanner les codes QR.</string>
+    <string name="permission_camera_required_desc">Cette application a besoin d'accéder à la caméra pour scanner les codes QR.</string>
     <string name="permission_continue">Continuer</string>
     <string name="permission_open_settings">Ouvrir les paramètres</string>
 
@@ -14,7 +14,7 @@
     <string name="action_scan_again">Scanner à nouveau</string>
     <string name="action_send_email">Envoyer un e-mail</string>
     <string name="action_call">Appeler</string>
-    <string name="toast_cannot_open">Impossible d\'ouvrir ce contenu</string>
+    <string name="toast_cannot_open">Impossible d'ouvrir ce contenu</string>
     <string name="toast_copied">Copié dans le presse-papiers</string>
     <string name="toast_cannot_share">Impossible de partager</string>
     <string name="clipboard_label_qr">Code QR</string>
@@ -29,19 +29,19 @@
     <string name="flash_turn_on">Allumer le flash</string>
     <string name="scan_instruction">Placez le code QR dans le cadre</string>
     <string name="scan_tip_formats">Compatible avec les codes QR, codes-barres et plus</string>
-    <string name="scan_tip_gallery">Appuyez sur l\'icône photo pour scanner depuis la galerie</string>
+    <string name="scan_tip_gallery">Appuyez sur l'icône photo pour scanner depuis la galerie</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">Choisir une photo de la galerie</string>
-    <string name="gallery_no_qr_found">Aucun code QR trouvé dans l\'image</string>
+    <string name="gallery_no_qr_found">Aucun code QR trouvé dans l'image</string>
 
     <!-- Onboarding -->
-    <string name="onboarding_step1_title">Qu\'est-ce qu\'un code QR ?</string>
-    <string name="onboarding_step1_desc">Les codes QR sont de petits carrés que l\'on trouve sur les produits, les menus de restaurants, les affiches et les billets. Ils contiennent des informations utiles comme des liens, des numéros de téléphone ou du texte.</string>
+    <string name="onboarding_step1_title">Qu'est-ce qu'un code QR ?</string>
+    <string name="onboarding_step1_desc">Les codes QR sont de petits carrés que l'on trouve sur les produits, les menus de restaurants, les affiches et les billets. Ils contiennent des informations utiles comme des liens, des numéros de téléphone ou du texte.</string>
     <string name="onboarding_step2_title">Comment scanner</string>
-    <string name="onboarding_step2_desc">Dirigez votre caméra vers un code QR ou un code-barres. L\'application le lit automatiquement et vous montre son contenu. Vous pouvez ensuite ouvrir des liens, copier du texte ou appeler des numéros.</string>
+    <string name="onboarding_step2_desc">Dirigez votre caméra vers un code QR ou un code-barres. L'application le lit automatiquement et vous montre son contenu. Vous pouvez ensuite ouvrir des liens, copier du texte ou appeler des numéros.</string>
     <string name="onboarding_step3_title">Scanner depuis vos photos</string>
-    <string name="onboarding_step3_desc">Vous pouvez aussi scanner des codes QR depuis les photos enregistrées sur votre téléphone. Appuyez sur l\'icône photo sur l\'écran de la caméra pour choisir une image.</string>
+    <string name="onboarding_step3_desc">Vous pouvez aussi scanner des codes QR depuis les photos enregistrées sur votre téléphone. Appuyez sur l'icône photo sur l'écran de la caméra pour choisir une image.</string>
     <string name="onboarding_next">Suivant</string>
     <string name="onboarding_get_started">Commencer</string>
     <string name="onboarding_skip">Passer</string>
@@ -49,7 +49,7 @@
 
     <!--  Onboarding Step 4 -->
     <string name="onboarding_step4_title">Créer et partager des codes QR</string>
-    <string name="onboarding_step4_desc">Créez vos propres codes QR pour des sites web, des contacts, le WiFi et plus encore. Partagez-les facilement avec n\'importe qui.</string>
+    <string name="onboarding_step4_desc">Créez vos propres codes QR pour des sites web, des contacts, le WiFi et plus encore. Partagez-les facilement avec n'importe qui.</string>
 
     <!--  Tab Bar -->
     <string name="tab_scan">Scanner</string>

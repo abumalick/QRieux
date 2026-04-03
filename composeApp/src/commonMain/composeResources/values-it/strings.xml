@@ -1,7 +1,7 @@
 <resources>
     <!-- Permission Screen -->
     <string name="permission_camera_required_title">Autorizzazione fotocamera richiesta</string>
-    <string name="permission_camera_required_desc">Questa app ha bisogno dell\'accesso alla fotocamera per scansionare i codici QR.</string>
+    <string name="permission_camera_required_desc">Questa app ha bisogno dell'accesso alla fotocamera per scansionare i codici QR.</string>
     <string name="permission_continue">Continua</string>
     <string name="permission_open_settings">Apri impostazioni</string>
 
@@ -29,19 +29,19 @@
     <string name="flash_turn_on">Accendi flash</string>
     <string name="scan_instruction">Posiziona il codice QR nel riquadro</string>
     <string name="scan_tip_formats">Supporta codici QR, codici a barre e altro</string>
-    <string name="scan_tip_gallery">Tocca l\'icona foto per scansionare dalla galleria</string>
+    <string name="scan_tip_gallery">Tocca l'icona foto per scansionare dalla galleria</string>
 
     <!-- Gallery -->
     <string name="gallery_pick_photo">Scegli foto dalla galleria</string>
-    <string name="gallery_no_qr_found">Nessun codice QR trovato nell\'immagine</string>
+    <string name="gallery_no_qr_found">Nessun codice QR trovato nell'immagine</string>
 
     <!-- Onboarding -->
     <string name="onboarding_step1_title">Cosa sono i codici QR?</string>
     <string name="onboarding_step1_desc">I codici QR sono piccoli motivi quadrati che si trovano su prodotti, menu dei ristoranti, manifesti e biglietti. Contengono informazioni utili come link a siti web, numeri di telefono o testo.</string>
     <string name="onboarding_step2_title">Come scansionare</string>
-    <string name="onboarding_step2_desc">Punta la fotocamera verso un codice QR o codice a barre. L\'app lo legge automaticamente e mostra il contenuto. Poi puoi aprire link, copiare testo o chiamare numeri di telefono.</string>
+    <string name="onboarding_step2_desc">Punta la fotocamera verso un codice QR o codice a barre. L'app lo legge automaticamente e mostra il contenuto. Poi puoi aprire link, copiare testo o chiamare numeri di telefono.</string>
     <string name="onboarding_step3_title">Scansiona dalle foto</string>
-    <string name="onboarding_step3_desc">Puoi anche scansionare codici QR dalle foto salvate sul telefono. Tocca l\'icona della foto nella schermata della fotocamera per scegliere un\'immagine dalla galleria.</string>
+    <string name="onboarding_step3_desc">Puoi anche scansionare codici QR dalle foto salvate sul telefono. Tocca l'icona della foto nella schermata della fotocamera per scegliere un'immagine dalla galleria.</string>
     <string name="onboarding_next">Avanti</string>
     <string name="onboarding_get_started">Inizia</string>
     <string name="onboarding_skip">Salta</string>
