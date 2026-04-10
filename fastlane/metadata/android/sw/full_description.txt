@@ -6,6 +6,7 @@ Vipengele:
 • Skana kutoka galeria — chagua picha yoyote yenye msimbo wa QR
 • Shiriki maandishi, URL, anwani, au picha kwenye programu — tengeneza au skana misimbo ya QR papo hapo
 • Vitendo kwa mguso mmoja: fungua URL, piga simu, tuma barua pepe, ongeza anwani, unganisha WiFi
+• Historia — angalia skana na uumbaji uliopita wakati wowote
 • Nakili na shiriki maudhui yaliyoskanwa kwa urahisi
 • Msaada wa flashi/tochi kwa skana katika mwanga hafifu
 • Kiolesura safi, rahisi kutumia na vitufe vikubwa

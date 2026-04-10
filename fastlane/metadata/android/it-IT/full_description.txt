@@ -6,6 +6,7 @@ Funzionalità:
 • Scansiona dalla galleria — scegli qualsiasi immagine con un codice QR
 • Condividi testo, URL, contatti o immagini nell'app — crea o scansiona codici QR all'istante
 • Azioni con un tocco: apri URL, chiama numeri, invia email, aggiungi contatti, connettiti al WiFi
+• Cronologia — rivedi scansioni e creazioni passate in qualsiasi momento
 • Copia e condividi facilmente i contenuti scansionati
 • Supporto flash/torcia per la scansione in condizioni di scarsa illuminazione
 • Interfaccia pulita e facile da usare con pulsanti grandi

@@ -6,6 +6,7 @@ Fitur:
 • Pindai dari galeri — pilih gambar apa pun yang memiliki kode QR
 • Bagikan teks, URL, kontak, atau gambar ke aplikasi — buat atau pindai kode QR secara instan
 • Aksi satu ketuk: buka URL, panggil nomor telepon, kirim email, tambah kontak, sambungkan ke WiFi
+• Riwayat — tinjau pemindaian dan pembuatan sebelumnya kapan saja
 • Salin dan bagikan konten yang dipindai dengan mudah
 • Dukungan flash/senter untuk pemindaian di tempat gelap
 • Antarmuka yang bersih dan mudah digunakan dengan tombol besar

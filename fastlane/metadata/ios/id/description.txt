@@ -5,9 +5,10 @@ Fitur:
 • Buat kode QR — buat kode QR untuk situs web, email, nomor telepon, Wi-Fi, dan teks
 • Pindai dari galeri — pilih gambar apa pun yang berisi kode QR
 • Bagikan teks, URL, kontak, atau gambar ke aplikasi — buat atau pindai kode QR secara instan
-• Aksi satu ketuk: buka URL, telepon, kirim email, tambah kontak
+• Aksi satu ketuk: buka URL, telepon, kirim email, tambah kontak, sambungkan ke WiFi
+• Riwayat — tinjau pemindaian dan pembuatan sebelumnya kapan saja
 • Salin dan bagikan konten hasil pemindaian dengan mudah
 • Dukungan flash/senter untuk memindai di tempat gelap
 • Tampilan bersih dan mudah digunakan dengan tombol besar
 
-Tanpa iklan. Tanpa pelacakan. Berfungsi sepenuhnya offline. Cukup pindai.
+Tanpa iklan. Tanpa pelacakan. Berfungsi sepenuhnya offline. Cukup pindai dan buat.

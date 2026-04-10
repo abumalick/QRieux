@@ -5,9 +5,10 @@ Features:
 • Create QR codes — generate QR codes for websites, emails, phone numbers, Wi-Fi, and text
 • Scan from gallery — pick any image with a QR code
 • Share text, URLs, contacts, or images to the app — create or scan QR codes instantly
-• One-tap actions: open URLs, call phone numbers, send emails, add contacts
+• One-tap actions: open URLs, call phone numbers, send emails, add contacts, connect to WiFi
+• History — review past scans and creations anytime
 • Copy and share scanned content easily
 • Flash/torch support for low-light scanning
 • Clean, easy-to-use interface with large buttons
 
-No ads. No tracking. Works fully offline. Just scan.
+No ads. No tracking. Works fully offline. Just scan and create.

@@ -6,6 +6,7 @@ Features:
 • Scan from gallery — pick any image with a QR code
 • Share text, URLs, contacts, or images to the app — create or scan QR codes instantly
 • One-tap actions: open URLs, call phone numbers, send emails, add contacts, connect to WiFi
+• History — review past scans and creations anytime
 • Copy and share scanned content easily
 • Flash/torch support for low-light scanning
 • Clean, easy-to-use interface with large buttons

@@ -6,6 +6,7 @@ Recursos:
 • Escaneie da galeria — escolha qualquer imagem com um QR code
 • Compartilhe texto, URLs, contatos ou imagens para o app — crie ou escaneie QR codes instantaneamente
 • Ações com um toque: abrir URLs, ligar para números, enviar e-mails, adicionar contatos, conectar ao WiFi
+• Histórico — reveja digitalizações e criações anteriores a qualquer momento
 • Copie e compartilhe o conteúdo escaneado facilmente
 • Suporte a flash/lanterna para leitura em ambientes escuros
 • Interface limpa e fácil de usar com botões grandes

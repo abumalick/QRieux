@@ -6,6 +6,7 @@ Funktionen:
 • Aus der Galerie scannen — wähle ein beliebiges Bild mit einem QR-Code
 • Texte, URLs, Kontakte oder Bilder an die App teilen — QR-Codes sofort erstellen oder scannen
 • Aktionen mit einem Tippen: URLs öffnen, Nummern anrufen, E-Mails senden, Kontakte hinzufügen, mit WiFi verbinden
+• Verlauf — vergangene Scans und Erstellungen jederzeit einsehen
 • Gescannte Inhalte einfach kopieren und teilen
 • Blitz-/Taschenlampen-Unterstützung für Scannen bei wenig Licht
 • Übersichtliche, einfach zu bedienende Oberfläche mit großen Buttons
