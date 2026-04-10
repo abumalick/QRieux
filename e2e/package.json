@@ -26,5 +26,8 @@
     "appium",
     "appium-ios-tuntap",
     "edgedriver"
-  ]
+  ],
+  "patchedDependencies": {
+    "webdriverio@9.26.1": "patches/webdriverio@9.26.1.patch"
+  }
 }

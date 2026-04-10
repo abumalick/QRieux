@@ -1,0 +1,22 @@
+diff --git a/build/types.d.ts b/build/types.d.ts
+index 601b9f71118a28298302be3a5ec224fa44afd45f..e38df6d516b313f139301917631bdd5761a1991d 100644
+--- a/build/types.d.ts
++++ b/build/types.d.ts
+@@ -66,7 +66,7 @@ interface ChainablePromiseBaseElement {
+      */
+     getElement(): Promise<WebdriverIO.Element>;
+ }
+-export interface ChainablePromiseElement extends ChainablePromiseBaseElement, AsyncElementProto, Omit<WebdriverIO.Element, keyof ChainablePromiseBaseElement | keyof AsyncElementProto> {
++export interface ChainablePromiseElement extends ChainablePromiseBaseElement, AsyncElementProto, Omit<WebdriverIO.Element, keyof ChainablePromiseBaseElement | keyof AsyncElementProto>, PromiseLike<WebdriverIO.Element> {
+ }
+ interface AsyncIterators<T> {
+     /**
+@@ -89,7 +89,7 @@ interface AsyncIterators<T> {
+     reduce: <T, U>(callback: (accumulator: U, currentValue: WebdriverIO.Element, currentIndex: number, array: T[]) => U | Promise<U>, initialValue?: U) => Promise<U>;
+     entries(): AsyncIterableIterator<[number, WebdriverIO.Element]>;
+ }
+-export interface ChainablePromiseArray extends AsyncIterators<WebdriverIO.Element> {
++export interface ChainablePromiseArray extends AsyncIterators<WebdriverIO.Element>, PromiseLike<WebdriverIO.ElementArray> {
+     [Symbol.asyncIterator](): AsyncIterableIterator<WebdriverIO.Element>;
+     [Symbol.iterator](): IterableIterator<WebdriverIO.Element>;
+     /**
