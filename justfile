@@ -79,13 +79,13 @@ ios-metadata:
 
 # Screenshot generation
 
-# Generate Android screenshots for all locales
+# Generate Android screenshots via Appium (--skip-build, --locale=xx)
 gen-android-screenshots *args:
-    ./scripts/generate_android_screenshots.sh {{args}}
+    ./scripts/generate_android_screenshots_appium.sh {{args}}
 
-# Generate iOS screenshots for all locales
+# Generate iOS screenshots via Appium (--skip-build, --locale=xx)
 gen-ios-screenshots *args:
-    ./scripts/generate_ios_screenshots.sh {{args}}
+    ./scripts/generate_ios_screenshots_appium.sh {{args}}
 
 # E2E tests
 
@@ -108,6 +108,24 @@ e2e-android-full *args: android-debug
 # Clean E2E artifacts and logs
 e2e-clean:
     rm -rf e2e/artifacts e2e/logs
+
+# Clean leftover Appium simulators
+e2e-clean-sims:
+    #!/usr/bin/env bash
+    for udid in $(xcrun simctl list devices | grep appiumTest | grep -o '[A-F0-9-]\{36\}'); do
+      xcrun simctl shutdown "$udid" 2>/dev/null; xcrun simctl delete "$udid" 2>/dev/null
+    done
+    echo "Cleaned. Remaining: $(xcrun simctl list devices | grep -c appiumTest 2>/dev/null || echo 0)"
+
+# Run iOS screenshot spec directly (e.g. just e2e-screenshots-ios SCREENSHOT_LANG=fr SCREENSHOT_LOCALE=fr_FR)
+e2e-screenshots-ios *args:
+    #!/usr/bin/env bash
+    cd e2e && {{args}} npx wdio run wdio.screenshots.ios.conf.ts
+
+# Run Android screenshot spec directly
+e2e-screenshots-android *args:
+    #!/usr/bin/env bash
+    cd e2e && {{args}} npx wdio run wdio.screenshots.android.conf.ts
 
 # Dependencies
 

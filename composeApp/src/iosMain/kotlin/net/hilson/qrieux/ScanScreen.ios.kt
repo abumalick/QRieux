@@ -9,6 +9,9 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.addressOf
+import kotlinx.cinterop.usePinned
 import kotlinx.coroutines.launch
 import net.hilson.qrieux.scanner.CameraPreview
 import net.hilson.qrieux.scanner.scanBarcodeFromImage
@@ -24,11 +27,47 @@ import platform.AVFoundation.AVCaptureDevice
 import platform.AVFoundation.AVMediaTypeVideo
 import platform.AVFoundation.authorizationStatusForMediaType
 import platform.AVFoundation.requestAccessForMediaType
+import platform.Foundation.NSProcessInfo
 import platform.UIKit.UIImage
 import platform.darwin.dispatch_async
 import platform.darwin.dispatch_get_main_queue
 import qr_scanner.composeapp.generated.resources.Res
 import qr_scanner.composeapp.generated.resources.gallery_no_qr_found
+
+private val demoCameraDir: String by lazy {
+    (platform.Foundation.NSSearchPathForDirectoriesInDomains(
+        platform.Foundation.NSDocumentDirectory, platform.Foundation.NSUserDomainMask, true
+    ).firstOrNull() as? String) ?: ""
+}
+
+private val isDemoCamera: Boolean by lazy {
+    NSProcessInfo.processInfo.arguments.contains("-DEMO_CAMERA") ||
+        (NSProcessInfo.processInfo.environment["DEMO_CAMERA"] as? String) == "1" ||
+        platform.Foundation.NSFileManager.defaultManager.fileExistsAtPath("$demoCameraDir/.demo_camera")
+}
+
+private val demoBackgroundPath: String? by lazy {
+    (NSProcessInfo.processInfo.environment["SCREENSHOT_BACKGROUND"] as? String)?.ifEmpty { null }
+        ?: readFileContent("$demoCameraDir/.demo_camera_bg")
+}
+
+private fun readFileContent(path: String): String? {
+    val fm = platform.Foundation.NSFileManager.defaultManager
+    if (!fm.fileExistsAtPath(path)) return null
+    val contents = fm.contentsAtPath(path) ?: return null
+    val str = contents.toKString()
+    return str.trim().ifEmpty { null }
+}
+
+@OptIn(kotlinx.cinterop.ExperimentalForeignApi::class)
+private fun platform.Foundation.NSData.toKString(): String {
+    if (length == 0uL) return ""
+    val bytes = ByteArray(length.toInt())
+    bytes.usePinned { pinned ->
+        platform.posix.memcpy(pinned.addressOf(0), this@toKString.bytes, length)
+    }
+    return bytes.decodeToString()
+}
 
 @Composable
 fun ScanScreen(sharedImage: UIImage? = null) {
@@ -36,18 +75,20 @@ fun ScanScreen(sharedImage: UIImage? = null) {
         val platformContext = IosContext()
         val scope = rememberCoroutineScope()
         var scannedContent by remember { mutableStateOf<QrContentType?>(null) }
-        var cameraPermissionGranted by remember { mutableStateOf(false) }
+        var cameraPermissionGranted by remember { mutableStateOf(isDemoCamera) }
         var showRationale by remember { mutableStateOf(false) }
         val snackbarHostState = remember { SnackbarHostState() }
         var showOnboarding by remember {
-            mutableStateOf(sharedImage == null && !isOnboardingCompleted(platformContext))
+            mutableStateOf(!isDemoCamera && sharedImage == null && !isOnboardingCompleted(platformContext))
         }
         var showPhotoPicker by remember { mutableStateOf(false) }
 
         LaunchedEffect(Unit) {
-            val status = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
-            cameraPermissionGranted = status == AVAuthorizationStatusAuthorized
-            showRationale = status != AVAuthorizationStatusNotDetermined && status != AVAuthorizationStatusAuthorized
+            if (!isDemoCamera) {
+                val status = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
+                cameraPermissionGranted = status == AVAuthorizationStatusAuthorized
+                showRationale = status != AVAuthorizationStatusNotDetermined && status != AVAuthorizationStatusAuthorized
+            }
         }
 
         LaunchedEffect(sharedImage) {
@@ -83,7 +124,9 @@ fun ScanScreen(sharedImage: UIImage? = null) {
                             },
                             isScanning = scannedContent == null,
                             onGalleryClick = { showPhotoPicker = true },
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier.fillMaxSize(),
+                            demoMode = isDemoCamera,
+                            demoBackgroundPath = demoBackgroundPath
                         )
 
                         scannedContent?.let { content ->

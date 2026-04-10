@@ -23,17 +23,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         handleShareIntent(intent)
 
-        val screenshotContent = intent?.getStringExtra("SCREENSHOT_CONTENT")
         val screenshotBg = intent?.getStringExtra("SCREENSHOT_BACKGROUND")
+        val demoCamera = intent?.getBooleanExtra("DEMO_CAMERA", false) ?: false
 
         setContent {
             App(
                 sharedImageUri = sharedUri.value,
                 shareTimestamp = shareTimestamp.longValue,
-                screenshotContent = screenshotContent,
                 screenshotBackground = screenshotBg,
                 sharedText = sharedText.value,
-                shareTextTimestamp = shareTextTimestamp.longValue
+                shareTextTimestamp = shareTextTimestamp.longValue,
+                demoCamera = demoCamera
             )
         }
     }

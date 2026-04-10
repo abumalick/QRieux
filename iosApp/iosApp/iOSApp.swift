@@ -11,6 +11,7 @@ struct iOSApp: App {
     @Environment(\.scenePhase) private var scenePhase
     @State private var sharedImage: UIImage?
     @State private var sharedText: String?
+    @State private var selectedTab: AppTab = .scan
 
     init() {
         UIView.appearance().backgroundColor = .clear
@@ -18,7 +19,7 @@ struct iOSApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView(sharedImage: $sharedImage, sharedText: $sharedText)
+            ContentView(sharedImage: $sharedImage, sharedText: $sharedText, selectedTab: $selectedTab)
                 .preferredColorScheme(.dark)
                 .onChange(of: scenePhase) { phase in
                     if phase == .active {
@@ -41,6 +42,13 @@ struct iOSApp: App {
                   let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
                   let text = components.queryItems?.first(where: { $0.name == "text" })?.value {
             sharedText = text
+        } else if url.host == "tab" {
+            switch url.path {
+            case "/scan": selectedTab = .scan
+            case "/create": selectedTab = .create
+            case "/help": selectedTab = .help
+            default: break
+            }
         }
     }
 

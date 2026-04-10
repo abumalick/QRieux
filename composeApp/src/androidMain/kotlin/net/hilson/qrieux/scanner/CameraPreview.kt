@@ -1,5 +1,6 @@
 package net.hilson.qrieux.scanner
 
+import android.graphics.BitmapFactory
 import android.view.ViewGroup
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
@@ -7,6 +8,7 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,13 +30,18 @@ import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.CompositingStrategy
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -53,6 +60,75 @@ import androidx.compose.material.icons.filled.PhotoLibrary
 
 @Composable
 fun CameraPreview(
+    onQrCodeDetected: (String) -> Unit,
+    isScanning: Boolean,
+    onGalleryClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    demoMode: Boolean = false,
+    demoBackgroundPath: String? = null
+) {
+    if (demoMode) {
+        DemoCameraPreview(
+            onGalleryClick = onGalleryClick,
+            modifier = modifier,
+            backgroundPath = demoBackgroundPath
+        )
+    } else {
+        LiveCameraPreview(
+            onQrCodeDetected = onQrCodeDetected,
+            isScanning = isScanning,
+            onGalleryClick = onGalleryClick,
+            modifier = modifier
+        )
+    }
+}
+
+@Composable
+private fun DemoCameraPreview(
+    onGalleryClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    backgroundPath: String? = null
+) {
+    val bgBitmap = remember(backgroundPath) {
+        backgroundPath?.let { BitmapFactory.decodeFile(it)?.asImageBitmap() }
+    }
+
+    CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
+        Box(modifier = modifier.fillMaxSize()) {
+            if (bgBitmap != null) {
+                Image(
+                    bitmap = bgBitmap,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize()
+                )
+            } else {
+                Canvas(modifier = Modifier.fillMaxSize()) {
+                    drawRect(Color(0xFF1A1A2E))
+                    drawRect(
+                        brush = Brush.radialGradient(
+                            colors = listOf(Color(0xFF16213E), Color(0xFF0F3460)),
+                            center = center,
+                            radius = size.minDimension * 0.8f
+                        )
+                    )
+                }
+            }
+
+            Box(Modifier.fillMaxSize().graphicsLayer { compositingStrategy = CompositingStrategy.Offscreen }) {
+                ScanOverlay()
+            }
+            CameraButtons(
+                flashEnabled = false,
+                onFlashClick = {},
+                onGalleryClick = onGalleryClick
+            )
+        }
+    }
+}
+
+@Composable
+private fun LiveCameraPreview(
     onQrCodeDetected: (String) -> Unit,
     isScanning: Boolean,
     onGalleryClick: () -> Unit,
@@ -90,7 +166,6 @@ fun CameraPreview(
     }
 
     // Force LTR so button positions don't flip in RTL locales (camera UI is ergonomic, not directional)
-    val originalLayoutDirection = LocalLayoutDirection.current
     CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
         Box(modifier = modifier.fillMaxSize()) {
             AndroidView(
@@ -139,50 +214,63 @@ fun CameraPreview(
             )
 
             ScanOverlay()
-
-            FilledIconButton(
-                onClick = {
+            CameraButtons(
+                flashEnabled = flashEnabled,
+                onFlashClick = {
                     flashEnabled = !flashEnabled
                     camera?.cameraControl?.enableTorch(flashEnabled)
                 },
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(24.dp)
-                    .size(64.dp),
-                colors = IconButtonDefaults.filledIconButtonColors(
-                    containerColor = if (flashEnabled) Color.White else Color.Black.copy(alpha = 0.5f),
-                    contentColor = if (flashEnabled) Color.Black else Color.White
-                )
-            ) {
-                Icon(
-                    painter = painterResource(
-                        if (flashEnabled) R.drawable.ic_flash_off else R.drawable.ic_flash_on
-                    ),
-                    contentDescription = stringResource(
-                        if (flashEnabled) R.string.flash_turn_off else R.string.flash_turn_on
-                    ),
-                    modifier = Modifier.size(32.dp)
-                )
-            }
+                onGalleryClick = onGalleryClick
+            )
+        }
+    }
+}
 
-            FilledIconButton(
-                onClick = onGalleryClick,
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(24.dp)
-                    .size(64.dp),
-                colors = IconButtonDefaults.filledIconButtonColors(
-                    containerColor = Color.Black.copy(alpha = 0.5f),
-                    contentColor = Color.White
-                )
-            ) {
-                Icon(
-                    imageVector = Icons.Default.PhotoLibrary,
-                    contentDescription = stringResource(R.string.gallery_pick_photo),
-                    modifier = Modifier.size(32.dp)
-                )
-            }
+@Composable
+private fun CameraButtons(
+    flashEnabled: Boolean,
+    onFlashClick: () -> Unit,
+    onGalleryClick: () -> Unit
+) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        FilledIconButton(
+            onClick = onFlashClick,
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(24.dp)
+                .size(64.dp),
+            colors = IconButtonDefaults.filledIconButtonColors(
+                containerColor = if (flashEnabled) Color.White else Color.Black.copy(alpha = 0.5f),
+                contentColor = if (flashEnabled) Color.Black else Color.White
+            )
+        ) {
+            Icon(
+                painter = painterResource(
+                    if (flashEnabled) R.drawable.ic_flash_off else R.drawable.ic_flash_on
+                ),
+                contentDescription = stringResource(
+                    if (flashEnabled) R.string.flash_turn_off else R.string.flash_turn_on
+                ),
+                modifier = Modifier.size(32.dp)
+            )
+        }
 
+        FilledIconButton(
+            onClick = onGalleryClick,
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(24.dp)
+                .size(64.dp),
+            colors = IconButtonDefaults.filledIconButtonColors(
+                containerColor = Color.Black.copy(alpha = 0.5f),
+                contentColor = Color.White
+            )
+        ) {
+            Icon(
+                imageVector = Icons.Default.PhotoLibrary,
+                contentDescription = stringResource(R.string.gallery_pick_photo),
+                modifier = Modifier.size(32.dp)
+            )
         }
     }
 }

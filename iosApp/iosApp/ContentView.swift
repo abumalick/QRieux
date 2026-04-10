@@ -47,7 +47,7 @@ enum AppTab: Hashable {
 struct ContentView: View {
     @Binding var sharedImage: UIImage?
     @Binding var sharedText: String?
-    @State private var selectedTab: AppTab = .scan
+    @Binding var selectedTab: AppTab
 
     var body: some View {
         TabView(selection: $selectedTab) {
