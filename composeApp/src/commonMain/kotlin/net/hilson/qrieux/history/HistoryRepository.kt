@@ -5,17 +5,14 @@ import net.hilson.qrieux.loadHistoryJson
 import net.hilson.qrieux.saveHistoryJson
 
 private const val MAX_ENTRIES = 200
-private val historyLock = Any()
 
 fun addHistoryEntry(context: PlatformContext, entry: HistoryEntry) {
-    synchronized(historyLock) {
-        val entries = loadHistory(context).toMutableList()
-        entries.add(0, entry)
-        if (entries.size > MAX_ENTRIES) {
-            entries.subList(MAX_ENTRIES, entries.size).clear()
-        }
-        saveHistory(context, entries)
+    val entries = loadHistory(context).toMutableList()
+    entries.add(0, entry)
+    if (entries.size > MAX_ENTRIES) {
+        entries.subList(MAX_ENTRIES, entries.size).clear()
     }
+    saveHistory(context, entries)
 }
 
 fun loadHistory(context: PlatformContext): List<HistoryEntry> {
