@@ -76,9 +76,6 @@ export const tapBackToScan = () =>
 export const getSelectedType = () =>
   useAndroid() ? android.getSelectedType() : ios.getSelectedType();
 
-export const waitForQrGenerated = () =>
-  useAndroid() ? android.waitForQrGenerated() : ios.waitForQrGenerated();
-
 // --- Share from external app ---
 
 export const shareImageToApp = (fixtureName: string) =>

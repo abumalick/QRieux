@@ -3,8 +3,6 @@
     <string name="action_create_qr">Crea</string>
     <string name="generator_title">Crea codice QR</string>
     <string name="generator_description">Scegli cosa vuoi condividere, poi compila i dettagli qui sotto.</string>
-    <string name="generator_preview_title">Codice QR</string>
-    <string name="generator_preview_hint">Compila il modulo per generare un codice QR.</string>
     <string name="generator_share_qr">Condividi QR</string>
     <string name="generator_type_website">Sito web</string>
     <string name="generator_type_email">Email</string>
@@ -28,4 +26,7 @@
     <string name="generator_invalid_wifi_name">Inserisci il nome del Wi-Fi</string>
     <string name="generator_invalid_wifi_password">Inserisci la password del Wi-Fi</string>
     <string name="generator_invalid_text">Inserisci del testo</string>
+    <string name="generator_generate_button">Genera codice QR</string>
+    <string name="generator_result_title">Il tuo codice QR</string>
+    <string name="generator_edit_button">Modifica</string>
 </resources>

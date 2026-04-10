@@ -2,7 +2,7 @@
 
 # Build debug APK
 android-debug:
-    ./gradlew :composeApp:assembleDebug
+    ./gradlew clean :composeApp:assembleDebug --no-build-cache
 
 # Build release bundle (requires key.properties)
 android-release:

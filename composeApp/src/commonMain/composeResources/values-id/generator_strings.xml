@@ -3,8 +3,6 @@
     <string name="action_create_qr">Buat</string>
     <string name="generator_title">Buat Kode QR</string>
     <string name="generator_description">Pilih apa yang ingin Anda bagikan, lalu isi detail di bawah.</string>
-    <string name="generator_preview_title">Kode QR</string>
-    <string name="generator_preview_hint">Isi formulir untuk membuat kode QR.</string>
     <string name="generator_share_qr">Bagikan QR</string>
     <string name="generator_type_website">Situs Web</string>
     <string name="generator_type_email">Email</string>
@@ -28,4 +26,7 @@
     <string name="generator_invalid_wifi_name">Masukkan nama Wi-Fi</string>
     <string name="generator_invalid_wifi_password">Masukkan kata sandi Wi-Fi</string>
     <string name="generator_invalid_text">Masukkan beberapa teks</string>
+    <string name="generator_generate_button">Buat Kode QR</string>
+    <string name="generator_result_title">Kode QR Anda</string>
+    <string name="generator_edit_button">Edit</string>
 </resources>

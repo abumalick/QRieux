@@ -3,8 +3,6 @@
     <string name="action_create_qr">Tengeneza</string>
     <string name="generator_title">Tengeneza Msimbo wa QR</string>
     <string name="generator_description">Chagua unachotaka kushiriki, kisha jaza maelezo hapa chini.</string>
-    <string name="generator_preview_title">Msimbo wa QR</string>
-    <string name="generator_preview_hint">Jaza fomu ili kutengeneza msimbo wa QR.</string>
     <string name="generator_share_qr">Shiriki QR</string>
     <string name="generator_type_website">Tovuti</string>
     <string name="generator_type_email">Barua Pepe</string>
@@ -28,4 +26,7 @@
     <string name="generator_invalid_wifi_name">Ingiza jina la Wi-Fi</string>
     <string name="generator_invalid_wifi_password">Ingiza nenosiri la Wi-Fi</string>
     <string name="generator_invalid_text">Ingiza maandishi</string>
+    <string name="generator_generate_button">Tengeneza Msimbo QR</string>
+    <string name="generator_result_title">Msimbo QR Wako</string>
+    <string name="generator_edit_button">Hariri</string>
 </resources>

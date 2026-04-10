@@ -3,9 +3,10 @@
     <string name="action_create_qr">बनाएं</string>
     <string name="generator_title">QR कोड बनाएं</string>
     <string name="generator_description">चुनें कि आप क्या शेयर करना चाहते हैं, फिर नीचे जानकारी भरें।</string>
-    <string name="generator_preview_title">QR कोड</string>
-    <string name="generator_preview_hint">QR कोड बनाने के लिए फॉर्म भरें।</string>
     <string name="generator_share_qr">QR शेयर करें</string>
+    <string name="generator_generate_button">QR कोड बनाएं</string>
+    <string name="generator_result_title">आपका QR कोड</string>
+    <string name="generator_edit_button">संपादित करें</string>
     <string name="generator_type_website">वेबसाइट</string>
     <string name="generator_type_email">ईमेल</string>
     <string name="generator_type_phone">फोन</string>

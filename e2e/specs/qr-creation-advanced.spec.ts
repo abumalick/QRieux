@@ -6,7 +6,9 @@ import {
   selectQrType,
   enterTextInField,
   clearField,
-  waitForQrGenerated,
+  tapGenerateButton,
+  waitForQrResultScreen,
+  tapEditButton,
   tapShareQrButton,
   dismissShareSheet,
   selectWifiSecurity,
@@ -26,13 +28,15 @@ describe('QR Creation - Advanced', () => {
   it('auto-normalizes website URL (adds https://)', async () => {
     await selectQrType('Website');
     await enterTextInField('Website address', 'example.com');
-    await waitForQrGenerated();
+    await tapGenerateButton();
+    await waitForQrResultScreen();
   });
 
   it('taps Share QR and opens share sheet', async () => {
     await tapShareQrButton();
     await browser.pause(1000);
     await dismissShareSheet();
+    await tapEditButton();
   });
 
   it('Wi-Fi security selector — WEP', async () => {
@@ -40,18 +44,24 @@ describe('QR Creation - Advanced', () => {
     await enterTextInField('Wi-Fi name', 'TestNet');
     await enterTextInField('Password', 'wepkey');
     await selectWifiSecurity('WEP');
-    await waitForQrGenerated();
+    await tapGenerateButton();
+    await waitForQrResultScreen();
+    await tapEditButton();
   });
 
   it('Wi-Fi security selector — None (no password required)', async () => {
     await selectWifiSecurity('None');
     await clearField('Password');
-    await waitForQrGenerated();
+    await tapGenerateButton();
+    await waitForQrResultScreen();
+    await tapEditButton();
   });
 
   it('Wi-Fi hidden network toggle', async () => {
     await toggleWifiHidden();
-    await waitForQrGenerated();
+    await tapGenerateButton();
+    await waitForQrResultScreen();
+    await tapEditButton();
   });
 
   it('navigates back to scanner', async () => {

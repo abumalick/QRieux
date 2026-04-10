@@ -2,8 +2,7 @@ import {
   dismissOnboarding,
   waitForScanner,
   waitForGeneratorScreen,
-  waitForQrGenerated,
-  isShareQrButtonEnabled,
+  isGenerateButtonEnabled,
   getSelectedType,
   tapBackToScan,
   shareTextToApp,
@@ -21,8 +20,7 @@ describe('Share Text to App', () => {
     await waitForGeneratorScreen();
 
     expect(await getSelectedType()).toBe('Text');
-    await waitForQrGenerated();
-    expect(await isShareQrButtonEnabled()).toBe(true);
+    expect(await isGenerateButtonEnabled()).toBe(true);
   });
 
   it('navigates back to scanner after text share', async () => {
@@ -35,8 +33,7 @@ describe('Share Text to App', () => {
     await waitForGeneratorScreen();
 
     expect(await getSelectedType()).toBe('Website');
-    await waitForQrGenerated();
-    expect(await isShareQrButtonEnabled()).toBe(true);
+    expect(await isGenerateButtonEnabled()).toBe(true);
   });
 
   it('navigates back to scanner after URL share', async () => {

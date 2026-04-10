@@ -3,8 +3,6 @@
     <string name="action_create_qr">உருவாக்கு</string>
     <string name="generator_title">QR குறியீடு உருவாக்கு</string>
     <string name="generator_description">நீங்கள் பகிர விரும்புவதைத் தேர்வு செய்து, கீழே விவரங்களை நிரப்பவும்.</string>
-    <string name="generator_preview_title">QR குறியீடு</string>
-    <string name="generator_preview_hint">QR குறியீடு உருவாக்க படிவத்தை நிரப்பவும்.</string>
     <string name="generator_share_qr">QR பகிர்</string>
     <string name="generator_type_website">இணையதளம்</string>
     <string name="generator_type_email">மின்னஞ்சல்</string>
@@ -28,4 +26,7 @@
     <string name="generator_invalid_wifi_name">Wi-Fi பெயரை உள்ளிடவும்</string>
     <string name="generator_invalid_wifi_password">Wi-Fi கடவுச்சொல்லை உள்ளிடவும்</string>
     <string name="generator_invalid_text">ஏதாவது உரையை உள்ளிடவும்</string>
+    <string name="generator_generate_button">QR குறியீட்டை உருவாக்கு</string>
+    <string name="generator_result_title">உங்கள் QR குறியீடு</string>
+    <string name="generator_edit_button">திருத்து</string>
 </resources>

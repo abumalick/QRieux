@@ -2,8 +2,7 @@ import {
   dismissOnboarding,
   waitForScanner,
   waitForGeneratorScreen,
-  waitForQrGenerated,
-  isShareQrButtonEnabled,
+  isGenerateButtonEnabled,
   getSelectedType,
   tapBackToScan,
   shareVCardToApp,
@@ -33,8 +32,7 @@ describe('Share Contact to App', () => {
     await waitForGeneratorScreen();
 
     expect(await getSelectedType()).toBe('Text');
-    await waitForQrGenerated();
-    expect(await isShareQrButtonEnabled()).toBe(true);
+    expect(await isGenerateButtonEnabled()).toBe(true);
   });
 
   it('navigates back to scanner after contact share', async () => {

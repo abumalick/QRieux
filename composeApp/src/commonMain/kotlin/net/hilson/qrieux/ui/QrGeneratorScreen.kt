@@ -1,6 +1,5 @@
 package net.hilson.qrieux.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,9 +22,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.QrCode2
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -38,8 +35,8 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -48,7 +45,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -59,6 +55,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.hilson.qrieux.PlatformContext
 import net.hilson.qrieux.dismissPlatformInput
@@ -90,7 +87,7 @@ import qr_scanner.composeapp.generated.resources.generator_invalid_text
 import qr_scanner.composeapp.generated.resources.generator_invalid_website
 import qr_scanner.composeapp.generated.resources.generator_invalid_wifi_name
 import qr_scanner.composeapp.generated.resources.generator_invalid_wifi_password
-import qr_scanner.composeapp.generated.resources.generator_preview_hint
+import qr_scanner.composeapp.generated.resources.generator_generate_button
 import qr_scanner.composeapp.generated.resources.generator_share_qr
 import qr_scanner.composeapp.generated.resources.generator_title
 import qr_scanner.composeapp.generated.resources.generator_type_email
@@ -136,6 +133,8 @@ fun QrGeneratorScreen(
     }
     var generatedQr by remember { mutableStateOf<net.hilson.qrieux.GeneratedQrCode?>(null) }
     var isGenerating by remember { mutableStateOf(false) }
+    var showResult by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     val payloadResult = remember(selectedType, form) {
         buildQrPayload(selectedType, form)
@@ -144,21 +143,9 @@ fun QrGeneratorScreen(
         hasInputFor(selectedType, form)
     }
     val shareLabel = stringResource(Res.string.generator_share_qr)
-
-    LaunchedEffect(payloadResult.payload) {
-        generatedQr = null
-        val payload = payloadResult.payload
-        if (payload == null) {
-            isGenerating = false
-            return@LaunchedEffect
-        }
-
-        isGenerating = true
-        generatedQr = withContext(Dispatchers.Default) {
-            generateQrCode(payload, size = 768)
-        }
-        isGenerating = false
-    }
+    val generateLabel = stringResource(Res.string.generator_generate_button)
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -243,59 +230,49 @@ fun QrGeneratorScreen(
                     )
                 }
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f)
-                        .background(Color.White, RoundedCornerShape(20.dp)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    val qr = generatedQr
-                    when {
-                        qr != null -> {
-                            Image(
-                                bitmap = qr.image,
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(24.dp),
-                                contentScale = ContentScale.Fit
-                            )
-                        }
-
-                        isGenerating -> CircularProgressIndicator()
-
-                        else -> {
-                            Text(
-                                text = stringResource(Res.string.generator_preview_hint),
-                                modifier = Modifier.padding(24.dp),
-                                style = largeBodyTextStyle(),
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                textAlign = TextAlign.Center
-                            )
-                        }
-                    }
-                }
-
                 Button(
-                    onClick = { generatedQr?.let { shareImage(platformContext, it.pngData, shareLabel) } },
-                    enabled = generatedQr != null,
+                    onClick = {
+                        focusManager.clearFocus()
+                        keyboardController?.hide()
+                        dismissPlatformInput(platformContext)
+                        showResult = true
+                        isGenerating = true
+                        scope.launch {
+                            generatedQr = withContext(Dispatchers.Default) {
+                                generateQrCode(payloadResult.payload!!, size = 768)
+                            }
+                            isGenerating = false
+                        }
+                    },
+                    enabled = payloadResult.payload != null,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(QRieuxUiConfig.controlHeight),
                     shape = RoundedCornerShape(QRieuxUiConfig.controlCornerRadius)
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Share,
+                        imageVector = Icons.Default.QrCode2,
                         contentDescription = null,
                         modifier = Modifier.size(24.dp)
                     )
                     Spacer(modifier = Modifier.width(10.dp))
                     Text(
-                        text = shareLabel,
+                        text = generateLabel,
                         fontSize = QRieuxUiConfig.buttonSize
                     )
                 }
+            }
+
+            if (showResult) {
+                QrResultOverlay(
+                    generatedQr = generatedQr,
+                    isGenerating = isGenerating,
+                    onShare = { generatedQr?.let { shareImage(platformContext, it.pngData, shareLabel) } },
+                    onEdit = {
+                        showResult = false
+                        generatedQr = null
+                    }
+                )
             }
         }
     }

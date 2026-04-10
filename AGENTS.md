@@ -102,6 +102,8 @@ Primary: `#4A90D9` (blue) — defined in `ui/theme/Theme.kt`, used in app icon a
 
 Use `stringResource(R.string.xxx)` for all user-facing strings. 20 languages supported.
 
+**Workflow:** when adding/changing strings for a feature, only edit English (`values/`) files. Once the feature is complete, launch the `translator` agent to translate all locales.
+
 Android strings: `composeApp/src/androidMain/res/values-{code}/strings.xml`
 Codes: (default=en), `ar`, `bn`, `de`, `es`, `fr`, `hi`, `in` (Indonesian), `it`, `ja`, `ko`, `pt-rBR`, `ru`, `sw`, `ta`, `th`, `tr`, `ur`, `vi`, `zh-rCN`
 
@@ -110,6 +112,15 @@ Codes: (default=en), `ar`, `bn`, `de`, `es`, `fr`, `hi`, `in` (Indonesian), `it`
 Open `examples/test-qr-codes.md` to test all supported QR types (URLs, emails, phones, text).
 
 ### E2E Tests
+
+**ALWAYS run E2E tests after implementing a new feature or modifying UI behavior.** Build the app with `--no-build-cache` first, then run relevant specs.
+
+**Build cache gotcha:** Gradle's build cache (`~/.gradle/caches/`) survives `:composeApp:clean`. After code changes, always use `--no-build-cache` to avoid stale dex files:
+```bash
+./gradlew clean :composeApp:assembleDebug --no-build-cache  # Android
+xcodebuild -scheme iosApp ... clean build                    # iOS — use 'clean build', not just 'build'
+```
+If `just android-debug` shows all tasks "UP-TO-DATE" or "FROM-CACHE" after code changes, that's a red flag.
 
 Appium + WebdriverIO v9 (TypeScript) in `e2e/`. Requires running emulator/simulator + built app.
 

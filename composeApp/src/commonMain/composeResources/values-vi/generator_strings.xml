@@ -3,8 +3,6 @@
     <string name="action_create_qr">Tạo</string>
     <string name="generator_title">Tạo mã QR</string>
     <string name="generator_description">Chọn nội dung bạn muốn chia sẻ, sau đó điền thông tin bên dưới.</string>
-    <string name="generator_preview_title">Mã QR</string>
-    <string name="generator_preview_hint">Điền vào biểu mẫu để tạo mã QR.</string>
     <string name="generator_share_qr">Chia sẻ QR</string>
     <string name="generator_type_website">Trang web</string>
     <string name="generator_type_email">Email</string>
@@ -28,4 +26,7 @@
     <string name="generator_invalid_wifi_name">Nhập tên Wi-Fi</string>
     <string name="generator_invalid_wifi_password">Nhập mật khẩu Wi-Fi</string>
     <string name="generator_invalid_text">Nhập nội dung văn bản</string>
+    <string name="generator_generate_button">Tạo mã QR</string>
+    <string name="generator_result_title">Mã QR của bạn</string>
+    <string name="generator_edit_button">Chỉnh sửa</string>
 </resources>

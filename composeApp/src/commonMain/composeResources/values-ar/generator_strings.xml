@@ -3,9 +3,10 @@
     <string name="action_create_qr">إنشاء</string>
     <string name="generator_title">إنشاء رمز QR</string>
     <string name="generator_description">اختر ما تريد مشاركته، ثم املأ التفاصيل أدناه.</string>
-    <string name="generator_preview_title">رمز QR</string>
-    <string name="generator_preview_hint">املأ النموذج لإنشاء رمز QR.</string>
     <string name="generator_share_qr">مشاركة QR</string>
+    <string name="generator_generate_button">إنشاء رمز QR</string>
+    <string name="generator_result_title">رمز QR الخاص بك</string>
+    <string name="generator_edit_button">تعديل</string>
     <string name="generator_type_website">موقع إلكتروني</string>
     <string name="generator_type_email">بريد إلكتروني</string>
     <string name="generator_type_phone">هاتف</string>

@@ -3,9 +3,10 @@
     <string name="action_create_qr">Créer</string>
     <string name="generator_title">Créer un code QR</string>
     <string name="generator_description">Choisissez ce que vous souhaitez partager, puis remplissez les détails ci-dessous.</string>
-    <string name="generator_preview_title">Code QR</string>
-    <string name="generator_preview_hint">Remplissez le formulaire pour générer un code QR.</string>
     <string name="generator_share_qr">Partager le QR</string>
+    <string name="generator_generate_button">Générer le code QR</string>
+    <string name="generator_result_title">Votre code QR</string>
+    <string name="generator_edit_button">Modifier</string>
     <string name="generator_type_website">Site web</string>
     <string name="generator_type_email">E-mail</string>
     <string name="generator_type_phone">Téléphone</string>

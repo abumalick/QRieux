@@ -3,8 +3,6 @@
     <string name="action_create_qr">만들기</string>
     <string name="generator_title">QR 코드 만들기</string>
     <string name="generator_description">공유할 내용을 선택하고 아래 세부 정보를 입력하세요.</string>
-    <string name="generator_preview_title">QR 코드</string>
-    <string name="generator_preview_hint">QR 코드를 생성하려면 양식을 작성하세요.</string>
     <string name="generator_share_qr">QR 공유</string>
     <string name="generator_type_website">웹사이트</string>
     <string name="generator_type_email">이메일</string>
@@ -28,4 +26,7 @@
     <string name="generator_invalid_wifi_name">Wi-Fi 이름을 입력하세요</string>
     <string name="generator_invalid_wifi_password">Wi-Fi 비밀번호를 입력하세요</string>
     <string name="generator_invalid_text">텍스트를 입력하세요</string>
+    <string name="generator_generate_button">QR 코드 생성</string>
+    <string name="generator_result_title">내 QR 코드</string>
+    <string name="generator_edit_button">편집</string>
 </resources>

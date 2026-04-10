@@ -164,22 +164,30 @@ export async function selectQrType(typeName: string): Promise<void> {
 
 export async function enterTextInField(label: string, value: string): Promise<void> {
   await scrollToTop();
-  // Click directly on the EditText that has the matching label hint.
-  // Use scrollIntoView to find it, then click it to focus.
+  // Compose OutlinedTextField renders the label as a child TextView, not as the
+  // EditText's text attribute. Try textContains first, then fall back to finding
+  // the EditText via its parent container that has the label as a child.
   await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().className("android.widget.EditText").textContains("${label}"))`);
   let editText = await $(`android=new UiSelector().className("android.widget.EditText").textContains("${label}")`);
   if (!(await editText.isExisting())) {
-    // Fallback: find the label TextView, click it, then find the focused EditText
-    const labelEl = await $(`android=new UiSelector().text("${label}").className("android.widget.TextView")`);
-    await labelEl.waitForExist({ timeout: 5_000 });
-    await labelEl.click();
-    await browser.pause(300);
-    editText = await $('android=new UiSelector().focused(true).className("android.widget.EditText")');
-  } else {
-    await editText.click();
-    await browser.pause(300);
+    // Find the label inside the OutlinedTextField container, then find its sibling EditText.
+    // The label and EditText share a common scrollable/focusable ancestor.
+    // Scroll to the label, click the EditText next to it.
+    await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("${label}"))`);
+    // Use fromParent: find a sibling EditText of the label text within the same container
+    editText = await $(`android=new UiSelector().text("${label}").fromParent(new UiSelector().className("android.widget.EditText"))`);
+    if (!(await editText.isExisting())) {
+      // Last resort: click the label and hope it focuses the EditText
+      const labelEl = await $(`android=new UiSelector().text("${label}").className("android.widget.TextView")`);
+      await labelEl.waitForExist({ timeout: 5_000 });
+      await labelEl.click();
+      await browser.pause(300);
+      editText = await $('android=new UiSelector().focused(true).className("android.widget.EditText")');
+    }
   }
-  await editText.waitForExist({ timeout: 3_000 });
+  await editText.waitForExist({ timeout: 5_000 });
+  await editText.click();
+  await browser.pause(300);
   await editText.clearValue();
   if (value) {
     await editText.setValue(value);
@@ -193,16 +201,19 @@ export async function clearField(label: string): Promise<void> {
   await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().className("android.widget.EditText").textContains("${label}"))`);
   let editText = await $(`android=new UiSelector().className("android.widget.EditText").textContains("${label}")`);
   if (!(await editText.isExisting())) {
-    const labelEl = await $(`android=new UiSelector().text("${label}").className("android.widget.TextView")`);
-    await labelEl.waitForExist({ timeout: 5_000 });
-    await labelEl.click();
-    await browser.pause(300);
-    editText = await $('android=new UiSelector().focused(true).className("android.widget.EditText")');
-  } else {
-    await editText.click();
-    await browser.pause(300);
+    await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("${label}"))`);
+    editText = await $(`android=new UiSelector().text("${label}").fromParent(new UiSelector().className("android.widget.EditText"))`);
+    if (!(await editText.isExisting())) {
+      const labelEl = await $(`android=new UiSelector().text("${label}").className("android.widget.TextView")`);
+      await labelEl.waitForExist({ timeout: 5_000 });
+      await labelEl.click();
+      await browser.pause(300);
+      editText = await $('android=new UiSelector().focused(true).className("android.widget.EditText")');
+    }
   }
-  await editText.waitForExist({ timeout: 3_000 });
+  await editText.waitForExist({ timeout: 5_000 });
+  await editText.click();
+  await browser.pause(300);
   await editText.clearValue();
   await driver.pressKeyCode(4);
   await browser.pause(300);
@@ -270,11 +281,6 @@ export async function getSelectedType(): Promise<string> {
     if (await el.isExisting()) return label;
   }
   throw new Error('Could not determine selected QR type');
-}
-
-export async function waitForQrGenerated(): Promise<void> {
-  await tapGenerateButton();
-  await waitForQrResultScreen();
 }
 
 // --- Toast / flash / help / share helpers ---

@@ -3,8 +3,6 @@
     <string name="action_create_qr">بنائیں</string>
     <string name="generator_title">QR کوڈ بنائیں</string>
     <string name="generator_description">منتخب کریں کہ آپ کیا شیئر کرنا چاہتے ہیں، پھر نیچے تفصیلات بھریں۔</string>
-    <string name="generator_preview_title">QR کوڈ</string>
-    <string name="generator_preview_hint">QR کوڈ بنانے کے لیے فارم بھریں۔</string>
     <string name="generator_share_qr">QR شیئر کریں</string>
     <string name="generator_type_website">ویب سائٹ</string>
     <string name="generator_type_email">ای میل</string>
@@ -28,4 +26,7 @@
     <string name="generator_invalid_wifi_name">Wi-Fi نام درج کریں</string>
     <string name="generator_invalid_wifi_password">Wi-Fi پاس ورڈ درج کریں</string>
     <string name="generator_invalid_text">کچھ ٹیکسٹ درج کریں</string>
+    <string name="generator_generate_button">QR کوڈ بنائیں</string>
+    <string name="generator_result_title">آپ کا QR کوڈ</string>
+    <string name="generator_edit_button">ترمیم</string>
 </resources>

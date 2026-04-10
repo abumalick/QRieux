@@ -289,11 +289,6 @@ export async function getSelectedType(): Promise<string> {
   return await field.getValue() as string;
 }
 
-export async function waitForQrGenerated(): Promise<void> {
-  await tapGenerateButton();
-  await waitForQrResultScreen();
-}
-
 // --- Toast / flash / help / share helpers ---
 
 export async function waitForToast(text: string): Promise<void> {

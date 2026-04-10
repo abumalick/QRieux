@@ -74,6 +74,31 @@ async function waitForQrGenerator(): Promise<void> {
   }, { timeout: 15_000, timeoutMsg: 'QR generator screen did not load' });
 }
 
+// Wait for QR result overlay
+async function waitForQrResult(): Promise<void> {
+  if (driver.isAndroid) {
+    const el = await $('android=new UiSelector().text("Your QR Code")');
+    await el.waitForExist({ timeout: 10_000 });
+  } else {
+    const el = await $('-ios predicate string:label == "Your QR Code"');
+    await el.waitForExist({ timeout: 10_000 });
+  }
+}
+
+// Tap the Generate QR Code button
+async function tapGenerate(): Promise<void> {
+  if (driver.isAndroid) {
+    await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("Generate QR Code"))');
+    const btn = await $('android=new UiSelector().clickable(true).childSelector(new UiSelector().text("Generate QR Code"))');
+    await btn.waitForExist({ timeout: 5_000 });
+    await btn.click();
+  } else {
+    const btn = await $('-ios predicate string:label == "Generate QR Code"');
+    await btn.waitForExist({ timeout: 5_000 });
+    await btn.click();
+  }
+}
+
 describe('App Store Screenshots', () => {
   before(async () => {
     mkdirSync(outputDir, { recursive: true });
@@ -116,14 +141,20 @@ describe('App Store Screenshots', () => {
       execSync(`xcrun simctl openurl booted 'qrieux://create?text=${encoded}'`);
     }
     await waitForQrGenerator();
-    await browser.pause(1000); // let QR preview render
+    await browser.pause(1000);
     await browser.saveScreenshot(screenshotPath('3_create_qr'));
+  });
+
+  it('4_create_qr_result', async () => {
+    await tapGenerate();
+    await waitForQrResult();
+    await browser.saveScreenshot(screenshotPath('4_create_qr_result'));
     await tapTabByIndex(0);
   });
 
-  it('4_help', async () => {
+  it('5_help', async () => {
     await tapTabByIndex(2);
     await browser.pause(1500);
-    await browser.saveScreenshot(screenshotPath('4_help'));
+    await browser.saveScreenshot(screenshotPath('5_help'));
   });
 });
