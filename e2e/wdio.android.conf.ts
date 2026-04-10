@@ -5,6 +5,7 @@ export const config: WebdriverIO.Config = {
   ...sharedConfig,
 
   specs: ['./specs/**/*.spec.ts'],
+  exclude: ['./specs/screenshots.spec.ts'],
 
   capabilities: [{
     platformName: 'Android',

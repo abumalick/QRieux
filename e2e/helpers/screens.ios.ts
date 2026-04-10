@@ -135,15 +135,6 @@ async function iosScrollUp(): Promise<void> {
   await iosSwipe('down');
 }
 
-async function iosScrollToShareButton(): Promise<void> {
-  // Scroll down until "Share QR" is visible
-  for (let i = 0; i < 3; i++) {
-    const btn = await $('-ios predicate string:label == "Share QR"');
-    if (await btn.isExisting()) return;
-    await iosScrollDown();
-  }
-}
-
 export async function tapCreateButton(): Promise<void> {
   const btn = await $('-ios predicate string:label == "Create"');
   await btn.waitForExist({ timeout: 5_000 });
@@ -238,15 +229,32 @@ export async function clearField(label: string): Promise<void> {
 }
 
 export async function isShareQrButtonEnabled(): Promise<boolean> {
-  await iosScrollToShareButton();
   const btn = await $('-ios predicate string:label == "Share QR"');
   if (!(await btn.isExisting())) return false;
   return btn.isEnabled();
 }
 
-export async function isPreviewHintVisible(): Promise<boolean> {
-  const hint = await $('-ios predicate string:label CONTAINS "Fill in the form"');
-  return hint.isExisting();
+export async function tapGenerateButton(): Promise<void> {
+  const btn = await $('-ios predicate string:label == "Generate QR Code"');
+  await btn.waitForExist({ timeout: 5_000 });
+  await btn.click();
+}
+
+export async function isGenerateButtonEnabled(): Promise<boolean> {
+  const btn = await $('-ios predicate string:label == "Generate QR Code"');
+  if (!(await btn.isExisting())) return false;
+  return btn.isEnabled();
+}
+
+export async function waitForQrResultScreen(): Promise<void> {
+  const title = await $('-ios predicate string:label == "Your QR Code"');
+  await title.waitForExist({ timeout: 10_000 });
+}
+
+export async function tapEditButton(): Promise<void> {
+  const btn = await $('-ios predicate string:label == "Edit"');
+  await btn.waitForExist({ timeout: 5_000 });
+  await btn.click();
 }
 
 export async function isValidationErrorVisible(errorText: string): Promise<boolean> {
@@ -282,15 +290,8 @@ export async function getSelectedType(): Promise<string> {
 }
 
 export async function waitForQrGenerated(): Promise<void> {
-  await browser.waitUntil(
-    async () => {
-      await iosScrollToShareButton();
-      const btn = await $('-ios predicate string:label == "Share QR"');
-      if (!(await btn.isExisting())) return false;
-      return btn.isEnabled();
-    },
-    { timeout: 10_000, timeoutMsg: 'QR code was not generated in time' }
-  );
+  await tapGenerateButton();
+  await waitForQrResultScreen();
 }
 
 // --- Toast / flash / help / share helpers ---
@@ -331,7 +332,6 @@ export async function isOnboardingVisible(): Promise<boolean> {
 }
 
 export async function tapShareQrButton(): Promise<void> {
-  await iosScrollToShareButton();
   const btn = await $('-ios predicate string:label == "Share QR"');
   await btn.waitForExist({ timeout: 5_000 });
   await btn.click();
@@ -363,7 +363,7 @@ export async function selectWifiSecurity(securityName: string): Promise<void> {
 
   // Tap the security selection_field (last one visible — type chooser may be scrolled away)
   const fields = await $$('-ios predicate string:label == "selection_field"');
-  const count = await fields.length;
+  const count = fields.length;
   if (count < 1) {
     throw new Error('Could not find Wi-Fi security selection field');
   }

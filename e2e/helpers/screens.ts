@@ -55,8 +55,17 @@ export const clearField = (label: string) =>
 export const isShareQrButtonEnabled = () =>
   useAndroid() ? android.isShareQrButtonEnabled() : ios.isShareQrButtonEnabled();
 
-export const isPreviewHintVisible = () =>
-  useAndroid() ? android.isPreviewHintVisible() : ios.isPreviewHintVisible();
+export const tapGenerateButton = () =>
+  useAndroid() ? android.tapGenerateButton() : ios.tapGenerateButton();
+
+export const isGenerateButtonEnabled = () =>
+  useAndroid() ? android.isGenerateButtonEnabled() : ios.isGenerateButtonEnabled();
+
+export const waitForQrResultScreen = () =>
+  useAndroid() ? android.waitForQrResultScreen() : ios.waitForQrResultScreen();
+
+export const tapEditButton = () =>
+  useAndroid() ? android.tapEditButton() : ios.tapEditButton();
 
 export const isValidationErrorVisible = (errorText: string) =>
   useAndroid() ? android.isValidationErrorVisible(errorText) : ios.isValidationErrorVisible(errorText);

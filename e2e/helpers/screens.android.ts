@@ -126,16 +126,6 @@ export async function tapScanAgain(): Promise<void> {
 
 // --- QR Creation helpers ---
 
-async function scrollToShareButton() {
-  // Share QR button is below the fold — scroll into view
-  await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("Share QR"))');
-  // The Compose Button renders as a clickable View parent with a child TextView.
-  // Check enabled on the parent View, not the child TextView.
-  const btn = await $('android=new UiSelector().clickable(true).childSelector(new UiSelector().text("Share QR"))');
-  await btn.waitForExist({ timeout: 5_000 });
-  return btn;
-}
-
 async function scrollToTop(): Promise<void> {
   await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollToBeginning(3)');
   await browser.pause(300);
@@ -154,12 +144,18 @@ export async function waitForGeneratorScreen(): Promise<void> {
 
 export async function selectQrType(typeName: string): Promise<void> {
   await scrollToTop();
-  // Dropdown is the first EditText (ExposedDropdownMenuBox)
-  const dropdown = await $('android=new UiSelector().className("android.widget.EditText").instance(0)');
-  await dropdown.waitForExist({ timeout: 5_000 });
-  await dropdown.click();
-  await browser.pause(500);
-
+  // The type chooser is an ExposedDropdownMenuBox with a Box anchor (not EditText).
+  // Find the currently selected type text and click it to open the dropdown,
+  // then click the desired option.
+  const typeLabels = ['Text', 'Website', 'Email', 'Phone', 'Wi-Fi'];
+  for (const label of typeLabels) {
+    const trigger = await $(`android=new UiSelector().text("${label}")`);
+    if (await trigger.isExisting()) {
+      await trigger.click();
+      await browser.pause(500);
+      break;
+    }
+  }
   const option = await $(`android=new UiSelector().text("${typeName}")`);
   await option.waitForExist({ timeout: 3_000 });
   await option.click();
@@ -167,16 +163,22 @@ export async function selectQrType(typeName: string): Promise<void> {
 }
 
 export async function enterTextInField(label: string, value: string): Promise<void> {
-  // Scroll to beginning first, then forward to the label (scrollIntoView only scrolls forward)
   await scrollToTop();
-  await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("${label}").className("android.widget.TextView"))`);
-
-  const labelEl = await $(`android=new UiSelector().text("${label}").className("android.widget.TextView")`);
-  await labelEl.waitForExist({ timeout: 5_000 });
-  await labelEl.click();
-  await browser.pause(300);
-
-  const editText = await $('android=new UiSelector().focused(true).className("android.widget.EditText")');
+  // Click directly on the EditText that has the matching label hint.
+  // Use scrollIntoView to find it, then click it to focus.
+  await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().className("android.widget.EditText").textContains("${label}"))`);
+  let editText = await $(`android=new UiSelector().className("android.widget.EditText").textContains("${label}")`);
+  if (!(await editText.isExisting())) {
+    // Fallback: find the label TextView, click it, then find the focused EditText
+    const labelEl = await $(`android=new UiSelector().text("${label}").className("android.widget.TextView")`);
+    await labelEl.waitForExist({ timeout: 5_000 });
+    await labelEl.click();
+    await browser.pause(300);
+    editText = await $('android=new UiSelector().focused(true).className("android.widget.EditText")');
+  } else {
+    await editText.click();
+    await browser.pause(300);
+  }
   await editText.waitForExist({ timeout: 3_000 });
   await editText.clearValue();
   if (value) {
@@ -188,14 +190,18 @@ export async function enterTextInField(label: string, value: string): Promise<vo
 
 export async function clearField(label: string): Promise<void> {
   await scrollToTop();
-  await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("${label}").className("android.widget.TextView"))`);
-
-  const labelEl = await $(`android=new UiSelector().text("${label}").className("android.widget.TextView")`);
-  await labelEl.waitForExist({ timeout: 5_000 });
-  await labelEl.click();
-  await browser.pause(300);
-
-  const editText = await $('android=new UiSelector().focused(true).className("android.widget.EditText")');
+  await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().className("android.widget.EditText").textContains("${label}"))`);
+  let editText = await $(`android=new UiSelector().className("android.widget.EditText").textContains("${label}")`);
+  if (!(await editText.isExisting())) {
+    const labelEl = await $(`android=new UiSelector().text("${label}").className("android.widget.TextView")`);
+    await labelEl.waitForExist({ timeout: 5_000 });
+    await labelEl.click();
+    await browser.pause(300);
+    editText = await $('android=new UiSelector().focused(true).className("android.widget.EditText")');
+  } else {
+    await editText.click();
+    await browser.pause(300);
+  }
   await editText.waitForExist({ timeout: 3_000 });
   await editText.clearValue();
   await driver.pressKeyCode(4);
@@ -203,16 +209,32 @@ export async function clearField(label: string): Promise<void> {
 }
 
 export async function isShareQrButtonEnabled(): Promise<boolean> {
-  await scrollToShareButton();
-  // The Compose Button is a clickable View with enabled=false when disabled.
-  // Check if a disabled parent with "Share QR" child exists.
   const disabledBtn = await $('android=new UiSelector().enabled(false).childSelector(new UiSelector().text("Share QR"))');
   return !(await disabledBtn.isExisting());
 }
 
-export async function isPreviewHintVisible(): Promise<boolean> {
-  const hint = await $('android=new UiSelector().textContains("Fill in the form")');
-  return hint.isExisting();
+export async function tapGenerateButton(): Promise<void> {
+  await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("Generate QR Code"))');
+  const btn = await $('android=new UiSelector().clickable(true).childSelector(new UiSelector().text("Generate QR Code"))');
+  await btn.waitForExist({ timeout: 5_000 });
+  await btn.click();
+}
+
+export async function isGenerateButtonEnabled(): Promise<boolean> {
+  await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("Generate QR Code"))');
+  const disabledBtn = await $('android=new UiSelector().enabled(false).childSelector(new UiSelector().text("Generate QR Code"))');
+  return !(await disabledBtn.isExisting());
+}
+
+export async function waitForQrResultScreen(): Promise<void> {
+  const title = await $('android=new UiSelector().text("Your QR Code")');
+  await title.waitForExist({ timeout: 10_000 });
+}
+
+export async function tapEditButton(): Promise<void> {
+  const btn = await $('android=new UiSelector().clickable(true).childSelector(new UiSelector().text("Edit"))');
+  await btn.waitForExist({ timeout: 5_000 });
+  await btn.click();
 }
 
 export async function isValidationErrorVisible(errorText: string): Promise<boolean> {
@@ -240,20 +262,19 @@ export async function waitForHelpScreen(): Promise<void> {
 }
 
 export async function getSelectedType(): Promise<string> {
-  const dropdown = await $('android=new UiSelector().className("android.widget.EditText").instance(0)');
-  await dropdown.waitForExist({ timeout: 5_000 });
-  return dropdown.getText();
+  // The dropdown trigger is a clickable View (not EditText) showing the selected type name.
+  // Find it by checking which type label exists outside the dropdown menu.
+  const typeLabels = ['Text', 'Website', 'Email', 'Phone', 'Wi-Fi'];
+  for (const label of typeLabels) {
+    const el = await $(`android=new UiSelector().text("${label}")`);
+    if (await el.isExisting()) return label;
+  }
+  throw new Error('Could not determine selected QR type');
 }
 
 export async function waitForQrGenerated(): Promise<void> {
-  await browser.waitUntil(
-    async () => {
-      await scrollToShareButton();
-      const disabledBtn = await $('android=new UiSelector().enabled(false).childSelector(new UiSelector().text("Share QR"))');
-      return !(await disabledBtn.isExisting());
-    },
-    { timeout: 10_000, timeoutMsg: 'QR code was not generated in time' }
-  );
+  await tapGenerateButton();
+  await waitForQrResultScreen();
 }
 
 // --- Toast / flash / help / share helpers ---
@@ -296,7 +317,8 @@ export async function isOnboardingVisible(): Promise<boolean> {
 }
 
 export async function tapShareQrButton(): Promise<void> {
-  const btn = await scrollToShareButton();
+  const btn = await $('android=new UiSelector().clickable(true).childSelector(new UiSelector().text("Share QR"))');
+  await btn.waitForExist({ timeout: 5_000 });
   await btn.click();
 }
 
@@ -310,11 +332,10 @@ export async function selectWifiSecurity(securityName: string): Promise<void> {
   await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("Security"))');
   await browser.pause(300);
 
-  // Find the security dropdown by its current value text (it shows current selection like "WPA/WPA2")
-  // It's the EditText right after the "Security" label
+  // Find the security dropdown by its current value text (Box-based, not EditText)
   const securityValues = ['WPA/WPA2', 'WEP', 'None'];
   for (const val of securityValues) {
-    const dropdown = await $(`android=new UiSelector().className("android.widget.EditText").text("${val}")`);
+    const dropdown = await $(`android=new UiSelector().text("${val}")`);
     if (await dropdown.isExisting()) {
       await dropdown.click();
       await browser.pause(500);
