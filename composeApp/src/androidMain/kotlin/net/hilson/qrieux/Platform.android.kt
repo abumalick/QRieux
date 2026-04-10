@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.os.Vibrator
 import android.os.VibratorManager
 import android.provider.Settings
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.content.FileProvider
@@ -103,7 +104,13 @@ actual fun showToast(context: PlatformContext, message: String) {
     Toast.makeText(ctx, message, Toast.LENGTH_SHORT).show()
 }
 
-actual fun dismissPlatformInput(context: PlatformContext) = Unit
+actual fun dismissPlatformInput(context: PlatformContext) {
+    val ctx = (context as AndroidContext).context
+    val imm = ctx.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    (ctx as? android.app.Activity)?.currentFocus?.let { view ->
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+}
 
 actual fun connectToWifi(context: PlatformContext, ssid: String, password: String, authType: String, hidden: Boolean, onResult: (Boolean) -> Unit) {
     val ctx = (context as AndroidContext).context
