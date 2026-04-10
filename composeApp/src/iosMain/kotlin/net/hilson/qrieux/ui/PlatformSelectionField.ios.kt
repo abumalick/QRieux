@@ -35,10 +35,12 @@ actual fun PlatformSelectionField(
                 backgroundColor = UIColor.colorWithWhite(0.98, alpha = 1.0)
                 textColor = UIColor.blackColor
                 font = UIFont.systemFontOfSize(QRieuxUiConfig.bodySize.value.toDouble())
-                textAlignment = UITextAlignmentLeft
+                textAlignment = NSTextAlignmentNatural
                 val paddingView = UIView(frame = platform.CoreGraphics.CGRectMake(0.0, 0.0, 16.0, 0.0))
                 leftView = paddingView
-                leftViewMode = platform.UIKit.UITextFieldViewMode.UITextFieldViewModeAlways
+                leftViewMode = UITextFieldViewMode.UITextFieldViewModeAlways
+                rightView = UIView(frame = platform.CoreGraphics.CGRectMake(0.0, 0.0, 16.0, 0.0))
+                rightViewMode = UITextFieldViewMode.UITextFieldViewModeAlways
                 layer.cornerRadius = 12.0
                 layer.borderWidth = 1.0
                 layer.borderColor = UIColor.colorWithWhite(0.82, alpha = 1.0).CGColor
