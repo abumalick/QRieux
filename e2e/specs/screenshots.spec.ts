@@ -15,18 +15,16 @@ function screenshotPath(name: string): string {
   return path.join(outputDir, `${prefix}${name}.png`);
 }
 
-const IOS_TABS = ['scan', 'create', 'help'];
+const IOS_TABS = ['scan', 'create', 'history', 'help'];
 
 async function tapTabByIndex(index: number): Promise<void> {
   if (driver.isAndroid) {
     const { width, height } = await browser.getWindowSize();
-    const y = height - 40;
-    const positions = [
-      Math.floor(width * 0.17),
-      Math.floor(width * 0.50),
-      Math.floor(width * 0.83),
-    ];
-    await driver.execute('mobile: tap', { x: positions[index], y });
+    // NavigationBar is ~80dp tall; target center of it, above system gesture area
+    const y = height - 50;
+    const sectionWidth = width / 4;
+    const x = Math.floor(sectionWidth * index + sectionWidth / 2);
+    await driver.execute('mobile: clickGesture', { x, y });
   } else {
     execSync(`xcrun simctl openurl booted 'qrieux://tab/${IOS_TABS[index]}'`);
   }
@@ -80,7 +78,7 @@ async function waitForQrResult(): Promise<void> {
     const el = await $('android=new UiSelector().text("Your QR Code")');
     await el.waitForExist({ timeout: 10_000 });
   } else {
-    const el = await $('-ios predicate string:label == "Your QR Code"');
+    const el = await $('~qr_result_title');
     await el.waitForExist({ timeout: 10_000 });
   }
 }
@@ -93,7 +91,7 @@ async function tapGenerate(): Promise<void> {
     await btn.waitForExist({ timeout: 5_000 });
     await btn.click();
   } else {
-    const btn = await $('-ios predicate string:label == "Generate QR Code"');
+    const btn = await $('~generate_button');
     await btn.waitForExist({ timeout: 5_000 });
     await btn.click();
   }
@@ -148,13 +146,26 @@ describe('App Store Screenshots', () => {
   it('4_create_qr_result', async () => {
     await tapGenerate();
     await waitForQrResult();
+    await browser.pause(2000);
     await browser.saveScreenshot(screenshotPath('4_create_qr_result'));
-    await tapTabByIndex(0);
+    // Dismiss QR result overlay so nav bar becomes tappable
+    if (driver.isAndroid) {
+      const backBtn = await $('~Navigate back');
+      await backBtn.waitForExist({ timeout: 5_000 });
+      await backBtn.click();
+    }
+    await browser.pause(500);
   });
 
-  it('5_help', async () => {
+  it('5_history', async () => {
     await tapTabByIndex(2);
     await browser.pause(1500);
-    await browser.saveScreenshot(screenshotPath('5_help'));
+    await browser.saveScreenshot(screenshotPath('5_history'));
+  });
+
+  it('6_help', async () => {
+    await tapTabByIndex(3);
+    await browser.pause(1500);
+    await browser.saveScreenshot(screenshotPath('6_help'));
   });
 });

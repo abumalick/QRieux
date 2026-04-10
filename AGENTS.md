@@ -130,7 +130,8 @@ Appium + WebdriverIO v9 (TypeScript) in `e2e/`. Requires running emulator/simula
 - On failure: screenshot, page source XML, device logs auto-saved to `e2e/artifacts/<timestamp>-<platform>/<test>/`
 - Appium/wdio logs: `e2e/logs/`
 - Env overrides: `E2E_APP_PATH`, `E2E_DEVICE_NAME`, `E2E_PLATFORM_VERSION`
-- Selectors use text/label matching — `testTagsAsResourceId` doesn't work in Compose Multiplatform
+- **iOS selectors**: prefer `testTag` (maps to `accessibilityIdentifier`, use `~tag_name` in Appium). Add `.semantics { testTag = "name" }` in Compose and select with `$('~name')`. This is locale-agnostic — avoids hardcoded English text in selectors.
+- **Android selectors**: `testTagsAsResourceId` doesn't work in Compose Multiplatform, so use text/label matching via UiSelector
 
 ## Fastlane
 

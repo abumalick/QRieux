@@ -235,19 +235,19 @@ export async function isShareQrButtonEnabled(): Promise<boolean> {
 }
 
 export async function tapGenerateButton(): Promise<void> {
-  const btn = await $('-ios predicate string:label == "Generate QR Code"');
+  const btn = await $('~generate_button');
   await btn.waitForExist({ timeout: 5_000 });
   await btn.click();
 }
 
 export async function isGenerateButtonEnabled(): Promise<boolean> {
-  const btn = await $('-ios predicate string:label == "Generate QR Code"');
+  const btn = await $('~generate_button');
   if (!(await btn.isExisting())) return false;
   return btn.isEnabled();
 }
 
 export async function waitForQrResultScreen(): Promise<void> {
-  const title = await $('-ios predicate string:label == "Your QR Code"');
+  const title = await $('~qr_result_title');
   await title.waitForExist({ timeout: 10_000 });
 }
 

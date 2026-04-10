@@ -32,6 +32,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -77,7 +79,7 @@ fun QrResultOverlay(
                     text = stringResource(Res.string.generator_result_title),
                     color = Color.White,
                     fontSize = 28.sp,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f).semantics { testTag = "qr_result_title" },
                     textAlign = TextAlign.Center
                 )
                 // Balance the row so title stays centered

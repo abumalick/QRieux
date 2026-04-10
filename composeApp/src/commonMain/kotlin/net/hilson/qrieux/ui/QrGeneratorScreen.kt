@@ -52,6 +52,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
@@ -256,7 +258,8 @@ fun QrGeneratorScreen(
                     enabled = payloadResult.payload != null,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(QRieuxUiConfig.controlHeight),
+                        .height(QRieuxUiConfig.controlHeight)
+                        .semantics { testTag = "generate_button" },
                     shape = RoundedCornerShape(QRieuxUiConfig.controlCornerRadius)
                 ) {
                     Icon(
