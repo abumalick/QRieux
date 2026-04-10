@@ -50,6 +50,7 @@
     <!--  Tab Bar -->
     <string name="tab_scan">扫描</string>
     <string name="tab_create">创建</string>
+    <string name="tab_history">历史</string>
     <string name="tab_help">帮助</string>
 
     <!--  Help Screen -->

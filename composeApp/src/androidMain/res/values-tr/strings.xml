@@ -50,6 +50,7 @@
     <!--  Tab Bar -->
     <string name="tab_scan">Tara</string>
     <string name="tab_create">Oluştur</string>
+    <string name="tab_history">Geçmiş</string>
     <string name="tab_help">Yardım</string>
 
     <!--  Help Screen -->

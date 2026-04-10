@@ -46,6 +46,7 @@ struct iOSApp: App {
             switch url.path {
             case "/scan": selectedTab = .scan
             case "/create": selectedTab = .create
+            case "/history": selectedTab = .history
             case "/help": selectedTab = .help
             default: break
             }

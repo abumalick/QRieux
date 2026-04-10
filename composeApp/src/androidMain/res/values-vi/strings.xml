@@ -50,6 +50,7 @@
     <!--  Tab Bar -->
     <string name="tab_scan">Quét</string>
     <string name="tab_create">Tạo</string>
+    <string name="tab_history">Lịch sử</string>
     <string name="tab_help">Trợ giúp</string>
 
     <!--  Help Screen -->

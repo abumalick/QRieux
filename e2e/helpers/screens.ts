@@ -130,3 +130,29 @@ export const toggleWifiHidden = () =>
 export const reactivateApp = () =>
   useAndroid() ? android.reactivateApp() : ios.reactivateApp();
 
+// --- History ---
+
+export const tapHistoryTab = () =>
+  useAndroid() ? android.tapHistoryTab() : ios.tapHistoryTab();
+
+export const waitForHistoryScreen = () =>
+  useAndroid() ? android.waitForHistoryScreen() : ios.waitForHistoryScreen();
+
+export const isHistoryEmpty = () =>
+  useAndroid() ? android.isHistoryEmpty() : ios.isHistoryEmpty();
+
+export const getHistoryEntryCount = () =>
+  useAndroid() ? android.getHistoryEntryCount() : ios.getHistoryEntryCount();
+
+export const tapHistoryEntry = (index: number) =>
+  useAndroid() ? android.tapHistoryEntry(index) : ios.tapHistoryEntry(index);
+
+export const swipeDeleteHistoryEntry = (index: number) =>
+  useAndroid() ? android.swipeDeleteHistoryEntry(index) : ios.swipeDeleteHistoryEntry(index);
+
+export const tapClearHistory = () =>
+  useAndroid() ? android.tapClearHistory() : ios.tapClearHistory();
+
+export const tapBackToHistory = () =>
+  useAndroid() ? android.tapBackToHistory() : ios.tapBackToHistory();
+

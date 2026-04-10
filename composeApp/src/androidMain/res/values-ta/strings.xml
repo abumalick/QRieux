@@ -50,6 +50,7 @@
     <!--  Tab Bar -->
     <string name="tab_scan">ஸ்கேன்</string>
     <string name="tab_create">உருவாக்கு</string>
+    <string name="tab_history">வரலாறு</string>
     <string name="tab_help">உதவி</string>
 
     <!--  Help Screen -->

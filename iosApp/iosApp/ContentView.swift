@@ -30,6 +30,14 @@ private struct CreateHost: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
 
+private struct HistoryHost: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+        return MainViewControllerKt.makeHistoryViewController()
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}
+
 private struct HelpHost: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
         return MainViewControllerKt.makeHelpViewController()
@@ -41,13 +49,14 @@ private struct HelpHost: UIViewControllerRepresentable {
 // MARK: - Main TabView
 
 enum AppTab: Hashable {
-    case scan, create, help
+    case scan, create, history, help
 }
 
 struct ContentView: View {
     @Binding var sharedImage: UIImage?
     @Binding var sharedText: String?
     @Binding var selectedTab: AppTab
+    @State private var historyViewId = UUID()
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -67,6 +76,14 @@ struct ContentView: View {
                 .tag(AppTab.create)
                 .id(createViewId)
 
+            HistoryHost()
+                .ignoresSafeArea()
+                .tabItem {
+                    Label(NSLocalizedString("tab_history", comment: ""), systemImage: "clock.arrow.circlepath")
+                }
+                .tag(AppTab.history)
+                .id(historyViewId)
+
             HelpHost()
                 .ignoresSafeArea()
                 .tabItem {
@@ -79,6 +96,9 @@ struct ContentView: View {
         }
         .onChange(of: sharedText) { text in
             if text != nil { selectedTab = .create }
+        }
+        .onChange(of: selectedTab) { tab in
+            if tab == .history { historyViewId = UUID() }
         }
     }
 

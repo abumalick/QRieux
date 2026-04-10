@@ -58,6 +58,16 @@
 
     <!--  Help Screen -->
     <string name="help_screen_title">How to Use QRieux</string>
+    <string name="help_flash_title">Using the Flash</string>
+    <string name="help_flash_desc">If it is too dark to scan, tap the flash button on the camera screen. It turns on your phone\'s light so the QR code is easier to read.</string>
+    <string name="help_share_to_scan_title">Scan from Other Apps</string>
+    <string name="help_share_to_scan_desc">You can share a photo from any app to QRieux to scan a QR code inside it. Open a photo in your gallery or a messaging app, tap the share button, and choose QRieux.</string>
+    <string name="help_wifi_contact_title">WiFi &amp; Contact QR Codes</string>
+    <string name="help_wifi_contact_desc">Some QR codes contain WiFi details or contact information. When you scan one, QRieux lets you connect to the WiFi network or add the person to your contacts with one tap.</string>
+    <string name="help_share_to_create_title">Share to Create QR Codes</string>
+    <string name="help_share_to_create_desc">You can share a website link, text, or contact from another app to QRieux, and it will create a QR code for you automatically. Just tap the share button and choose QRieux.</string>
+    <string name="help_history_title">History</string>
+    <string name="help_history_desc">The History tab keeps a record of every QR code you have scanned or created. You can tap any item to see its details again. Swipe left on an item to delete it.</string>
     <string name="help_supported_formats_title">Supported Formats</string>
     <string name="help_supported_formats_desc">QR codes, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec, and Data Matrix.</string>
     <string name="navigate_back">Navigate back</string>

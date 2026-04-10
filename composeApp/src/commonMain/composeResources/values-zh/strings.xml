@@ -58,6 +58,16 @@
 
     <!--  Help Screen -->
     <string name="help_screen_title">如何使用 QRieux</string>
+    <string name="help_flash_title">使用闪光灯</string>
+    <string name="help_flash_desc">如果光线太暗无法扫描，请点击相机屏幕上的闪光灯按钮。它会打开手机的手电筒，让二维码更容易识别。</string>
+    <string name="help_share_to_scan_title">从其他应用扫描</string>
+    <string name="help_share_to_scan_desc">您可以将任意应用中的照片分享给 QRieux，以扫描其中的二维码。在相册或聊天应用中打开一张照片，点击分享按钮，然后选择 QRieux。</string>
+    <string name="help_wifi_contact_title">WiFi 和联系人二维码</string>
+    <string name="help_wifi_contact_desc">有些二维码包含 WiFi 信息或联系人信息。扫描后，QRieux 可让您一键连接 WiFi 网络或将该联系人添加到通讯录。</string>
+    <string name="help_share_to_create_title">分享内容以创建二维码</string>
+    <string name="help_share_to_create_desc">您可以将网址、文字或联系人从其他应用分享给 QRieux，它会自动为您生成二维码。只需点击分享按钮并选择 QRieux 即可。</string>
+    <string name="help_history_title">历史记录</string>
+    <string name="help_history_desc">历史记录标签页保存了您扫描或创建的所有二维码。点击任意条目可再次查看详情。向左滑动条目可将其删除。</string>
     <string name="help_supported_formats_title">支持的格式</string>
     <string name="help_supported_formats_desc">二维码、EAN-8、EAN-13、Code 128、Code 39、Code 93、UPC-E、PDF417、Aztec 和 Data Matrix。</string>
     <string name="navigate_back">返回</string>

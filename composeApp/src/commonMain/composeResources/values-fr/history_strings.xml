@@ -1,0 +1,18 @@
+<resources>
+    <string name="tab_history">Historique</string>
+    <string name="history_title">Historique</string>
+    <string name="history_empty">Pas encore d\'historique</string>
+    <string name="history_empty_desc">Scannez ou créez un code QR pour commencer.</string>
+    <string name="history_scanned">Scanné</string>
+    <string name="history_created">Créé</string>
+    <string name="history_back">Retour à l\'historique</string>
+    <string name="history_clear_all">Tout effacer</string>
+    <string name="history_clear_confirm">Effacer tout l\'historique ?</string>
+    <string name="history_clear_yes">Effacer</string>
+    <string name="history_clear_cancel">Annuler</string>
+    <string name="history_just_now">À l\'instant</string>
+    <string name="history_minutes_ago">Il y a %1$d min</string>
+    <string name="history_hours_ago">Il y a %1$d heures</string>
+    <string name="history_yesterday">Hier</string>
+    <string name="history_days_ago">Il y a %1$d jours</string>
+</resources>

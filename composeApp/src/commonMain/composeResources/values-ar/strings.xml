@@ -58,6 +58,16 @@
 
     <!--  Help Screen -->
     <string name="help_screen_title">كيفية استخدام QRieux</string>
+    <string name="help_flash_title">استخدام الفلاش</string>
+    <string name="help_flash_desc">إذا كانت الإضاءة خافتة جداً للمسح، اضغط على زر الفلاش في شاشة الكاميرا. سيضيء ضوء هاتفك لتسهيل قراءة رمز QR.</string>
+    <string name="help_share_to_scan_title">المسح من تطبيقات أخرى</string>
+    <string name="help_share_to_scan_desc">يمكنك مشاركة صورة من أي تطبيق إلى QRieux لمسح رمز QR بداخلها. افتح صورة في معرضك أو تطبيق المراسلة، اضغط على زر المشاركة واختر QRieux.</string>
+    <string name="help_wifi_contact_title">رموز QR لـ WiFi وجهات الاتصال</string>
+    <string name="help_wifi_contact_desc">تحتوي بعض رموز QR على تفاصيل WiFi أو معلومات الاتصال. عند مسحها، يتيح لك QRieux الاتصال بشبكة WiFi أو إضافة الشخص إلى جهات اتصالك بنقرة واحدة.</string>
+    <string name="help_share_to_create_title">مشاركة لإنشاء رموز QR</string>
+    <string name="help_share_to_create_desc">يمكنك مشاركة رابط موقع أو نص أو جهة اتصال من تطبيق آخر إلى QRieux، وسيُنشئ رمز QR تلقائياً. فقط اضغط على زر المشاركة واختر QRieux.</string>
+    <string name="help_history_title">السجل</string>
+    <string name="help_history_desc">تبويب السجل يحتفظ بتاريخ كل رمز QR قمت بمسحه أو إنشائه. يمكنك الضغط على أي عنصر لرؤية تفاصيله مرة أخرى. اسحب للشمال لحذف عنصر.</string>
     <string name="help_supported_formats_title">الصيغ المدعومة</string>
     <string name="help_supported_formats_desc">رموز QR، EAN-8، EAN-13، Code 128، Code 39، Code 93، UPC-E، PDF417، Aztec، وData Matrix.</string>
     <string name="navigate_back">رجوع</string>

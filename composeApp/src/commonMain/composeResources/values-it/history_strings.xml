@@ -1,0 +1,18 @@
+<resources>
+    <string name="tab_history">Cronologia</string>
+    <string name="history_title">Cronologia</string>
+    <string name="history_empty">Nessuna cronologia</string>
+    <string name="history_empty_desc">Scansiona o crea un codice QR per iniziare.</string>
+    <string name="history_scanned">Scansionato</string>
+    <string name="history_created">Creato</string>
+    <string name="history_back">Torna alla cronologia</string>
+    <string name="history_clear_all">Cancella tutto</string>
+    <string name="history_clear_confirm">Cancellare tutta la cronologia?</string>
+    <string name="history_clear_yes">Cancella</string>
+    <string name="history_clear_cancel">Annulla</string>
+    <string name="history_just_now">Adesso</string>
+    <string name="history_minutes_ago">%1$d min fa</string>
+    <string name="history_hours_ago">%1$d ore fa</string>
+    <string name="history_yesterday">Ieri</string>
+    <string name="history_days_ago">%1$d giorni fa</string>
+</resources>

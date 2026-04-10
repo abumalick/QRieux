@@ -15,6 +15,9 @@ import kotlinx.cinterop.usePinned
 import kotlinx.coroutines.launch
 import net.hilson.qrieux.scanner.CameraPreview
 import net.hilson.qrieux.scanner.scanBarcodeFromImage
+import net.hilson.qrieux.history.HistoryEntry
+import net.hilson.qrieux.history.HistoryEntryType
+import net.hilson.qrieux.history.addHistoryEntry
 import net.hilson.qrieux.ui.OnboardingScreen
 import net.hilson.qrieux.ui.PermissionScreen
 import net.hilson.qrieux.ui.ScanResultOverlay
@@ -97,6 +100,7 @@ fun ScanScreen(sharedImage: UIImage? = null) {
                 if (result != null) {
                     vibrate(IosContext())
                     scannedContent = QrContentType.fromRawValue(result)
+                    addHistoryEntry(platformContext, HistoryEntry(generateUuid(), currentTimeMillis(), HistoryEntryType.SCAN, result))
                 } else {
                     snackbarHostState.showSnackbar(getString(Res.string.gallery_no_qr_found))
                 }
@@ -121,6 +125,7 @@ fun ScanScreen(sharedImage: UIImage? = null) {
                         CameraPreview(
                             onQrCodeDetected = { rawValue ->
                                 scannedContent = QrContentType.fromRawValue(rawValue)
+                                addHistoryEntry(platformContext, HistoryEntry(generateUuid(), currentTimeMillis(), HistoryEntryType.SCAN, rawValue))
                             },
                             isScanning = scannedContent == null,
                             onGalleryClick = { showPhotoPicker = true },
@@ -168,6 +173,7 @@ fun ScanScreen(sharedImage: UIImage? = null) {
                             if (result != null) {
                                 vibrate(IosContext())
                                 scannedContent = QrContentType.fromRawValue(result)
+                                addHistoryEntry(platformContext, HistoryEntry(generateUuid(), currentTimeMillis(), HistoryEntryType.SCAN, result))
                             } else {
                                 snackbarHostState.showSnackbar(getString(Res.string.gallery_no_qr_found))
                             }

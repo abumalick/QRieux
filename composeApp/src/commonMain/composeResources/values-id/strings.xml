@@ -58,6 +58,16 @@
 
     <!--  Help Screen -->
     <string name="help_screen_title">Cara Menggunakan QRieux</string>
+    <string name="help_flash_title">Menggunakan Flash</string>
+    <string name="help_flash_desc">Jika terlalu gelap untuk memindai, ketuk tombol flash di layar kamera. Flash akan menyalakan lampu ponsel agar kode QR lebih mudah dibaca.</string>
+    <string name="help_share_to_scan_title">Pindai dari Aplikasi Lain</string>
+    <string name="help_share_to_scan_desc">Anda bisa membagikan foto dari aplikasi mana pun ke QRieux untuk memindai kode QR di dalamnya. Buka foto di galeri atau aplikasi pesan, ketuk tombol bagikan, lalu pilih QRieux.</string>
+    <string name="help_wifi_contact_title">Kode QR WiFi &amp; Kontak</string>
+    <string name="help_wifi_contact_desc">Beberapa kode QR berisi detail WiFi atau informasi kontak. Saat Anda memindainya, QRieux memungkinkan Anda terhubung ke jaringan WiFi atau menambahkan orang tersebut ke kontak dengan satu ketukan.</string>
+    <string name="help_share_to_create_title">Bagikan untuk Membuat Kode QR</string>
+    <string name="help_share_to_create_desc">Anda bisa membagikan tautan situs web, teks, atau kontak dari aplikasi lain ke QRieux, dan QRieux akan membuat kode QR untuk Anda secara otomatis. Cukup ketuk tombol bagikan dan pilih QRieux.</string>
+    <string name="help_history_title">Riwayat</string>
+    <string name="help_history_desc">Tab Riwayat menyimpan catatan setiap kode QR yang telah Anda pindai atau buat. Ketuk item mana pun untuk melihat detailnya kembali. Geser ke kiri pada item untuk menghapusnya.</string>
     <string name="help_supported_formats_title">Format yang Didukung</string>
     <string name="help_supported_formats_desc">Kode QR, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec, dan Data Matrix.</string>
     <string name="navigate_back">Kembali</string>

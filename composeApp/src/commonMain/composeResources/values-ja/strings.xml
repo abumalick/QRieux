@@ -58,6 +58,16 @@
 
     <!--  Help Screen -->
     <string name="help_screen_title">QRieuxの使い方</string>
+    <string name="help_flash_title">フラッシュの使い方</string>
+    <string name="help_flash_desc">暗くてスキャンしにくい場合は、カメラ画面のフラッシュボタンをタップしてください。スマホのライトが点灯してQRコードが読み取りやすくなります。</string>
+    <string name="help_share_to_scan_title">他のアプリからスキャン</string>
+    <string name="help_share_to_scan_desc">他のアプリの写真をQRieuxに共有して、その中のQRコードをスキャンできます。ギャラリーやメッセージアプリで写真を開き、共有ボタンをタップしてQRieuxを選んでください。</string>
+    <string name="help_wifi_contact_title">WiFiと連絡先のQRコード</string>
+    <string name="help_wifi_contact_desc">WiFiの設定や連絡先情報が入ったQRコードがあります。スキャンすると、QRieuxからワンタップでWiFiに接続したり、その人を連絡先に追加したりできます。</string>
+    <string name="help_share_to_create_title">共有してQRコードを作成</string>
+    <string name="help_share_to_create_desc">他のアプリからウェブサイトのリンク、テキスト、または連絡先をQRieuxに共有すると、自動でQRコードを作成します。共有ボタンをタップしてQRieuxを選ぶだけです。</string>
+    <string name="help_history_title">履歴</string>
+    <string name="help_history_desc">履歴タブには、スキャンまたは作成したすべてのQRコードが記録されています。項目をタップすると詳細を確認できます。左にスワイプすると削除できます。</string>
     <string name="help_supported_formats_title">対応フォーマット</string>
     <string name="help_supported_formats_desc">QRコード、EAN-8、EAN-13、Code 128、Code 39、Code 93、UPC-E、PDF417、Aztec、Data Matrix。</string>
     <string name="navigate_back">戻る</string>

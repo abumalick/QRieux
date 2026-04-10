@@ -50,6 +50,7 @@
     <!--  Tab Bar -->
     <string name="tab_scan">스캔</string>
     <string name="tab_create">만들기</string>
+    <string name="tab_history">기록</string>
     <string name="tab_help">도움말</string>
 
     <!--  Help Screen -->

@@ -187,6 +187,22 @@ actual fun setOnboardingCompleted(context: PlatformContext) {
         .edit().putBoolean("onboarding_completed", true).apply()
 }
 
+actual fun generateUuid(): String = java.util.UUID.randomUUID().toString()
+
+actual fun currentTimeMillis(): Long = System.currentTimeMillis()
+
+actual fun loadHistoryJson(context: PlatformContext): String {
+    val ctx = (context as AndroidContext).context
+    return ctx.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        .getString("history", "") ?: ""
+}
+
+actual fun saveHistoryJson(context: PlatformContext, json: String) {
+    val ctx = (context as AndroidContext).context
+    ctx.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        .edit().putString("history", json).apply()
+}
+
 actual fun generateQrCode(content: String, size: Int): GeneratedQrCode? {
     return try {
         val hints = mapOf(

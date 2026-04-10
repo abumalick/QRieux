@@ -58,6 +58,16 @@
 
     <!--  Help Screen -->
     <string name="help_screen_title">So verwenden Sie QRieux</string>
+    <string name="help_flash_title">Blitz verwenden</string>
+    <string name="help_flash_desc">Wenn es zum Scannen zu dunkel ist, tippen Sie auf den Blitz-Knopf im Kamerabildschirm. Er schaltet die Taschenlampe Ihres Handys ein, damit der QR-Code leichter zu lesen ist.</string>
+    <string name="help_share_to_scan_title">Aus anderen Apps scannen</string>
+    <string name="help_share_to_scan_desc">Sie können ein Foto aus einer anderen App an QRieux teilen, um einen QR-Code darin zu scannen. Öffnen Sie ein Foto in Ihrer Galerie oder einer Nachrichten-App, tippen Sie auf Teilen und wählen Sie QRieux.</string>
+    <string name="help_wifi_contact_title">QR-Codes für WLAN &amp; Kontakte</string>
+    <string name="help_wifi_contact_desc">Manche QR-Codes enthalten WLAN-Daten oder Kontaktinformationen. Wenn Sie einen solchen scannen, können Sie sich mit einem Tipp mit dem WLAN verbinden oder die Person zu Ihren Kontakten hinzufügen.</string>
+    <string name="help_share_to_create_title">QR-Codes per Teilen erstellen</string>
+    <string name="help_share_to_create_desc">Sie können einen Website-Link, Text oder Kontakt aus einer anderen App an QRieux teilen, und es erstellt automatisch einen QR-Code für Sie. Tippen Sie einfach auf Teilen und wählen Sie QRieux.</string>
+    <string name="help_history_title">Verlauf</string>
+    <string name="help_history_desc">Der Reiter Verlauf führt eine Aufzeichnung jedes QR-Codes, den Sie gescannt oder erstellt haben. Tippen Sie auf einen Eintrag, um seine Details erneut zu sehen. Wischen Sie nach links, um ihn zu löschen.</string>
     <string name="help_supported_formats_title">Unterstützte Formate</string>
     <string name="help_supported_formats_desc">QR-Codes, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec und Data Matrix.</string>
     <string name="navigate_back">Zurück</string>

@@ -58,6 +58,16 @@
 
     <!--  Help Screen -->
     <string name="help_screen_title">Cách sử dụng QRieux</string>
+    <string name="help_flash_title">Sử dụng đèn flash</string>
+    <string name="help_flash_desc">Nếu quá tối để quét, hãy nhấn nút flash trên màn hình camera. Đèn pin điện thoại sẽ bật sáng để mã QR dễ đọc hơn.</string>
+    <string name="help_share_to_scan_title">Quét từ ứng dụng khác</string>
+    <string name="help_share_to_scan_desc">Bạn có thể chia sẻ ảnh từ bất kỳ ứng dụng nào sang QRieux để quét mã QR trong ảnh đó. Mở ảnh trong thư viện hoặc ứng dụng nhắn tin, nhấn nút chia sẻ rồi chọn QRieux.</string>
+    <string name="help_wifi_contact_title">Mã QR WiFi &amp; Danh bạ</string>
+    <string name="help_wifi_contact_desc">Một số mã QR chứa thông tin WiFi hoặc thông tin liên hệ. Khi quét, QRieux cho phép bạn kết nối mạng WiFi hoặc thêm người đó vào danh bạ chỉ bằng một lần nhấn.</string>
+    <string name="help_share_to_create_title">Chia sẻ để tạo mã QR</string>
+    <string name="help_share_to_create_desc">Bạn có thể chia sẻ liên kết trang web, văn bản hoặc danh bạ từ ứng dụng khác sang QRieux, và QRieux sẽ tự động tạo mã QR cho bạn. Chỉ cần nhấn nút chia sẻ và chọn QRieux.</string>
+    <string name="help_history_title">Lịch sử</string>
+    <string name="help_history_desc">Tab Lịch sử lưu lại tất cả mã QR bạn đã quét hoặc tạo. Nhấn vào bất kỳ mục nào để xem lại chi tiết. Vuốt sang trái để xóa mục đó.</string>
     <string name="help_supported_formats_title">Định dạng được hỗ trợ</string>
     <string name="help_supported_formats_desc">Mã QR, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec và Data Matrix.</string>
     <string name="navigate_back">Quay lại</string>

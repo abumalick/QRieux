@@ -106,7 +106,10 @@ fun QrGeneratorScreen(
     onBack: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     screenshotPayload: String? = null,
-    initialText: String? = null
+    initialText: String? = null,
+    initialType: QrGeneratorType? = null,
+    initialForm: QrGeneratorFormData? = null,
+    onGenerated: ((payload: String, type: QrGeneratorType) -> Unit)? = null
 ) {
     val initialContent = screenshotPayload ?: initialText
     val isUrl = initialContent != null &&
@@ -116,6 +119,7 @@ fun QrGeneratorScreen(
     var selectedType by remember {
         mutableStateOf(
             when {
+                initialType != null -> initialType
                 screenshotPayload != null || isUrl -> QrGeneratorType.Website
                 initialText != null -> QrGeneratorType.Text
                 else -> QrGeneratorType.Text
@@ -125,6 +129,7 @@ fun QrGeneratorScreen(
     var form by remember {
         mutableStateOf(
             when {
+                initialForm != null -> initialForm
                 screenshotPayload != null || isUrl -> QrGeneratorFormData(website = initialContent!!)
                 initialText != null -> QrGeneratorFormData(text = initialText)
                 else -> QrGeneratorFormData()
@@ -237,11 +242,15 @@ fun QrGeneratorScreen(
                         dismissPlatformInput(platformContext)
                         showResult = true
                         isGenerating = true
+                        val payload = payloadResult.payload!!
+                        val currentType = selectedType
                         scope.launch {
-                            generatedQr = withContext(Dispatchers.Default) {
-                                generateQrCode(payloadResult.payload!!, size = 768)
+                            val qr = withContext(Dispatchers.Default) {
+                                generateQrCode(payload, size = 768)
                             }
+                            generatedQr = qr
                             isGenerating = false
+                            if (qr != null) onGenerated?.invoke(payload, currentType)
                         }
                     },
                     enabled = payloadResult.payload != null,

@@ -49,9 +49,24 @@ export async function dismissOnboarding(): Promise<void> {
   const skipBtn = await $('android=new UiSelector().text("Skip")');
   if (await skipBtn.isExisting()) {
     await skipBtn.click();
-    const instruction = await $('android=new UiSelector().text("Place QR code inside the frame")');
-    await instruction.waitForExist({ timeout: 10_000 });
+    await browser.pause(1000);
   }
+
+  // Handle camera permission screen if autoGrantPermissions didn't work
+  const continueBtn = await $('android=new UiSelector().text("Continue")');
+  if (await continueBtn.isExisting()) {
+    await continueBtn.click();
+    await browser.pause(1000);
+    // Handle system permission dialog
+    const allowBtn = await $('android=new UiSelector().textMatches("(?i)(allow|while using|only this time)")');
+    if (await allowBtn.isExisting()) {
+      await allowBtn.click();
+      await browser.pause(1000);
+    }
+  }
+
+  const instruction = await $('android=new UiSelector().text("Place QR code inside the frame")');
+  await instruction.waitForExist({ timeout: 10_000 });
 }
 
 export async function waitForScanner(): Promise<void> {
@@ -418,4 +433,101 @@ export async function shareVCardToApp(vcfContent: string): Promise<void> {
 export async function reactivateApp(): Promise<void> {
   await driver.activateApp('net.hilson.qrieux.dev');
   await browser.pause(1000);
+}
+
+// --- History helpers ---
+
+export async function tapHistoryTab(): Promise<void> {
+  const btn = await $('android=new UiSelector().text("History")');
+  await btn.waitForExist({ timeout: 5_000 });
+  await btn.click();
+}
+
+export async function waitForHistoryScreen(): Promise<void> {
+  const title = await $('android=new UiSelector().text("History")');
+  await title.waitForExist({ timeout: 10_000 });
+}
+
+export async function isHistoryEmpty(): Promise<boolean> {
+  const empty = await $('android=new UiSelector().text("No history yet")');
+  return empty.isExisting();
+}
+
+export async function getHistoryEntryCount(): Promise<number> {
+  const scanned = await $$('android=new UiSelector().text("Scanned")');
+  const created = await $$('android=new UiSelector().text("Created")');
+  return scanned.length + created.length;
+}
+
+export async function tapHistoryEntry(index: number): Promise<void> {
+  const entries = await $$('android=new UiSelector().textMatches("Scanned|Created")');
+  if (index >= entries.length) {
+    throw new Error(`History entry ${index} not found (total: ${entries.length})`);
+  }
+  // Use coordinate-based tap to avoid SwipeToDismissBox intercepting clicks
+  const el = entries[index];
+  const location = await el.getLocation();
+  const size = await el.getSize();
+  const x = location.x + Math.floor(size.width / 2);
+  const y = location.y + Math.floor(size.height / 2);
+  await driver.action('pointer', { parameters: { pointerType: 'touch' } })
+    .move({ x, y })
+    .down()
+    .pause(100)
+    .up()
+    .perform();
+  await browser.pause(500);
+}
+
+export async function swipeDeleteHistoryEntry(index: number): Promise<void> {
+  const entries = await $$('android=new UiSelector().textMatches("Scanned|Created")');
+  if (index >= entries.length) {
+    throw new Error(`History entry ${index} not found for swipe delete`);
+  }
+  const el = entries[index];
+  const location = await el.getLocation();
+  const size = await el.getSize();
+  const startX = location.x + size.width - 20;
+  const endX = location.x + 20;
+  const y = location.y + Math.floor(size.height / 2);
+
+  await driver.performActions([{
+    type: 'pointer', id: 'swipe', parameters: { pointerType: 'touch' },
+    actions: [
+      { type: 'pointerMove', duration: 0, x: startX, y },
+      { type: 'pointerDown', button: 0 },
+      { type: 'pointerMove', duration: 300, x: endX, y },
+      { type: 'pointerUp', button: 0 },
+    ],
+  }]);
+  await driver.releaseActions();
+  await browser.pause(500);
+}
+
+export async function tapClearHistory(): Promise<void> {
+  // Clear All is an icon button with contentDescription
+  let btn = await $('~Clear All');
+  if (!(await btn.isExisting())) {
+    btn = await $('android=new UiSelector().description("Clear All")');
+  }
+  await btn.waitForExist({ timeout: 5_000 });
+  await btn.click();
+  await browser.pause(300);
+  // Confirm dialog
+  const confirm = await $('android=new UiSelector().text("Clear")');
+  await confirm.waitForExist({ timeout: 3_000 });
+  await confirm.click();
+  await browser.pause(300);
+}
+
+export async function tapBackToHistory(): Promise<void> {
+  const btn = await $('~Back to History');
+  if (await btn.isExisting()) {
+    await btn.click();
+    return;
+  }
+  // Fallback: look for the back arrow in TopAppBar
+  const back = await $('~Navigate back');
+  await back.waitForExist({ timeout: 5_000 });
+  await back.click();
 }

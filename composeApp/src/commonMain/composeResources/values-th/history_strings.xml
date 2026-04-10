@@ -1,0 +1,18 @@
+<resources>
+    <string name="tab_history">ประวัติ</string>
+    <string name="history_title">ประวัติ</string>
+    <string name="history_empty">ยังไม่มีประวัติ</string>
+    <string name="history_empty_desc">สแกนหรือสร้างคิวอาร์โค้ดเพื่อเริ่มต้น</string>
+    <string name="history_scanned">สแกนแล้ว</string>
+    <string name="history_created">สร้างแล้ว</string>
+    <string name="history_back">กลับไปที่ประวัติ</string>
+    <string name="history_clear_all">ลบทั้งหมด</string>
+    <string name="history_clear_confirm">ลบประวัติทั้งหมด?</string>
+    <string name="history_clear_yes">ลบ</string>
+    <string name="history_clear_cancel">ยกเลิก</string>
+    <string name="history_just_now">เมื่อสักครู่</string>
+    <string name="history_minutes_ago">%1$d นาทีที่แล้ว</string>
+    <string name="history_hours_ago">%1$d ชั่วโมงที่แล้ว</string>
+    <string name="history_yesterday">เมื่อวาน</string>
+    <string name="history_days_ago">%1$d วันที่แล้ว</string>
+</resources>

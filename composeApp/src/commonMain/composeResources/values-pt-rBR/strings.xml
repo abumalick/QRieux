@@ -58,6 +58,16 @@
 
     <!--  Help Screen -->
     <string name="help_screen_title">Como usar o QRieux</string>
+    <string name="help_flash_title">Usar o flash</string>
+    <string name="help_flash_desc">Se estiver escuro demais para escanear, toque no botão de flash na tela da câmera. Ele acende a lanterna do seu celular para facilitar a leitura do código QR.</string>
+    <string name="help_share_to_scan_title">Escanear de outros apps</string>
+    <string name="help_share_to_scan_desc">Você pode compartilhar uma foto de qualquer app para o QRieux para escanear um código QR nela. Abra uma foto na sua galeria ou em um app de mensagens, toque em compartilhar e escolha QRieux.</string>
+    <string name="help_wifi_contact_title">Códigos QR de WiFi e Contatos</string>
+    <string name="help_wifi_contact_desc">Alguns códigos QR contêm dados de WiFi ou informações de contato. Ao escanear um, o QRieux permite que você se conecte à rede WiFi ou adicione a pessoa aos seus contatos com um toque.</string>
+    <string name="help_share_to_create_title">Compartilhar para criar códigos QR</string>
+    <string name="help_share_to_create_desc">Você pode compartilhar um link, texto ou contato de outro app para o QRieux, e ele criará um código QR automaticamente. Basta tocar em compartilhar e escolher QRieux.</string>
+    <string name="help_history_title">Histórico</string>
+    <string name="help_history_desc">A aba Histórico guarda um registro de todos os códigos QR que você escaneou ou criou. Toque em qualquer item para ver seus detalhes novamente. Deslize para a esquerda para excluí-lo.</string>
     <string name="help_supported_formats_title">Formatos suportados</string>
     <string name="help_supported_formats_desc">Códigos QR, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec e Data Matrix.</string>
     <string name="navigate_back">Voltar</string>

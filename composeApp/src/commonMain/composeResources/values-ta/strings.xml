@@ -58,6 +58,16 @@
 
     <!--  Help Screen -->
     <string name="help_screen_title">QRieux பயன்படுத்துவது எப்படி</string>
+    <string name="help_flash_title">ஃபிளாஷ் பயன்படுத்துதல்</string>
+    <string name="help_flash_desc">ஸ்கேன் செய்ய வெளிச்சம் குறைவாக இருந்தால், கேமரா திரையில் ஃபிளாஷ் பொத்தானை தட்டவும். உங்கள் மொபைலின் டார்ச்சை இது இயக்கும், QR குறியீட்டை படிக்க எளிதாகும்.</string>
+    <string name="help_share_to_scan_title">மற்ற ஆப்களிலிருந்து ஸ்கேன் செய்யுங்கள்</string>
+    <string name="help_share_to_scan_desc">எந்த ஆப்பிலிருந்தும் QRieux-க்கு புகைப்படம் பகிர்ந்து அதில் உள்ள QR குறியீட்டை ஸ்கேன் செய்யலாம். உங்கள் கேலரி அல்லது மெசேஜிங் ஆப்பில் படம் திறந்து, பகிர் பொத்தான் அழுத்தி QRieux தேர்வு செய்யுங்கள்.</string>
+    <string name="help_wifi_contact_title">WiFi மற்றும் தொடர்பு QR குறியீடுகள்</string>
+    <string name="help_wifi_contact_desc">சில QR குறியீடுகளில் WiFi விவரங்கள் அல்லது தொடர்பு தகவல்கள் உள்ளன. ஒன்றை ஸ்கேன் செய்தால், QRieux ஒரு தட்டில் WiFi நெட்வொர்க்கில் இணைக்க அல்லது நபரை உங்கள் தொடர்புகளில் சேர்க்க அனுமதிக்கும்.</string>
+    <string name="help_share_to_create_title">QR குறியீடுகள் உருவாக்க பகிரவும்</string>
+    <string name="help_share_to_create_desc">வேறு ஆப்பிலிருந்து ஒரு இணையதள லிங்க், உரை அல்லது தொடர்பை QRieux-க்கு பகிரலாம், அது தானாகவே உங்களுக்கு QR குறியீடு உருவாக்கும். பகிர் பொத்தான் அழுத்தி QRieux தேர்ந்தெடுக்கவும்.</string>
+    <string name="help_history_title">வரலாறு</string>
+    <string name="help_history_desc">வரலாறு தாவலில் நீங்கள் ஸ்கேன் செய்த அல்லது உருவாக்கிய ஒவ்வொரு QR குறியீட்டின் பதிவும் உள்ளது. எந்த உருப்படியையும் தட்டி மீண்டும் அதன் விவரங்களைப் பாருங்கள். அழிக்க இடப்புறம் ஸ்வைப் செய்யுங்கள்.</string>
     <string name="help_supported_formats_title">ஆதரிக்கப்படும் வடிவங்கள்</string>
     <string name="help_supported_formats_desc">QR குறியீடுகள், EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec மற்றும் Data Matrix.</string>
     <string name="navigate_back">பின்செல்</string>

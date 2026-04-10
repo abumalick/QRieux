@@ -1,0 +1,18 @@
+<resources>
+    <string name="tab_history">Verlauf</string>
+    <string name="history_title">Verlauf</string>
+    <string name="history_empty">Noch kein Verlauf</string>
+    <string name="history_empty_desc">Scannen oder erstellen Sie einen QR-Code, um loszulegen.</string>
+    <string name="history_scanned">Gescannt</string>
+    <string name="history_created">Erstellt</string>
+    <string name="history_back">Zurück zum Verlauf</string>
+    <string name="history_clear_all">Alles löschen</string>
+    <string name="history_clear_confirm">Gesamten Verlauf löschen?</string>
+    <string name="history_clear_yes">Löschen</string>
+    <string name="history_clear_cancel">Abbrechen</string>
+    <string name="history_just_now">Gerade eben</string>
+    <string name="history_minutes_ago">Vor %1$d Min.</string>
+    <string name="history_hours_ago">Vor %1$d Std.</string>
+    <string name="history_yesterday">Gestern</string>
+    <string name="history_days_ago">Vor %1$d Tagen</string>
+</resources>

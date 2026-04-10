@@ -30,13 +30,21 @@ import kotlinx.coroutines.launch
 import net.hilson.qrieux.scanner.CameraPreview
 import net.hilson.qrieux.scanner.scanBarcodeFromUri
 import net.hilson.qrieux.ui.HelpScreen
+import net.hilson.qrieux.ui.HistoryScreen
+import net.hilson.qrieux.ui.HistoryGenerateDetail
+import net.hilson.qrieux.ui.HistoryScanDetailScreen
 import net.hilson.qrieux.ui.OnboardingScreen
 import net.hilson.qrieux.ui.PermissionScreen
 import net.hilson.qrieux.ui.QrGeneratorScreen
 import net.hilson.qrieux.ui.ScanResultOverlay
 import net.hilson.qrieux.ui.theme.QRieuxTheme
+import net.hilson.qrieux.history.HistoryEntry
+import net.hilson.qrieux.history.HistoryEntryType
+import net.hilson.qrieux.history.addHistoryEntry
+import net.hilson.qrieux.history.reverseParseToFormData
 import net.hilson.qrieux.util.QrContentType
 import net.hilson.qrieux.vibrate
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.QrCodeScanner
 import androidx.compose.material.icons.filled.AddCircleOutline
 import androidx.compose.material.icons.automirrored.filled.HelpOutline
@@ -47,6 +55,7 @@ import qr_scanner.composeapp.generated.resources.*
 private enum class AppMode {
     Scan,
     Generate,
+    History,
     Help
 }
 
@@ -72,6 +81,8 @@ fun App(
         var showOnboarding by remember {
             mutableStateOf(!demoCamera && sharedImageUri == null && sharedText == null && !isOnboardingCompleted(platformContext))
         }
+        var historyDetailEntry by remember { mutableStateOf<HistoryEntry?>(null) }
+        var pendingEditEntry by remember { mutableStateOf<HistoryEntry?>(null) }
 
         LaunchedEffect(shareTimestamp) {
             if (shareTimestamp > 0L) {
@@ -82,6 +93,7 @@ fun App(
                     if (result != null) {
                         vibrate(AndroidContext(context))
                         scannedContent = QrContentType.fromRawValue(result)
+                        addHistoryEntry(platformContext, HistoryEntry(generateUuid(), currentTimeMillis(), HistoryEntryType.SCAN, result))
                     } else {
                         snackbarHostState.showSnackbar(noQrFoundMessage)
                     }
@@ -102,6 +114,7 @@ fun App(
                     if (result != null) {
                         vibrate(AndroidContext(context))
                         scannedContent = QrContentType.fromRawValue(result)
+                        addHistoryEntry(platformContext, HistoryEntry(generateUuid(), currentTimeMillis(), HistoryEntryType.SCAN, result))
                     } else {
                         snackbarHostState.showSnackbar(noQrFoundMessage)
                     }
@@ -122,9 +135,15 @@ fun App(
                         )
                         NavigationBarItem(
                             selected = appMode == AppMode.Generate,
-                            onClick = { appMode = AppMode.Generate },
+                            onClick = { appMode = AppMode.Generate; pendingEditEntry = null },
                             icon = { Icon(Icons.Default.AddCircleOutline, contentDescription = null) },
                             label = { Text(stringResource(R.string.tab_create)) }
+                        )
+                        NavigationBarItem(
+                            selected = appMode == AppMode.History,
+                            onClick = { appMode = AppMode.History; historyDetailEntry = null },
+                            icon = { Icon(Icons.Default.History, contentDescription = null) },
+                            label = { Text(stringResource(R.string.tab_history)) }
                         )
                         NavigationBarItem(
                             selected = appMode == AppMode.Help,
@@ -144,11 +163,55 @@ fun App(
                     })
                 }
                 appMode == AppMode.Generate -> {
-                    key(shareTextTimestamp) {
+                    val editEntry = pendingEditEntry
+                    val editData = editEntry?.let { reverseParseToFormData(it.rawValue, it.generatorType) }
+                    key(shareTextTimestamp, editEntry?.id) {
                         QrGeneratorScreen(
                             platformContext = platformContext,
                             modifier = Modifier.padding(paddingValues),
-                            initialText = sharedText
+                            initialText = if (editEntry == null) sharedText else null,
+                            initialType = editData?.first,
+                            initialForm = editData?.second,
+                            onGenerated = { payload, type ->
+                                addHistoryEntry(platformContext, HistoryEntry(
+                                    generateUuid(), currentTimeMillis(),
+                                    HistoryEntryType.GENERATE, payload, type.name
+                                ))
+                            }
+                        )
+                    }
+                }
+                appMode == AppMode.History -> {
+                    val detail = historyDetailEntry
+                    if (detail != null) {
+                        when (detail.type) {
+                            HistoryEntryType.SCAN -> {
+                                HistoryScanDetailScreen(
+                                    entry = detail,
+                                    platformContext = platformContext,
+                                    onBack = { historyDetailEntry = null },
+                                    modifier = Modifier.padding(paddingValues)
+                                )
+                            }
+                            HistoryEntryType.GENERATE -> {
+                                HistoryGenerateDetail(
+                                    entry = detail,
+                                    platformContext = platformContext,
+                                    onBack = { historyDetailEntry = null },
+                                    onEditInCreateTab = {
+                                        pendingEditEntry = detail
+                                        historyDetailEntry = null
+                                        appMode = AppMode.Generate
+                                    },
+                                    modifier = Modifier.padding(paddingValues)
+                                )
+                            }
+                        }
+                    } else {
+                        HistoryScreen(
+                            platformContext = platformContext,
+                            onEntryClick = { historyDetailEntry = it },
+                            modifier = Modifier.padding(paddingValues)
                         )
                     }
                 }
@@ -160,6 +223,7 @@ fun App(
                         CameraPreview(
                             onQrCodeDetected = { rawValue ->
                                 scannedContent = QrContentType.fromRawValue(rawValue)
+                                addHistoryEntry(platformContext, HistoryEntry(generateUuid(), currentTimeMillis(), HistoryEntryType.SCAN, rawValue))
                             },
                             isScanning = scannedContent == null,
                             onGalleryClick = {

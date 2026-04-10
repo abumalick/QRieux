@@ -58,6 +58,16 @@
 
     <!--  Help Screen -->
     <string name="help_screen_title">QRieux কীভাবে ব্যবহার করবেন</string>
+    <string name="help_flash_title">ফ্ল্যাশ ব্যবহার</string>
+    <string name="help_flash_desc">স্ক্যান করার জন্য যদি আলো খুব কম থাকে, তাহলে ক্যামেরা স্ক্রিনের ফ্ল্যাশ বাটন দিন। এটি আপনার ফোনের টর্চ জ্বালিয়ে QR কোড পড়া সহজ করে দেবে।</string>
+    <string name="help_share_to_scan_title">অন্য অ্যাপ থেকে স্ক্যান করুন</string>
+    <string name="help_share_to_scan_desc">যেকোনো অ্যাপ থেকে QRieux-এ ছবি শেয়ার করে ভেতরে থাকা QR কোড স্ক্যান করতে পারবেন। আপনার গ্যালারি বা মেসেজিং অ্যাপে ছবি খুলুন, শেয়ার বাটন দিন এবং QRieux বেছে নিন।</string>
+    <string name="help_wifi_contact_title">WiFi ও কন্টাক্ট QR কোড</string>
+    <string name="help_wifi_contact_desc">কিছু QR কোডে WiFi তথ্য বা যোগাযোগের তথ্য থাকে। স্ক্যান করলে QRieux আপনাকে এক ট্যাপেই WiFi নেটওয়ার্কে যোগ দিতে বা পরিচিতিতে ব্যক্তিটিকে যোগ করতে দেয়।</string>
+    <string name="help_share_to_create_title">QR কোড তৈরি করতে শেয়ার করুন</string>
+    <string name="help_share_to_create_desc">অন্য অ্যাপ থেকে একটি ওয়েবসাইট লিংক, টেক্সট বা কন্টাক্ট QRieux-এ শেয়ার করুন, এটি স্বয়ংক্রিয়ভাবে আপনার জন্য QR কোড তৈরি করবে। শুধু শেয়ার বাটন দিন এবং QRieux বেছে নিন।</string>
+    <string name="help_history_title">ইতিহাস</string>
+    <string name="help_history_desc">ইতিহাস ট্যাবে আপনার স্ক্যান বা তৈরি করা প্রতিটি QR কোডের রেকর্ড থাকে। যেকোনো আইটেমে ট্যাপ করে আবার বিবরণ দেখতে পারবেন। মুছতে বাম দিকে সোয়াইপ করুন।</string>
     <string name="help_supported_formats_title">সমর্থিত ফরম্যাট</string>
     <string name="help_supported_formats_desc">QR কোড, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec এবং Data Matrix।</string>
     <string name="navigate_back">পিছনে যান</string>

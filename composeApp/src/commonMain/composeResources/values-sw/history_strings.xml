@@ -1,0 +1,18 @@
+<resources>
+    <string name="tab_history">Historia</string>
+    <string name="history_title">Historia</string>
+    <string name="history_empty">Hakuna historia bado</string>
+    <string name="history_empty_desc">Changanua au tengeneza msimbo wa QR ili kuanza.</string>
+    <string name="history_scanned">Imechanganuliwa</string>
+    <string name="history_created">Imetengenezwa</string>
+    <string name="history_back">Rudi kwenye Historia</string>
+    <string name="history_clear_all">Futa Yote</string>
+    <string name="history_clear_confirm">Futa historia yote?</string>
+    <string name="history_clear_yes">Futa</string>
+    <string name="history_clear_cancel">Ghairi</string>
+    <string name="history_just_now">Sasa hivi</string>
+    <string name="history_minutes_ago">Dakika %1$d zilizopita</string>
+    <string name="history_hours_ago">Saa %1$d zilizopita</string>
+    <string name="history_yesterday">Jana</string>
+    <string name="history_days_ago">Siku %1$d zilizopita</string>
+</resources>

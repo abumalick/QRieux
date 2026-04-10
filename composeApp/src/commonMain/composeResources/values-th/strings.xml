@@ -58,6 +58,16 @@
 
     <!--  Help Screen -->
     <string name="help_screen_title">วิธีใช้ QRieux</string>
+    <string name="help_flash_title">การใช้แฟลช</string>
+    <string name="help_flash_desc">หากแสงน้อยเกินไปสำหรับการสแกน ให้แตะปุ่มแฟลชบนหน้าจอกล้อง แฟลชจะเปิดไฟของโทรศัพท์คุณเพื่อให้อ่าน QR โค้ดได้ง่ายขึ้น</string>
+    <string name="help_share_to_scan_title">สแกนจากแอปอื่น</string>
+    <string name="help_share_to_scan_desc">คุณสามารถแชร์รูปภาพจากแอปใดก็ได้ไปยัง QRieux เพื่อสแกน QR โค้ดในรูปนั้น เปิดรูปในแกลเลอรีหรือแอปส่งข้อความ แตะปุ่มแชร์ แล้วเลือก QRieux</string>
+    <string name="help_wifi_contact_title">QR โค้ด WiFi &amp; ผู้ติดต่อ</string>
+    <string name="help_wifi_contact_desc">QR โค้ดบางอันมีข้อมูล WiFi หรือข้อมูลติดต่อ เมื่อสแกนแล้ว QRieux จะให้คุณเชื่อมต่อกับเครือข่าย WiFi หรือเพิ่มบุคคลนั้นในรายชื่อผู้ติดต่อด้วยการแตะเพียงครั้งเดียว</string>
+    <string name="help_share_to_create_title">แชร์เพื่อสร้าง QR โค้ด</string>
+    <string name="help_share_to_create_desc">คุณสามารถแชร์ลิงก์เว็บไซต์ ข้อความ หรือผู้ติดต่อจากแอปอื่นไปยัง QRieux แล้วมันจะสร้าง QR โค้ดให้คุณโดยอัตโนมัติ เพียงแตะปุ่มแชร์แล้วเลือก QRieux</string>
+    <string name="help_history_title">ประวัติ</string>
+    <string name="help_history_desc">แท็บประวัติจะเก็บบันทึก QR โค้ดทุกอันที่คุณสแกนหรือสร้างไว้ แตะรายการใดก็ได้เพื่อดูรายละเอียดอีกครั้ง ปัดซ้ายบนรายการเพื่อลบออก</string>
     <string name="help_supported_formats_title">รูปแบบที่รองรับ</string>
     <string name="help_supported_formats_desc">รหัส QR, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec และ Data Matrix</string>
     <string name="navigate_back">ย้อนกลับ</string>

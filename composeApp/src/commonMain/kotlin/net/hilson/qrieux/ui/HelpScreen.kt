@@ -25,7 +25,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.FlashOn
+import androidx.compose.material.icons.filled.History
+import androidx.compose.material.icons.filled.QrCode2
 import androidx.compose.material.icons.filled.QrCodeScanner
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -64,8 +69,13 @@ private data class HelpItem(
 private val helpItems = listOf(
     HelpItem(Res.string.onboarding_step1_title, Res.string.onboarding_step1_desc, Res.drawable.onboarding_qr_codes),
     HelpItem(Res.string.onboarding_step2_title, Res.string.onboarding_step2_desc, Res.drawable.onboarding_scan),
+    HelpItem(Res.string.help_flash_title, Res.string.help_flash_desc, fallbackIcon = Icons.Default.FlashOn),
     HelpItem(Res.string.onboarding_step3_title, Res.string.onboarding_step3_desc, Res.drawable.onboarding_gallery),
+    HelpItem(Res.string.help_share_to_scan_title, Res.string.help_share_to_scan_desc, fallbackIcon = Icons.Default.Share),
+    HelpItem(Res.string.help_wifi_contact_title, Res.string.help_wifi_contact_desc, fallbackIcon = Icons.Default.Wifi),
     HelpItem(Res.string.onboarding_step4_title, Res.string.onboarding_step4_desc, Res.drawable.onboarding_create_qr),
+    HelpItem(Res.string.help_share_to_create_title, Res.string.help_share_to_create_desc, fallbackIcon = Icons.Default.QrCode2),
+    HelpItem(Res.string.help_history_title, Res.string.help_history_desc, fallbackIcon = Icons.Default.History),
     HelpItem(Res.string.help_supported_formats_title, Res.string.help_supported_formats_desc, fallbackIcon = Icons.Default.QrCodeScanner),
 )
 

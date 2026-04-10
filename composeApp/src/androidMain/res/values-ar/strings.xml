@@ -50,6 +50,7 @@
     <!--  Tab Bar -->
     <string name="tab_scan">مسح</string>
     <string name="tab_create">إنشاء</string>
+    <string name="tab_history">السجل</string>
     <string name="tab_help">مساعدة</string>
 
     <!--  Help Screen -->

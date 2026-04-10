@@ -58,6 +58,16 @@
 
     <!--  Help Screen -->
     <string name="help_screen_title">Jinsi ya Kutumia QRieux</string>
+    <string name="help_flash_title">Kutumia Tochi</string>
+    <string name="help_flash_desc">Ikiwa ni giza mno kuchanganua, gonga kitufe cha tochi kwenye skrini ya kamera. Itawasha mwanga wa simu yako ili msimbo wa QR uwe rahisi kusomeka.</string>
+    <string name="help_share_to_scan_title">Changanua kutoka Programu Nyingine</string>
+    <string name="help_share_to_scan_desc">Unaweza kushiriki picha kutoka programu yoyote kwenda QRieux ili kuchanganua msimbo wa QR ndani yake. Fungua picha katika galeria yako au programu ya ujumbe, gonga kitufe cha kushiriki, na uchague QRieux.</string>
+    <string name="help_wifi_contact_title">Misimbo ya QR ya WiFi &amp; Anwani</string>
+    <string name="help_wifi_contact_desc">Baadhi ya misimbo ya QR ina maelezo ya WiFi au taarifa za mawasiliano. Ukichanganua moja, QRieux inakuruhusu kuunganika na mtandao wa WiFi au kuongeza mtu kwenye anwani zako kwa gongo moja.</string>
+    <string name="help_share_to_create_title">Shiriki ili Kuunda Misimbo ya QR</string>
+    <string name="help_share_to_create_desc">Unaweza kushiriki kiungo cha tovuti, maandishi, au anwani kutoka programu nyingine kwenda QRieux, nayo itatengeneza msimbo wa QR kiotomatiki. Gonga tu kitufe cha kushiriki na uchague QRieux.</string>
+    <string name="help_history_title">Historia</string>
+    <string name="help_history_desc">Kichupo cha Historia kina rekodi ya kila msimbo wa QR uliouchanganua au kuuunda. Unaweza kugonga kipengele chochote kuona maelezo yake tena. Telezesha kushoto kwenye kipengele ili kukifuta.</string>
     <string name="help_supported_formats_title">Miundo Inayotumika</string>
     <string name="help_supported_formats_desc">Misimbo ya QR, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec, na Data Matrix.</string>
     <string name="navigate_back">Rudi</string>

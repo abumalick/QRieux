@@ -50,6 +50,7 @@
     <!--  Tab Bar -->
     <string name="tab_scan">Escanear</string>
     <string name="tab_create">Criar</string>
+    <string name="tab_history">Histórico</string>
     <string name="tab_help">Ajuda</string>
 
     <!--  Help Screen -->

@@ -1,0 +1,18 @@
+<resources>
+    <string name="tab_history">ইতিহাস</string>
+    <string name="history_title">ইতিহাস</string>
+    <string name="history_empty">এখনো কোনো ইতিহাস নেই</string>
+    <string name="history_empty_desc">শুরু করতে একটি QR কোড স্ক্যান বা তৈরি করুন।</string>
+    <string name="history_scanned">স্ক্যান করা হয়েছে</string>
+    <string name="history_created">তৈরি করা হয়েছে</string>
+    <string name="history_back">ইতিহাসে ফিরে যান</string>
+    <string name="history_clear_all">সব মুছুন</string>
+    <string name="history_clear_confirm">সব ইতিহাস মুছে ফেলবেন?</string>
+    <string name="history_clear_yes">মুছুন</string>
+    <string name="history_clear_cancel">বাতিল</string>
+    <string name="history_just_now">এইমাত্র</string>
+    <string name="history_minutes_ago">%1$d মিনিট আগে</string>
+    <string name="history_hours_ago">%1$d ঘণ্টা আগে</string>
+    <string name="history_yesterday">গতকাল</string>
+    <string name="history_days_ago">%1$d দিন আগে</string>
+</resources>

@@ -58,6 +58,16 @@
 
     <!--  Help Screen -->
     <string name="help_screen_title">Как использовать QRieux</string>
+    <string name="help_flash_title">Использование вспышки</string>
+    <string name="help_flash_desc">Если для сканирования слишком темно, нажмите кнопку вспышки на экране камеры. Фонарик телефона включится и QR-код станет легче прочитать.</string>
+    <string name="help_share_to_scan_title">Сканирование из других приложений</string>
+    <string name="help_share_to_scan_desc">Вы можете поделиться фотографией из любого приложения в QRieux, чтобы отсканировать QR-код на ней. Откройте фото в галерее или мессенджере, нажмите «Поделиться» и выберите QRieux.</string>
+    <string name="help_wifi_contact_title">QR-коды для WiFi и контактов</string>
+    <string name="help_wifi_contact_desc">Некоторые QR-коды содержат данные WiFi или контактную информацию. После сканирования QRieux позволяет одним нажатием подключиться к сети WiFi или добавить человека в контакты.</string>
+    <string name="help_share_to_create_title">Создание QR-кода через «Поделиться»</string>
+    <string name="help_share_to_create_desc">Вы можете поделиться ссылкой на сайт, текстом или контактом из другого приложения в QRieux, и он автоматически создаст QR-код. Просто нажмите «Поделиться» и выберите QRieux.</string>
+    <string name="help_history_title">История</string>
+    <string name="help_history_desc">Вкладка «История» хранит записи обо всех QR-кодах, которые вы сканировали или создавали. Нажмите на любой элемент, чтобы снова увидеть его детали. Проведите влево, чтобы удалить.</string>
     <string name="help_supported_formats_title">Поддерживаемые форматы</string>
     <string name="help_supported_formats_desc">QR-коды, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec и Data Matrix.</string>
     <string name="navigate_back">Назад</string>

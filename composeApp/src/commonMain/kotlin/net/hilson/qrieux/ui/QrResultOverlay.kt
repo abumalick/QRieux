@@ -48,7 +48,8 @@ fun QrResultOverlay(
     generatedQr: GeneratedQrCode?,
     isGenerating: Boolean,
     onShare: () -> Unit,
-    onEdit: () -> Unit
+    onEdit: () -> Unit,
+    onBack: (() -> Unit)? = null
 ) {
     Box(
         modifier = Modifier
@@ -65,7 +66,7 @@ fun QrResultOverlay(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = onEdit) {
+                IconButton(onClick = onBack ?: onEdit) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringResource(Res.string.navigate_back),

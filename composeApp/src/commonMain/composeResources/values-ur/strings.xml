@@ -58,6 +58,16 @@
 
     <!--  Help Screen -->
     <string name="help_screen_title">QRieux کیسے استعمال کریں</string>
+    <string name="help_flash_title">فلیش کا استعمال</string>
+    <string name="help_flash_desc">اگر اسکین کرنے کے لیے روشنی بہت کم ہو تو کیمرا اسکرین پر فلیش بٹن دبائیں۔ یہ آپ کے فون کی ٹارچ جلا دیتا ہے تاکہ QR کوڈ پڑھنا آسان ہو جائے۔</string>
+    <string name="help_share_to_scan_title">دوسرے ایپس سے اسکین کریں</string>
+    <string name="help_share_to_scan_desc">آپ کسی بھی ایپ سے QRieux پر تصویر شیئر کر کے اس میں موجود QR کوڈ اسکین کر سکتے ہیں۔ اپنی گیلری یا میسجنگ ایپ میں تصویر کھولیں، شیئر بٹن دبائیں اور QRieux چنیں۔</string>
+    <string name="help_wifi_contact_title">WiFi اور رابطہ QR کوڈز</string>
+    <string name="help_wifi_contact_desc">کچھ QR کوڈز میں WiFi کی تفصیلات یا رابطہ معلومات ہوتی ہیں۔ اسکین کرنے پر QRieux آپ کو ایک ٹیپ میں WiFi نیٹ ورک سے جڑنے یا اس شخص کو اپنے رابطوں میں شامل کرنے دیتا ہے۔</string>
+    <string name="help_share_to_create_title">QR کوڈ بنانے کے لیے شیئر کریں</string>
+    <string name="help_share_to_create_desc">آپ کسی دوسرے ایپ سے ویب سائٹ لنک، ٹیکسٹ یا رابطہ QRieux پر شیئر کر سکتے ہیں، اور یہ خود بخود آپ کے لیے QR کوڈ بنا دے گا۔ بس شیئر بٹن دبائیں اور QRieux چنیں۔</string>
+    <string name="help_history_title">تاریخ</string>
+    <string name="help_history_desc">تاریخ ٹیب میں آپ کے اسکین یا بنائے گئے ہر QR کوڈ کا ریکارڈ ہوتا ہے۔ کسی بھی آئٹم پر ٹیپ کر کے اس کی تفصیلات دوبارہ دیکھ سکتے ہیں۔ حذف کرنے کے لیے بائیں طرف سوائپ کریں۔</string>
     <string name="help_supported_formats_title">معاون فارمیٹس</string>
     <string name="help_supported_formats_desc">QR کوڈز، EAN-8، EAN-13، Code 128، Code 39، Code 93، UPC-E، PDF417، Aztec، اور Data Matrix۔</string>
     <string name="navigate_back">واپس جائیں</string>

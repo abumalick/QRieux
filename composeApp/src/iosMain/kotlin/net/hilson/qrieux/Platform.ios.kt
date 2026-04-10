@@ -151,6 +151,18 @@ actual fun setOnboardingCompleted(context: PlatformContext) {
     NSUserDefaults.standardUserDefaults.setBool(true, forKey = "onboarding_completed")
 }
 
+actual fun generateUuid(): String = NSUUID().UUIDString
+
+actual fun currentTimeMillis(): Long =
+    (NSDate().timeIntervalSince1970 * 1000).toLong()
+
+actual fun loadHistoryJson(context: PlatformContext): String =
+    NSUserDefaults.standardUserDefaults.stringForKey("history") ?: ""
+
+actual fun saveHistoryJson(context: PlatformContext, json: String) {
+    NSUserDefaults.standardUserDefaults.setObject(json, forKey = "history")
+}
+
 @OptIn(ExperimentalForeignApi::class)
 actual fun generateQrCode(content: String, size: Int): GeneratedQrCode? {
     return try {
@@ -181,7 +193,7 @@ actual fun generateQrCode(content: String, size: Int): GeneratedQrCode? {
 }
 
 @OptIn(ExperimentalForeignApi::class)
-private fun ByteArray.toNSData(): NSData =
+internal fun ByteArray.toNSData(): NSData =
     usePinned { pinned ->
         NSData.dataWithBytes(bytes = pinned.addressOf(0), length = size.toULong())
     }

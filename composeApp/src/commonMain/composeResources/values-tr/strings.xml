@@ -58,6 +58,16 @@
 
     <!--  Help Screen -->
     <string name="help_screen_title">QRieux Nasıl Kullanılır</string>
+    <string name="help_flash_title">Flaşı Kullanmak</string>
+    <string name="help_flash_desc">Taramak için ortam çok karanlıksa kamera ekranındaki flaş düğmesine dokunun. Telefonunuzun fenerini açar ve QR kodunu okumayı kolaylaştırır.</string>
+    <string name="help_share_to_scan_title">Diğer Uygulamalardan Tara</string>
+    <string name="help_share_to_scan_desc">Herhangi bir uygulamadan QRieux'a fotoğraf paylaşarak içindeki QR kodu tarayabilirsiniz. Galerinizdeki veya bir mesajlaşma uygulamasındaki bir fotoğrafı açın, paylaş düğmesine dokunun ve QRieux'u seçin.</string>
+    <string name="help_wifi_contact_title">WiFi ve Kişi QR Kodları</string>
+    <string name="help_wifi_contact_desc">Bazı QR kodlar WiFi bilgileri veya kişi bilgileri içerir. Birini taradığınızda QRieux, tek bir dokunuşla WiFi ağına bağlanmanızı veya kişiyi rehberinize eklemenizi sağlar.</string>
+    <string name="help_share_to_create_title">QR Kodu Oluşturmak için Paylaş</string>
+    <string name="help_share_to_create_desc">Başka bir uygulamadan web sitesi bağlantısı, metin veya kişi QRieux ile paylaşabilirsiniz; otomatik olarak sizin için bir QR kodu oluşturur. Sadece paylaş düğmesine dokunup QRieux'u seçin.</string>
+    <string name="help_history_title">Geçmiş</string>
+    <string name="help_history_desc">Geçmiş sekmesi, taradığınız veya oluşturduğunuz her QR kodun kaydını tutar. Herhangi bir öğeye dokunarak ayrıntılarını tekrar görebilirsiniz. Silmek için öğeyi sola kaydırın.</string>
     <string name="help_supported_formats_title">Desteklenen Formatlar</string>
     <string name="help_supported_formats_desc">QR kodlar, EAN-8, EAN-13, Code 128, Code 39, Code 93, UPC-E, PDF417, Aztec ve Data Matrix.</string>
     <string name="navigate_back">Geri</string>

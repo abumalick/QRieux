@@ -24,3 +24,7 @@ expect fun isOnboardingCompleted(context: PlatformContext): Boolean
 expect fun setOnboardingCompleted(context: PlatformContext)
 expect fun addContact(context: PlatformContext, vCardData: String)
 expect fun generateQrCode(content: String, size: Int): GeneratedQrCode?
+expect fun generateUuid(): String
+expect fun currentTimeMillis(): Long
+expect fun loadHistoryJson(context: PlatformContext): String
+expect fun saveHistoryJson(context: PlatformContext, json: String)

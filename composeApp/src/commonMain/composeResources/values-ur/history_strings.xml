@@ -1,0 +1,18 @@
+<resources>
+    <string name="tab_history">تاریخچہ</string>
+    <string name="history_title">تاریخچہ</string>
+    <string name="history_empty">ابھی تک کوئی تاریخچہ نہیں</string>
+    <string name="history_empty_desc">شروع کرنے کے لیے QR کوڈ اسکین یا بنائیں۔</string>
+    <string name="history_scanned">اسکین ہو گیا</string>
+    <string name="history_created">بنایا گیا</string>
+    <string name="history_back">تاریخچے پر واپس جائیں</string>
+    <string name="history_clear_all">سب صاف کریں</string>
+    <string name="history_clear_confirm">پورا تاریخچہ صاف کریں؟</string>
+    <string name="history_clear_yes">صاف کریں</string>
+    <string name="history_clear_cancel">منسوخ</string>
+    <string name="history_just_now">ابھی</string>
+    <string name="history_minutes_ago">%1$d منٹ پہلے</string>
+    <string name="history_hours_ago">%1$d گھنٹے پہلے</string>
+    <string name="history_yesterday">کل</string>
+    <string name="history_days_ago">%1$d دن پہلے</string>
+</resources>

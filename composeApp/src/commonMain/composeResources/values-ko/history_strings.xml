@@ -1,0 +1,18 @@
+<resources>
+    <string name="tab_history">기록</string>
+    <string name="history_title">기록</string>
+    <string name="history_empty">아직 기록이 없습니다</string>
+    <string name="history_empty_desc">QR 코드를 스캔하거나 만들어 시작하세요.</string>
+    <string name="history_scanned">스캔됨</string>
+    <string name="history_created">생성됨</string>
+    <string name="history_back">기록으로 돌아가기</string>
+    <string name="history_clear_all">모두 삭제</string>
+    <string name="history_clear_confirm">모든 기록을 삭제할까요?</string>
+    <string name="history_clear_yes">삭제</string>
+    <string name="history_clear_cancel">취소</string>
+    <string name="history_just_now">방금</string>
+    <string name="history_minutes_ago">%1$d분 전</string>
+    <string name="history_hours_ago">%1$d시간 전</string>
+    <string name="history_yesterday">어제</string>
+    <string name="history_days_ago">%1$d일 전</string>
+</resources>

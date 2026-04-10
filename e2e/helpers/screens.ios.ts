@@ -443,3 +443,84 @@ export async function reactivateApp(): Promise<void> {
   await driver.activateApp('net.hilson.qrieux');
   await browser.pause(1000);
 }
+
+// --- History helpers ---
+
+export async function tapHistoryTab(): Promise<void> {
+  const btn = await $('-ios predicate string:label == "History"');
+  await btn.waitForExist({ timeout: 5_000 });
+  await btn.click();
+}
+
+export async function waitForHistoryScreen(): Promise<void> {
+  // Wait for the History title text
+  const title = await $('-ios predicate string:label == "History"');
+  await title.waitForExist({ timeout: 10_000 });
+}
+
+export async function isHistoryEmpty(): Promise<boolean> {
+  const empty = await $('-ios predicate string:label == "No history yet"');
+  return empty.isExisting();
+}
+
+export async function getHistoryEntryCount(): Promise<number> {
+  const scanned = await $$('-ios predicate string:label == "Scanned"');
+  const created = await $$('-ios predicate string:label == "Created"');
+  return scanned.length + created.length;
+}
+
+export async function tapHistoryEntry(index: number): Promise<void> {
+  const entries = await $$('-ios predicate string:label == "Scanned" OR label == "Created"');
+  if (index >= entries.length) {
+    throw new Error(`History entry ${index} not found (total: ${entries.length})`);
+  }
+  await entries[index].click();
+}
+
+export async function swipeDeleteHistoryEntry(index: number): Promise<void> {
+  const entries = await $$('-ios predicate string:label == "Scanned" OR label == "Created"');
+  if (index >= entries.length) {
+    throw new Error(`History entry ${index} not found for swipe delete`);
+  }
+  const el = entries[index];
+  const { width } = await browser.getWindowSize();
+  const location = await el.getLocation();
+  const size = await el.getSize();
+  const y = location.y + Math.floor(size.height / 2);
+
+  // Swipe far enough to trigger dismiss (full screen width)
+  await driver.performActions([{
+    type: 'pointer', id: 'swipe', parameters: { pointerType: 'touch' },
+    actions: [
+      { type: 'pointerMove', duration: 0, x: width - 30, y },
+      { type: 'pointerDown', button: 0 },
+      { type: 'pointerMove', duration: 400, x: 10, y },
+      { type: 'pointerUp', button: 0 },
+    ],
+  }]);
+  await driver.releaseActions();
+  await browser.pause(1000);
+}
+
+export async function tapClearHistory(): Promise<void> {
+  const btn = await $('-ios predicate string:label == "Clear All"');
+  await btn.waitForExist({ timeout: 5_000 });
+  await btn.click();
+  await browser.pause(300);
+  // Confirm dialog
+  const confirm = await $('-ios predicate string:label == "Clear"');
+  await confirm.waitForExist({ timeout: 3_000 });
+  await confirm.click();
+  await browser.pause(300);
+}
+
+export async function tapBackToHistory(): Promise<void> {
+  const btn = await $('-ios predicate string:label == "Back to History"');
+  if (await btn.isExisting()) {
+    await btn.click();
+    return;
+  }
+  const back = await $('~Navigate back');
+  await back.waitForExist({ timeout: 5_000 });
+  await back.click();
+}

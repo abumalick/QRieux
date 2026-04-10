@@ -8,4 +8,5 @@ fun makeScanViewController() = ComposeUIViewController { ScanScreen() }
 fun makeScanViewControllerWithImage(image: UIImage) = ComposeUIViewController { ScanScreen(sharedImage = image) }
 fun makeCreateViewController() = ComposeUIViewController { CreateScreen() }
 fun makeCreateViewControllerWithText(text: String) = ComposeUIViewController { CreateScreen(initialText = text) }
+fun makeHistoryViewController() = ComposeUIViewController { HistoryScreenHost() }
 fun makeHelpViewController() = ComposeUIViewController { HelpScreenHost() }
