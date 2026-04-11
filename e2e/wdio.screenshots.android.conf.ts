@@ -14,9 +14,11 @@ export const config: WebdriverIO.Config = {
       path.join(process.cwd(), '..', 'composeApp', 'build', 'outputs', 'apk', 'debug', 'composeApp-debug.apk'),
     'appium:appPackage': 'net.hilson.qrieux.dev',
     'appium:appActivity': 'net.hilson.qrieux.MainActivity',
+    'appium:udid': process.env.ANDROID_SERIAL || undefined,
     'appium:autoGrantPermissions': true,
     'appium:newCommandTimeout': 240,
     'appium:noReset': false,
+    ...(process.env.DEVICE_PIN ? { 'appium:unlockType': 'pin', 'appium:unlockKey': process.env.DEVICE_PIN } : {}),
     'appium:language': process.env.SCREENSHOT_LANG || 'en',
     'appium:locale': process.env.SCREENSHOT_LOCALE || 'US',
     'appium:optionalIntentArguments':
@@ -32,7 +34,8 @@ export const config: WebdriverIO.Config = {
       await (sharedConfig.before as Function)(_capabilities, _specs);
     }
     // Enable Android demo mode for clean status bar
-    const adb = 'adb';
+    const serial = process.env.ANDROID_SERIAL;
+    const adb = serial ? `adb -s ${serial}` : 'adb';
     try {
       execSync(`${adb} shell settings put global sysui_demo_allowed 1`);
       execSync(`${adb} shell am broadcast -a com.android.systemui.demo -e command clock -e hhmm 0941`);
@@ -51,7 +54,8 @@ export const config: WebdriverIO.Config = {
 
   async after() {
     // Restore animations and exit demo mode
-    const adb = 'adb';
+    const serial = process.env.ANDROID_SERIAL;
+    const adb = serial ? `adb -s ${serial}` : 'adb';
     try {
       execSync(`${adb} shell am broadcast -a com.android.systemui.demo -e command exit`);
       execSync(`${adb} shell settings put global window_animation_scale 1`);

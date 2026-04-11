@@ -20,8 +20,8 @@ const IOS_TABS = ['scan', 'create', 'history', 'help'];
 async function tapTabByIndex(index: number): Promise<void> {
   if (driver.isAndroid) {
     const { width, height } = await browser.getWindowSize();
-    // NavigationBar is ~80dp tall; target center of it, above system gesture area
-    const y = height - 50;
+    // Material3 NavigationBar sits above the system gesture bar (~130px from bottom)
+    const y = height - 130;
     const sectionWidth = width / 4;
     const x = Math.floor(sectionWidth * index + sectionWidth / 2);
     await driver.execute('mobile: clickGesture', { x, y });

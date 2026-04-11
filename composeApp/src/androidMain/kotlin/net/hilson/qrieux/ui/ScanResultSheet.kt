@@ -62,6 +62,7 @@ fun ScanResultOverlay(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Top))
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

@@ -1,10 +1,7 @@
 package net.hilson.qrieux.ui
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -43,7 +40,7 @@ fun HistoryGenerateDetail(
         isGenerating = false
     }
 
-    Box(modifier = modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
+    Box(modifier = modifier.fillMaxSize()) {
         QrResultOverlay(
             generatedQr = generatedQr,
             isGenerating = isGenerating,

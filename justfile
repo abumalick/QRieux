@@ -81,7 +81,7 @@ ios-metadata:
 
 # Generate Android screenshots via Appium (--skip-build, --locale=xx)
 gen-android-screenshots *args:
-    ./scripts/generate_android_screenshots_appium.sh {{args}}
+    bun scripts/generate_android_screenshots.ts {{args}}
 
 # Generate iOS screenshots via Appium (--skip-build, --locale=xx)
 gen-ios-screenshots *args:

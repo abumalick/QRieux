@@ -6,6 +6,8 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts.PickVisualMedia
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -124,6 +126,10 @@ fun App(
 
         Scaffold(
             snackbarHost = { SnackbarHost(snackbarHostState) },
+            // Outer scaffold has no topBar — zero contentWindowInsets so paddingValues.top is 0,
+            // otherwise the systemBars default leaves a blank status-bar strip above each screen.
+            // Inner Scaffolds / windowInsetsPadding handle their own top insets.
+            contentWindowInsets = WindowInsets(0),
             bottomBar = {
                 if (!showOnboarding) {
                     NavigationBar {
@@ -168,7 +174,7 @@ fun App(
                     key(shareTextTimestamp, editEntry?.id) {
                         QrGeneratorScreen(
                             platformContext = platformContext,
-                            modifier = Modifier.padding(paddingValues),
+                            modifier = Modifier.padding(paddingValues).consumeWindowInsets(paddingValues),
                             initialText = if (editEntry == null) sharedText else null,
                             initialType = editData?.first,
                             initialForm = editData?.second,
@@ -190,7 +196,7 @@ fun App(
                                     entry = detail,
                                     platformContext = platformContext,
                                     onBack = { historyDetailEntry = null },
-                                    modifier = Modifier.padding(paddingValues)
+                                    modifier = Modifier.padding(paddingValues).consumeWindowInsets(paddingValues)
                                 )
                             }
                             HistoryEntryType.GENERATE -> {
@@ -203,7 +209,7 @@ fun App(
                                         historyDetailEntry = null
                                         appMode = AppMode.Generate
                                     },
-                                    modifier = Modifier.padding(paddingValues)
+                                    modifier = Modifier.padding(paddingValues).consumeWindowInsets(paddingValues)
                                 )
                             }
                         }
@@ -211,15 +217,17 @@ fun App(
                         HistoryScreen(
                             platformContext = platformContext,
                             onEntryClick = { historyDetailEntry = it },
-                            modifier = Modifier.padding(paddingValues)
+                            modifier = Modifier.padding(paddingValues).consumeWindowInsets(paddingValues)
                         )
                     }
                 }
                 appMode == AppMode.Help -> {
-                    HelpScreen(modifier = Modifier.padding(paddingValues))
+                    HelpScreen(modifier = Modifier.padding(paddingValues).consumeWindowInsets(paddingValues))
                 }
                 cameraPermissionState.status.isGranted -> {
-                    Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
+                    // Scanner is edge-to-edge: camera extends behind the status bar/cutout.
+                    // CameraButtons and ScanResultOverlay apply their own top insets.
+                    Box(modifier = Modifier.fillMaxSize()) {
                         CameraPreview(
                             onQrCodeDetected = { rawValue ->
                                 scannedContent = QrContentType.fromRawValue(rawValue)
