@@ -47,7 +47,7 @@ const LOCALES: Locale[] = [
   { lang: 'pt', locale: 'BR', dir: 'pt-BR' },
   { lang: 'ru', locale: 'RU', dir: 'ru-RU' },
   { lang: 'ja', locale: 'JP', dir: 'ja-JP' },
-  { lang: 'in', locale: 'ID', dir: 'id' },
+  { lang: 'id', locale: 'ID', dir: 'id' },
   { lang: 'de', locale: 'DE', dir: 'de-DE' },
   { lang: 'ur', locale: 'PK', dir: 'ur' },
   { lang: 'tr', locale: 'TR', dir: 'tr-TR' },
@@ -67,14 +67,21 @@ const DEVICES: Device[] = [
 // --- Parse args ---
 const args = process.argv.slice(2);
 const skipBuild = args.includes('--skip-build');
-const localeArg = args.find(a => a.startsWith('--locale='))?.split('=')[1];
+// --locale supports comma-separated list and can be passed multiple times
+const localeArgs = args
+  .filter(a => a.startsWith('--locale='))
+  .flatMap(a => a.split('=')[1].split(','))
+  .filter(Boolean);
 const deviceArg = args.find(a => a.startsWith('--device='))?.split('=')[1];
 
 let locales = LOCALES;
-if (localeArg) {
-  locales = LOCALES.filter(l => l.dir === localeArg);
-  if (locales.length === 0) {
-    console.error(`ERROR: Locale '${localeArg}' not found. Available:`);
+if (localeArgs.length > 0) {
+  const requested = new Set(localeArgs);
+  locales = LOCALES.filter(l => requested.has(l.dir));
+  const found = new Set(locales.map(l => l.dir));
+  const missing = localeArgs.filter(l => !found.has(l));
+  if (missing.length > 0) {
+    console.error(`ERROR: Locale(s) not found: ${missing.join(', ')}. Available:`);
     for (const l of LOCALES) console.error(`  ${l.dir}`);
     process.exit(1);
   }
@@ -291,7 +298,7 @@ async function runLocale(
 // --- Main ---
 async function main(): Promise<void> {
   try {
-    if (localeArg) log(`Running for locale: ${localeArg} only`);
+    if (localeArgs.length > 0) log(`Running for locale(s): ${localeArgs.join(', ')}`);
 
     if (!skipBuild) {
       section('Building debug APK (clean, no-cache)...');

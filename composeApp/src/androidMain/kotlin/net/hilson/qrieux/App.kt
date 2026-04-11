@@ -22,6 +22,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -134,24 +136,28 @@ fun App(
                 if (!showOnboarding) {
                     NavigationBar {
                         NavigationBarItem(
+                            modifier = Modifier.semantics { testTag = "tab_scan" },
                             selected = appMode == AppMode.Scan,
                             onClick = { appMode = AppMode.Scan },
                             icon = { Icon(Icons.Default.QrCodeScanner, contentDescription = null) },
                             label = { Text(stringResource(R.string.tab_scan)) }
                         )
                         NavigationBarItem(
+                            modifier = Modifier.semantics { testTag = "tab_create" },
                             selected = appMode == AppMode.Generate,
                             onClick = { appMode = AppMode.Generate; pendingEditEntry = null },
                             icon = { Icon(Icons.Default.AddCircleOutline, contentDescription = null) },
                             label = { Text(stringResource(R.string.tab_create)) }
                         )
                         NavigationBarItem(
+                            modifier = Modifier.semantics { testTag = "tab_history" },
                             selected = appMode == AppMode.History,
                             onClick = { appMode = AppMode.History; historyDetailEntry = null },
                             icon = { Icon(Icons.Default.History, contentDescription = null) },
                             label = { Text(stringResource(R.string.tab_history)) }
                         )
                         NavigationBarItem(
+                            modifier = Modifier.semantics { testTag = "tab_help" },
                             selected = appMode == AppMode.Help,
                             onClick = { appMode = AppMode.Help },
                             icon = { Icon(Icons.AutoMirrored.Filled.HelpOutline, contentDescription = null) },

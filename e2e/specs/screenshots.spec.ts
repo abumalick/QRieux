@@ -15,28 +15,25 @@ function screenshotPath(name: string): string {
   return path.join(outputDir, `${prefix}${name}.png`);
 }
 
-const IOS_TABS = ['scan', 'create', 'history', 'help'];
+const TAB_NAMES = ['scan', 'create', 'history', 'help'] as const;
 
 async function tapTabByIndex(index: number): Promise<void> {
   if (driver.isAndroid) {
-    const { width, height } = await browser.getWindowSize();
-    // Material3 NavigationBar sits above the system gesture bar (~130px from bottom)
-    const y = height - 130;
-    const sectionWidth = width / 4;
-    const x = Math.floor(sectionWidth * index + sectionWidth / 2);
-    await driver.execute('mobile: clickGesture', { x, y });
+    // testTag-based selector works in any layout direction (RTL locales flip visual order)
+    const btn = await $(`android=new UiSelector().resourceId("tab_${TAB_NAMES[index]}")`);
+    await btn.waitForExist({ timeout: 5_000 });
+    await btn.click();
   } else {
-    execSync(`xcrun simctl openurl booted 'qrieux://tab/${IOS_TABS[index]}'`);
+    execSync(`xcrun simctl openurl booted 'qrieux://tab/${TAB_NAMES[index]}'`);
   }
   await browser.pause(1000);
 }
 
-// Wait for the scanner screen (scan overlay text or flash button visible)
+// Wait for the scanner screen (flash button visible — resourceId is locale-agnostic)
 async function waitForScanner(): Promise<void> {
   await browser.waitUntil(async () => {
-    // Check for flash button (accessibility label) or scan instruction text
     if (driver.isAndroid) {
-      const el = await $('android=new UiSelector().descriptionContains("flash")');
+      const el = await $('android=new UiSelector().resourceId("flash_button")');
       return el.isExisting();
     } else {
       // The flash button always exists on scanner; check by class + position
@@ -75,7 +72,7 @@ async function waitForQrGenerator(): Promise<void> {
 // Wait for QR result overlay
 async function waitForQrResult(): Promise<void> {
   if (driver.isAndroid) {
-    const el = await $('android=new UiSelector().text("Your QR Code")');
+    const el = await $('android=new UiSelector().resourceId("qr_result_title")');
     await el.waitForExist({ timeout: 10_000 });
   } else {
     const el = await $('~qr_result_title');
@@ -86,8 +83,8 @@ async function waitForQrResult(): Promise<void> {
 // Tap the Generate QR Code button
 async function tapGenerate(): Promise<void> {
   if (driver.isAndroid) {
-    await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("Generate QR Code"))');
-    const btn = await $('android=new UiSelector().clickable(true).childSelector(new UiSelector().text("Generate QR Code"))');
+    await $('android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().resourceId("generate_button"))');
+    const btn = await $('android=new UiSelector().resourceId("generate_button")');
     await btn.waitForExist({ timeout: 5_000 });
     await btn.click();
   } else {
@@ -150,7 +147,7 @@ describe('App Store Screenshots', () => {
     await browser.saveScreenshot(screenshotPath('4_create_qr_result'));
     // Dismiss QR result overlay so nav bar becomes tappable
     if (driver.isAndroid) {
-      const backBtn = await $('~Navigate back');
+      const backBtn = await $('android=new UiSelector().resourceId("qr_result_back")');
       await backBtn.waitForExist({ timeout: 5_000 });
       await backBtn.click();
     }

@@ -80,7 +80,10 @@ fun QrResultOverlay(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = onBack ?: onEdit) {
+                IconButton(
+                    onClick = onBack ?: onEdit,
+                    modifier = Modifier.semantics { testTag = "qr_result_back" }
+                ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringResource(Res.string.navigate_back),

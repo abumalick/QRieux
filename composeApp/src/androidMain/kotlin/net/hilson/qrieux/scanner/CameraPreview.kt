@@ -49,6 +49,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
@@ -246,7 +248,8 @@ private fun CameraButtons(
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(24.dp)
-                .size(64.dp),
+                .size(64.dp)
+                .semantics { testTag = "flash_button" },
             colors = IconButtonDefaults.filledIconButtonColors(
                 containerColor = if (flashEnabled) Color.White else Color.Black.copy(alpha = 0.5f),
                 contentColor = if (flashEnabled) Color.Black else Color.White

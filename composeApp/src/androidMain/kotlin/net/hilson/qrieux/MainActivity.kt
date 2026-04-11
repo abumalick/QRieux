@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.ui.ExperimentalComposeUiApi::class)
+
 package net.hilson.qrieux
 
 import android.content.Intent
@@ -7,9 +9,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 
 class MainActivity : ComponentActivity() {
@@ -27,14 +33,19 @@ class MainActivity : ComponentActivity() {
         val demoCamera = intent?.getBooleanExtra("DEMO_CAMERA", false) ?: false
 
         setContent {
-            App(
-                sharedImageUri = sharedUri.value,
-                shareTimestamp = shareTimestamp.longValue,
-                screenshotBackground = screenshotBg,
-                sharedText = sharedText.value,
-                shareTextTimestamp = shareTextTimestamp.longValue,
-                demoCamera = demoCamera
-            )
+            // testTagsAsResourceId makes Compose testTag appear as resource-id in the
+            // accessibility tree, so UiAutomator can find elements by resourceId
+            // (locale-agnostic, unlike text/contentDescription).
+            Box(modifier = Modifier.semantics { testTagsAsResourceId = true }) {
+                App(
+                    sharedImageUri = sharedUri.value,
+                    shareTimestamp = shareTimestamp.longValue,
+                    screenshotBackground = screenshotBg,
+                    sharedText = sharedText.value,
+                    shareTextTimestamp = shareTextTimestamp.longValue,
+                    demoCamera = demoCamera
+                )
+            }
         }
     }
 
