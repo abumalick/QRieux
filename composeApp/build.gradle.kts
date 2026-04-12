@@ -72,8 +72,8 @@ android {
         applicationId = "net.hilson.qrieux"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 22
-        versionName = "1.8.2"
+        versionCode = 23
+        versionName = "1.8.3"
     }
 
     signingConfigs {

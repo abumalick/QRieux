@@ -1,0 +1,3 @@
+• Corregido el diseño en dispositivos con recorte de pantalla — las pantallas ya no muestran espacio extra en la parte superior
+• Nuevas capturas de pantalla de Play Store para todas las pantallas (escáner, resultado, crear QR, resultado QR, historial, ayuda)
+• Mejorado el diseño en modo horizontal para tabletas en la pantalla de resultado QR

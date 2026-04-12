@@ -1,0 +1,3 @@
+• Ekran çentiği olan cihazlarda düzen düzeltildi — içerik ekranları artık fazladan üst boşluk göstermiyor
+• Tüm ekranlar için yeni Play Store ekran görüntüleri (tarayıcı, tarama sonucu, QR oluştur, QR sonucu, geçmiş, yardım)
+• Tablet yatay modunda QR sonucu yer paylaşımı düzeni iyileştirildi

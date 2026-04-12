@@ -1,0 +1,3 @@
+• Fixed layout on devices with display cutouts — content screens no longer show excess top padding
+• New Play Store screenshots for all screens (scanner, scan result, create QR, QR result, history, help)
+• Improved tablet landscape layout for QR result overlay

@@ -1,0 +1,3 @@
+• Corretto il layout sui dispositivi con ritaglio del display — le schermate non mostrano più spazio eccessivo in alto
+• Nuovi screenshot del Play Store per tutte le schermate (scanner, risultato scansione, crea QR, risultato QR, cronologia, guida)
+• Migliorato il layout orizzontale su tablet per la sovrapposizione del risultato QR

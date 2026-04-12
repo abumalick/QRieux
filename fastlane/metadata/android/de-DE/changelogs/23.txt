@@ -1,0 +1,3 @@
+• Layout auf Geräten mit Display-Aussparung korrigiert — Inhaltsbildschirme zeigen keinen übermäßigen oberen Abstand mehr
+• Neue Play Store-Screenshots für alle Bildschirme (Scanner, Scan-Ergebnis, QR erstellen, QR-Ergebnis, Verlauf, Hilfe)
+• Verbessertes Querformat-Layout auf Tablets für die QR-Ergebnis-Überlagerung

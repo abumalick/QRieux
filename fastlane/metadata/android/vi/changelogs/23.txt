@@ -1,0 +1,3 @@
+• Sửa bố cục trên thiết bị có vùng cắt màn hình — các màn hình nội dung không còn bị khoảng trống thừa ở trên đầu
+• Ảnh chụp màn hình Play Store mới cho tất cả các màn hình (máy quét, kết quả quét, tạo QR, kết quả QR, lịch sử, trợ giúp)
+• Cải thiện bố cục ngang trên máy tính bảng cho lớp phủ kết quả QR

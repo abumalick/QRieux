@@ -1,0 +1,3 @@
+• Memperbaiki tata letak di perangkat dengan potongan layar — layar konten tidak lagi menampilkan ruang kosong berlebih di bagian atas
+• Tangkapan layar Play Store baru untuk semua layar (pemindai, hasil pindai, buat QR, hasil QR, riwayat, bantuan)
+• Tata letak lanskap tablet untuk overlay hasil QR telah ditingkatkan

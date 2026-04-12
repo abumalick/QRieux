@@ -1,0 +1,3 @@
+• Corrigido o layout em dispositivos com recorte na tela — as telas de conteúdo não exibem mais espaço extra no topo
+• Novas capturas de tela da Play Store para todas as telas (scanner, resultado, criar QR, resultado QR, histórico, ajuda)
+• Melhorado o layout em modo paisagem no tablet para a sobreposição de resultado QR

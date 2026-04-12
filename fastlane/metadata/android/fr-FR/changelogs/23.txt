@@ -1,0 +1,3 @@
+• Correction de la mise en page sur les appareils avec encoche — les écrans n'affichent plus un excès d'espace en haut
+• Nouvelles captures d'écran Play Store pour tous les écrans (scanner, résultat, créer QR, résultat QR, historique, aide)
+• Amélioration de la mise en page paysage sur tablette pour l'overlay de résultat QR
