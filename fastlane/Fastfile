@@ -1,3 +1,17 @@
+before_all do
+  # Xcode's IPA-export step shells out to /usr/bin/rsync (openrsync), which
+  # then resolves a "server-side" `rsync` via PATH. When Homebrew's rsync 3.x
+  # is ahead of /usr/bin in PATH, it rejects openrsync's --extended-attributes
+  # flag and the export fails with "Copy failed". Shim only `rsync` so the
+  # server side is also openrsync.
+  rsync_shim = File.expand_path("../.tmp/fastlane-bin", __dir__)
+  FileUtils.mkdir_p(rsync_shim)
+  shim_path = "#{rsync_shim}/rsync"
+  File.delete(shim_path) if File.symlink?(shim_path) || File.exist?(shim_path)
+  File.symlink("/usr/bin/rsync", shim_path)
+  ENV["PATH"] = "#{rsync_shim}:#{ENV.fetch('PATH', '')}"
+end
+
 # Android lanes
 platform :android do
   desc "Download existing metadata from Play Store"
@@ -73,6 +87,21 @@ platform :ios do
 
     upload_to_testflight(
       api_key: api_key,
+      skip_waiting_for_build_processing: true
+    )
+  end
+
+  desc "Upload a pre-built IPA to TestFlight (workaround for macOS Tahoe rsync bug breaking gym's exportArchive step)"
+  lane :pilot_upload do |options|
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APP_STORE_KEY_ID"],
+      issuer_id: ENV["APP_STORE_ISSUER_ID"],
+      key_filepath: "fastlane/AuthKey_#{ENV['APP_STORE_KEY_ID']}.p8"
+    )
+
+    upload_to_testflight(
+      api_key: api_key,
+      ipa: options[:ipa],
       skip_waiting_for_build_processing: true
     )
   end
