@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.roborazzi)
 }
 
 kotlin {
@@ -54,6 +55,15 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+        }
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(libs.robolectric)
+                implementation(libs.roborazzi.lib)
+                implementation(libs.roborazzi.compose)
+                implementation(libs.junit)
+                implementation(libs.kotlin.testJunit)
+            }
         }
     }
 }
@@ -112,6 +122,15 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
+}
+
+roborazzi {
+    outputDir.set(file("src/androidUnitTest/snapshots"))
 }
 
 dependencies {

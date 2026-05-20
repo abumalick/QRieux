@@ -40,13 +40,32 @@ fun HistoryGenerateDetail(
         isGenerating = false
     }
 
+    HistoryGenerateDetailContent(
+        isGenerating = isGenerating,
+        generatedQr = generatedQr,
+        onBack = onBack,
+        onShare = { generatedQr?.let { shareImage(platformContext, it.pngData, shareLabel) } },
+        onEditInCreateTab = onEditInCreateTab,
+        modifier = modifier,
+    )
+}
+
+@Composable
+internal fun HistoryGenerateDetailContent(
+    isGenerating: Boolean,
+    generatedQr: GeneratedQrCode?,
+    onBack: () -> Unit,
+    onShare: () -> Unit,
+    onEditInCreateTab: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Box(modifier = modifier.fillMaxSize()) {
         QrResultOverlay(
             generatedQr = generatedQr,
             isGenerating = isGenerating,
-            onShare = { generatedQr?.let { shareImage(platformContext, it.pngData, shareLabel) } },
+            onShare = onShare,
             onEdit = onEditInCreateTab,
-            onBack = onBack
+            onBack = onBack,
         )
     }
 }

@@ -26,6 +26,8 @@ just gen-android-screenshots    # Generate Android screenshots (--skip-build, --
 just gen-ios-screenshots        # Generate iOS screenshots (--skip-build, --locale=xx)
 just test                       # Run all unit tests
 just test-class <fully.qualified.ClassName>  # Run single test class
+just screenshot-record          # Record/update Roborazzi screenshot baselines
+just screenshot-verify          # Verify screenshots against committed baselines
 just e2e-install                # Install E2E dependencies (bun)
 just e2e-android                # Run E2E tests on Android (pass wdio args)
 just e2e-ios                    # Run E2E tests on iOS (pass wdio args)
@@ -110,6 +112,25 @@ Codes: (default=en), `ar`, `bn`, `de`, `es`, `fr`, `hi`, `in` (Indonesian), `it`
 ### Manual Testing
 
 Open `examples/test-qr-codes.md` to test all supported QR types (URLs, emails, phones, text).
+
+### Screenshot tests (Roborazzi)
+
+JVM-only Compose snapshot tests for the Android side. Run on Robolectric — no
+emulator. Tests live in `composeApp/src/androidUnitTest/kotlin/.../screenshot/`,
+baselines in `composeApp/src/androidUnitTest/snapshots/`.
+
+Matrix per test method: SDK (30, 34) × theme (light, dark) × locale (en, ar, ja)
+= 12 PNGs. SDK 30 covers the pre-Material-You color-scheme branch; SDK 34
+covers dynamic color. Arabic covers RTL layout; Japanese covers CJK font fallback.
+
+```bash
+just screenshot-record    # update baselines after intentional visual change — review diff before committing
+just screenshot-verify    # fail on any pixel diff vs committed baselines
+```
+
+`just test` runs screenshot tests too but never fails on diff — only
+`screenshot-verify` diffs. Adding a new screen: create a `*ScreenshotTest.kt`
+using `captureMatrix(...)` from `ScreenshotMatrix.kt`.
 
 ### E2E Tests
 

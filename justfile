@@ -53,6 +53,14 @@ test:
 test-class class:
     ./gradlew :composeApp:testDebugUnitTest --tests "{{class}}"
 
+# Record/update screenshot baselines (Roborazzi)
+screenshot-record:
+    ./gradlew :composeApp:recordRoborazziDebug
+
+# Verify current screens against committed baselines
+screenshot-verify:
+    ./gradlew :composeApp:verifyRoborazziDebug
+
 # Fastlane - Android
 
 # Test Play Store connection
