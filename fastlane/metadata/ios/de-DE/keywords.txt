@@ -1,1 +1,1 @@
-qr,qr-code,barcode,scanner,leser,scannen,offline,keine werbung,datenschutz,einfach
+qr,qr-code,barcode,scanner,ersteller,scannen,offline,keine werbung,datenschutz

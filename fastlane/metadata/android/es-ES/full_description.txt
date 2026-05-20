@@ -1,10 +1,11 @@
-QRieux es un escáner de códigos QR y códigos de barras simple y rápido, diseñado para todos.
+QRieux es un escáner y creador de códigos QR y códigos de barras simple y rápido, diseñado para todos.
 
 Características:
 • Escaneo instantáneo de códigos QR y códigos de barras
 • Crear códigos QR — genera códigos QR para sitios web, correos, números de teléfono, WiFi y texto
 • Escanear desde la galería — elige cualquier imagen con un código QR
-• Comparte texto, URLs, contactos o imágenes a la app — crea o escanea códigos QR al instante
+• Comparte una imagen a la app para escanear el código QR que contiene
+• Comparte texto, URLs o contactos para crear códigos QR al instante
 • Acciones con un toque: abrir URLs, llamar a números, enviar correos, agregar contactos, conectar a WiFi
 • Historial — revisa escaneos y creaciones anteriores en cualquier momento
 • Copia y comparte el contenido escaneado fácilmente

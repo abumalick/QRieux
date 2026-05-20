@@ -1,1 +1,1 @@
-qr,qr code,barcode,scanner,reader,scan,offline,no ads,privacy,simple
+qr,qr code,barcode,scanner,creator,generator,create,offline,no ads,privacy

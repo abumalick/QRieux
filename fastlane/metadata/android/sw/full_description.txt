@@ -1,10 +1,11 @@
-QRieux ni skana ya msimbo wa QR na msimbo wa pau rahisi na haraka, iliyoundwa kwa kila mtu.
+QRieux ni skana na muundaji wa msimbo wa QR na msimbo wa pau rahisi na haraka, iliyoundwa kwa kila mtu.
 
 Vipengele:
 • Skana msimbo wa QR na msimbo wa pau papo hapo
 • Tengeneza misimbo ya QR — tengeneza misimbo ya QR kwa tovuti, barua pepe, nambari za simu, Wi-Fi, na maandishi
 • Skana kutoka galeria — chagua picha yoyote yenye msimbo wa QR
-• Shiriki maandishi, URL, anwani, au picha kwenye programu — tengeneza au skana misimbo ya QR papo hapo
+• Shiriki picha kwenye programu ili skana msimbo wa QR ulio ndani yake
+• Shiriki maandishi, URL, au anwani ili tengeneza misimbo ya QR papo hapo
 • Vitendo kwa mguso mmoja: fungua URL, piga simu, tuma barua pepe, ongeza anwani, unganisha WiFi
 • Historia — angalia skana na uumbaji uliopita wakati wowote
 • Nakili na shiriki maudhui yaliyoskanwa kwa urahisi

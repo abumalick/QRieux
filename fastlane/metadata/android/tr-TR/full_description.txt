@@ -1,10 +1,11 @@
-QRieux, herkes için tasarlanmış basit ve hızlı bir QR kodu ve barkod tarayıcısıdır.
+QRieux, herkes için tasarlanmış basit ve hızlı bir QR kodu ve barkod tarayıcısı ve oluşturucusudur.
 
 Özellikler:
 • Anında QR kodu ve barkod tarama
 • QR kodu oluşturun — web siteleri, e-posta, telefon numaraları, Wi-Fi ve metin için QR kodu oluşturun
 • Galeriden tarayın — QR kodu içeren herhangi bir görüntüyü seçin
-• Uygulamaya metin, URL, kişi veya görüntü paylaşın — anında QR kodu oluşturun veya tarayın
+• QR kodunu taramak için uygulamaya bir görüntü paylaşın
+• Anında QR kodu oluşturmak için metin, URL veya kişi paylaşın
 • Tek dokunuşla eylemler: URL aç, telefon numarası ara, e-posta gönder, kişi ekle, WiFi'ye bağlan
 • Geçmiş — geçmiş taramalar ve oluşturmaları istediğiniz zaman inceleyin
 • Taranan içeriği kolayca kopyalayın ve paylaşın

@@ -1,1 +1,1 @@
-Schneller, einfacher QR- & Barcode-Scanner. Keine Werbung, kein Tracking, funktioniert offline.
+QR- & Barcode-Scanner und -Ersteller. Keine Werbung, kein Tracking, funktioniert offline.

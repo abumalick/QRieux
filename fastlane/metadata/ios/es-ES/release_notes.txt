@@ -1,4 +1,2 @@
-• Nuevo: Comparte un contacto con QRieux para crear un código QR
-• Escanea códigos QR de contacto para ver nombre, teléfono, email y añadir a contactos
-• Corregido: Las imágenes y contactos compartidos ahora abren la app automáticamente
-• Botones del escáner corregidos en tablets
+• Nuevo: Historial de escaneos — consulta y vuelve a abrir escaneos anteriores
+• Sección de ayuda más completa

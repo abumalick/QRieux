@@ -1,4 +1,2 @@
-• Yeni: Bir kişiyi QRieux'e paylaşarak QR kod oluşturun
-• Kişi QR kodlarını tarayarak ad, telefon, e-posta görüntüleyin ve rehbere ekleyin
-• Düzeltildi: Paylaşılan resimler ve kişiler artık uygulamayı otomatik olarak açıyor
-• Tabletlerde tarayıcı düğmelerinin kesilmesi düzeltildi
+• Yeni: Tarama geçmişi — geçmiş taramaları görüntüleyin ve yeniden açın
+• Daha eksiksiz yardım bölümü

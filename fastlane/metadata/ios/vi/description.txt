@@ -1,10 +1,11 @@
-QRieux là ứng dụng quét mã QR và mã vạch đơn giản, nhanh chóng, dành cho mọi người.
+QRieux là ứng dụng quét và tạo mã QR và mã vạch đơn giản, nhanh chóng, dành cho mọi người.
 
 Tính năng:
 • Quét mã QR và mã vạch tức thì
 • Tạo mã QR — tạo mã QR cho trang web, email, số điện thoại, Wi-Fi và văn bản
 • Quét từ thư viện ảnh — chọn bất kỳ hình ảnh nào có mã QR
-• Chia sẻ văn bản, URL, danh bạ hoặc hình ảnh vào ứng dụng — tạo hoặc quét mã QR ngay lập tức
+• Chia sẻ hình ảnh vào ứng dụng để quét mã QR trong ảnh đó
+• Chia sẻ văn bản, URL hoặc danh bạ để tạo mã QR ngay lập tức
 • Thao tác một chạm: mở URL, gọi điện, gửi email, thêm danh bạ, kết nối WiFi
 • Lịch sử — xem lại các lần quét và tạo trước đó bất cứ lúc nào
 • Sao chép và chia sẻ nội dung đã quét dễ dàng

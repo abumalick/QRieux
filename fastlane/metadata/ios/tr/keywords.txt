@@ -1,1 +1,1 @@
-qr,qr kod,barkod,tarayıcı,okuyucu,tara,çevrimdışı,reklamsız,gizlilik,basit
+qr,qr kod,barkod,tarayıcı,oluşturucu,tara,çevrimdışı,reklamsız,gizlilik

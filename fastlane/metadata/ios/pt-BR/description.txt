@@ -1,10 +1,11 @@
-QRieux é um leitor de QR code e código de barras simples e rápido, feito para todos.
+QRieux é um leitor e criador de QR code e código de barras simples e rápido, feito para todos.
 
 Recursos:
 • Leitura instantânea de QR codes e códigos de barras
 • Crie QR codes — gere QR codes para sites, e-mails, números de telefone, Wi-Fi e texto
 • Escaneie da galeria — escolha qualquer imagem com um QR code
-• Compartilhe texto, URLs, contatos ou imagens com o app — crie ou escaneie QR codes instantaneamente
+• Compartilhe uma imagem com o app para escanear o QR code nela
+• Compartilhe texto, URLs ou contatos para criar QR codes instantaneamente
 • Ações com um toque: abrir links, ligar, enviar e-mails, adicionar contatos, conectar ao WiFi
 • Histórico — reveja digitalizações e criações anteriores a qualquer momento
 • Copie e compartilhe o conteúdo escaneado facilmente

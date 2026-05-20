@@ -1,1 +1,1 @@
-Leitor de QR e código de barras rápido e simples. Sem anúncios, sem rastreamento, funciona offline.
+Leitor e criador de QR code e código de barras. Sem anúncios, sem rastreamento, funciona offline.

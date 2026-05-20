@@ -1,4 +1,2 @@
-• New: Share a contact to QRieux to create a QR code for it
-• Scan contact QR codes to see name, phone, email and add to contacts
-• Fixed: Shared images and contacts now open the app automatically
-• Fixed scanner buttons on tablets
+• New: Scan history — view and re-open past scans
+• More complete help section

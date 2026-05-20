@@ -1,10 +1,11 @@
-QRieux is a simple, fast QR code and barcode scanner designed for everyone.
+QRieux is a simple, fast QR code and barcode scanner & creator designed for everyone.
 
 Features:
 • Instant QR code and barcode scanning
 • Create QR codes — generate QR codes for websites, emails, phone numbers, Wi-Fi, and text
 • Scan from gallery — pick any image with a QR code
-• Share text, URLs, contacts, or images to the app — create or scan QR codes instantly
+• Share an image to the app to scan the QR code in it
+• Share text, URLs, or contacts to create QR codes instantly
 • One-tap actions: open URLs, call phone numbers, send emails, add contacts, connect to WiFi
 • History — review past scans and creations anytime
 • Copy and share scanned content easily

@@ -1,1 +1,1 @@
-Escáner de QR y códigos de barras rápido y simple. Sin anuncios, sin rastreo, funciona sin conexión.
+Escáner y creador de códigos QR y barras. Sin anuncios, sin rastreo, funciona sin conexión.

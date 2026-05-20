@@ -1,1 +1,1 @@
-qr,mã qr,mã vạch,quét,đọc,ngoại tuyến,không quảng cáo,riêng tư,đơn giản,scanner
+qr,mã qr,mã vạch,quét,tạo,ngoại tuyến,không quảng cáo,riêng tư,đơn giản,scanner
