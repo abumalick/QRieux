@@ -143,14 +143,29 @@ xcodebuild -scheme iosApp ... clean build                    # iOS — use 'clea
 ```
 If `just android-debug` shows all tasks "UP-TO-DATE" or "FROM-CACHE" after code changes, that's a red flag.
 
-Appium + WebdriverIO v9 (TypeScript) in `e2e/`. Requires running emulator/simulator + built app.
+Appium + WebdriverIO v9 (TypeScript) in `e2e/`. Requires a built app.
+
+**Android runs against a pinned emulator, never a plugged-in phone.** `just
+e2e-android` boots the `qrieux-e2e` AVD (API 36, `google_apis`, x86_64) defined
+in `scripts/e2e_emulator.sh`, wiping user data first so every run starts from
+the same state. `just e2e-emulator-ensure` creates the AVD and installs the
+system image on a fresh machine. Use `just e2e-android-fast` to reuse a
+running emulator while iterating — it skips the wipe, so treat a failure there
+as suspect until reproduced with the full recipe.
+
+Do not run these specs against a physical device. MediaStore on a real phone
+refuses to serve adb-pushed fixtures to the app (`FileNotFoundException: No
+item at content://...`), so every gallery and share spec fails for reasons that
+have nothing to do with the app. `appium:udid` and the `ADB` helper both pin
+`emulator-5554` to keep that from happening by accident.
 
 - Config: `e2e/wdio.shared.conf.ts` (shared), `wdio.android.conf.ts`, `wdio.ios.conf.ts`
 - Helpers: `e2e/helpers/screens.ts` (dispatcher), `screens.android.ts`, `screens.ios.ts`
 - Specs: `e2e/specs/` — all specs run on both platforms
 - On failure: screenshot, page source XML, device logs auto-saved to `e2e/artifacts/<timestamp>-<platform>/<test>/`
 - Appium/wdio logs: `e2e/logs/`
-- Env overrides: `E2E_APP_PATH`, `E2E_DEVICE_NAME`, `E2E_PLATFORM_VERSION`
+- Env overrides: `E2E_APP_PATH`, `E2E_DEVICE_NAME`, `E2E_PLATFORM_VERSION`, `E2E_DEVICE_SERIAL` (adb target), `E2E_EMULATOR_WINDOW=1` (show the emulator window)
+- Shell out to adb through `ADB` from `e2e/helpers/adb.ts`, never a bare `adb` — a bare call picks the wrong device when a phone is attached
 - **iOS selectors**: prefer `testTag` (maps to `accessibilityIdentifier`, use `~tag_name` in Appium). Add `.semantics { testTag = "name" }` in Compose and select with `$('~name')`. This is locale-agnostic — avoids hardcoded English text in selectors.
 - **Android selectors**: `testTagsAsResourceId` doesn't work in Compose Multiplatform, so use text/label matching via UiSelector
 

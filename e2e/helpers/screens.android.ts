@@ -1,3 +1,4 @@
+import { ADB } from './adb.js';
 // Screen interaction helpers for Android (UiSelector syntax)
 // Compose Multiplatform doesn't support testTagsAsResourceId — uses text/description selectors
 
@@ -8,7 +9,7 @@ export async function shareImageToApp(fixtureName: string): Promise<void> {
   let mediaId: string | null = null;
   for (let attempt = 0; attempt < 3; attempt++) {
     const output = execSync(
-      `adb shell content query --uri content://media/external/images/media --projection _id --where "\\"_display_name='${fixtureName}.png'\\""`,
+      `${ADB} shell content query --uri content://media/external/images/media --projection _id --where "\\"_display_name='${fixtureName}.png'\\""`,
     ).toString().trim();
     const match = output.match(/_id=(\d+)/);
     if (match) {
@@ -26,7 +27,7 @@ export async function shareImageToApp(fixtureName: string): Promise<void> {
   // -d sets the data URI so FLAG_GRANT_READ_URI_PERMISSION creates a URI permission grant;
   // --eu sets EXTRA_STREAM which the app reads — same URI, so the grant covers it
   execSync(
-    `adb shell am start -a android.intent.action.SEND -t image/png -f 0x30000001 ` +
+    `${ADB} shell am start -a android.intent.action.SEND -t image/png -f 0x30000001 ` +
     `-d '${contentUri}' --eu android.intent.extra.STREAM '${contentUri}' ` +
     `-n net.hilson.qrieux.dev/net.hilson.qrieux.MainActivity`,
   );
@@ -38,7 +39,7 @@ export async function shareTextToApp(text: string): Promise<void> {
   const innerEscaped = text.replace(/'/g, "'\\''");
   const escaped = innerEscaped.replace(/[\\$`"]/g, '\\$&');
   execSync(
-    `adb shell "am start -a android.intent.action.SEND -t text/plain ` +
+    `${ADB} shell "am start -a android.intent.action.SEND -t text/plain ` +
     `-f 0x30000000 --es android.intent.extra.TEXT '${escaped}' ` +
     `-n net.hilson.qrieux.dev/net.hilson.qrieux.MainActivity"`,
   );
@@ -83,7 +84,12 @@ export async function tapGalleryButton(): Promise<void> {
 export async function pickImageFromGallery(): Promise<void> {
   await browser.pause(3000);
 
+  // The photo picker moved to com.google.android.photopicker and is drawn with
+  // Compose, so it exposes no resource ids and no checkable nodes — its items
+  // are only identifiable by content description. Older pickers are kept as
+  // fallbacks so the helper still works on earlier system images.
   const selectors = [
+    'android=new UiSelector().packageName("com.google.android.photopicker").descriptionStartsWith("Photo taken")',
     'android=new UiSelector().resourceIdMatches(".*icon_thumbnail.*").instance(0)',
     'android=new UiSelector().checkable(true).instance(0)',
     'android=new UiSelector().packageName("com.google.android.providers.media.module").className("android.widget.ImageView").instance(0)',
@@ -177,29 +183,35 @@ export async function selectQrType(typeName: string): Promise<void> {
   await browser.pause(500);
 }
 
+// Resolves the input carrying `label`. A label is not unique on the generator
+// screen: the type chooser renders the selected type ("Text") as plain text
+// above a field whose label is also "Text", and the chooser comes first in the
+// tree — so matching on the label alone opens the dropdown instead of focusing
+// the field. Where the form has a single input that input is unambiguous, so it
+// wins over any label lookup.
+async function findInputField(label: string) {
+  await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().className("android.widget.EditText").textContains("${label}"))`);
+  const byValue = await $(`android=new UiSelector().className("android.widget.EditText").textContains("${label}")`);
+  if (await byValue.isExisting()) return byValue;
+
+  const inputs = await $$('android=new UiSelector().className("android.widget.EditText")');
+  if (inputs.length === 1) return inputs[0];
+
+  await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("${label}"))`);
+  const bySibling = await $(`android=new UiSelector().text("${label}").fromParent(new UiSelector().className("android.widget.EditText"))`);
+  if (await bySibling.isExisting()) return bySibling;
+
+  // Compose nests the label inside the field, so tapping it focuses the input.
+  const labelEl = await $(`android=new UiSelector().text("${label}").className("android.widget.TextView")`);
+  await labelEl.waitForExist({ timeout: 5_000 });
+  await labelEl.click();
+  await browser.pause(300);
+  return $('android=new UiSelector().focused(true).className("android.widget.EditText")');
+}
+
 export async function enterTextInField(label: string, value: string): Promise<void> {
   await scrollToTop();
-  // Compose OutlinedTextField renders the label as a child TextView, not as the
-  // EditText's text attribute. Try textContains first, then fall back to finding
-  // the EditText via its parent container that has the label as a child.
-  await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().className("android.widget.EditText").textContains("${label}"))`);
-  let editText = await $(`android=new UiSelector().className("android.widget.EditText").textContains("${label}")`);
-  if (!(await editText.isExisting())) {
-    // Find the label inside the OutlinedTextField container, then find its sibling EditText.
-    // The label and EditText share a common scrollable/focusable ancestor.
-    // Scroll to the label, click the EditText next to it.
-    await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("${label}"))`);
-    // Use fromParent: find a sibling EditText of the label text within the same container
-    editText = await $(`android=new UiSelector().text("${label}").fromParent(new UiSelector().className("android.widget.EditText"))`);
-    if (!(await editText.isExisting())) {
-      // Last resort: click the label and hope it focuses the EditText
-      const labelEl = await $(`android=new UiSelector().text("${label}").className("android.widget.TextView")`);
-      await labelEl.waitForExist({ timeout: 5_000 });
-      await labelEl.click();
-      await browser.pause(300);
-      editText = await $('android=new UiSelector().focused(true).className("android.widget.EditText")');
-    }
-  }
+  const editText = await findInputField(label);
   await editText.waitForExist({ timeout: 5_000 });
   await editText.click();
   await browser.pause(300);
@@ -213,19 +225,7 @@ export async function enterTextInField(label: string, value: string): Promise<vo
 
 export async function clearField(label: string): Promise<void> {
   await scrollToTop();
-  await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().className("android.widget.EditText").textContains("${label}"))`);
-  let editText = await $(`android=new UiSelector().className("android.widget.EditText").textContains("${label}")`);
-  if (!(await editText.isExisting())) {
-    await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("${label}"))`);
-    editText = await $(`android=new UiSelector().text("${label}").fromParent(new UiSelector().className("android.widget.EditText"))`);
-    if (!(await editText.isExisting())) {
-      const labelEl = await $(`android=new UiSelector().text("${label}").className("android.widget.TextView")`);
-      await labelEl.waitForExist({ timeout: 5_000 });
-      await labelEl.click();
-      await browser.pause(300);
-      editText = await $('android=new UiSelector().focused(true).className("android.widget.EditText")');
-    }
-  }
+  const editText = await findInputField(label);
   await editText.waitForExist({ timeout: 5_000 });
   await editText.click();
   await browser.pause(300);
@@ -396,20 +396,20 @@ export async function toggleWifiHidden(): Promise<void> {
 export async function shareVCardToApp(vcfContent: string): Promise<void> {
   const filePath = '/sdcard/Download/test-contact.vcf';
   // Clean up file and stale MediaStore entry from previous runs
-  execSync(`adb shell rm -f ${filePath}`);
+  execSync(`${ADB} shell rm -f ${filePath}`);
   execSync(
-    `adb shell content delete --uri content://media/external/file --where "\\"_display_name='test-contact.vcf'\\""`,
+    `${ADB} shell content delete --uri content://media/external/file --where "\\"_display_name='test-contact.vcf'\\""`,
   );
   const b64 = Buffer.from(vcfContent).toString('base64');
-  execSync(`adb shell "echo '${b64}' | base64 -d > ${filePath}"`);
+  execSync(`${ADB} shell "echo '${b64}' | base64 -d > ${filePath}"`);
   // Trigger media scan so MediaStore indexes the file
-  execSync(`adb shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d "file://${filePath}"`);
+  execSync(`${ADB} shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d "file://${filePath}"`);
   await browser.pause(2000);
   // Query MediaStore for content URI
   let mediaId: string | null = null;
   for (let attempt = 0; attempt < 3; attempt++) {
     const output = execSync(
-      `adb shell content query --uri content://media/external/file --projection _id --where "\\"_display_name='test-contact.vcf'\\""`,
+      `${ADB} shell content query --uri content://media/external/file --projection _id --where "\\"_display_name='test-contact.vcf'\\""`,
     ).toString().trim();
     const match = output.match(/_id=(\d+)/);
     if (match) {
@@ -423,7 +423,7 @@ export async function shareVCardToApp(vcfContent: string): Promise<void> {
   }
   const contentUri = `content://media/external/file/${mediaId}`;
   execSync(
-    `adb shell am start -a android.intent.action.SEND -t text/x-vcard -f 0x30000001 ` +
+    `${ADB} shell am start -a android.intent.action.SEND -t text/x-vcard -f 0x30000001 ` +
     `-d '${contentUri}' --eu android.intent.extra.STREAM '${contentUri}' ` +
     `-n net.hilson.qrieux.dev/net.hilson.qrieux.MainActivity`,
   );

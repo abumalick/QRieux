@@ -101,16 +101,32 @@ gen-ios-screenshots *args:
 e2e-install:
     cd e2e && bun install
 
-# Run E2E tests on Android (requires running emulator + debug APK)
-e2e-android *args:
+# Create the pinned E2E emulator if it does not exist yet
+e2e-emulator-ensure:
+    ./scripts/e2e_emulator.sh ensure
+
+# Boot the pinned E2E emulator with a wiped user data image
+e2e-emulator-up:
+    ./scripts/e2e_emulator.sh start
+
+# Shut the pinned E2E emulator down
+e2e-emulator-stop:
+    ./scripts/e2e_emulator.sh stop
+
+# Run E2E tests on Android against the pinned emulator (requires debug APK)
+e2e-android *args: e2e-emulator-up
+    cd e2e && bunx wdio run wdio.android.conf.ts {{args}}
+
+# Run E2E tests against an already-booted emulator, skipping the wipe and reboot
+e2e-android-fast *args:
     cd e2e && bunx wdio run wdio.android.conf.ts {{args}}
 
 # Run E2E tests on iOS (requires running simulator + built app)
 e2e-ios *args:
     cd e2e && bunx wdio run wdio.ios.conf.ts {{args}}
 
-# Build debug APK then run Android E2E tests
-e2e-android-full *args: android-debug
+# Build debug APK then run Android E2E tests on the pinned emulator
+e2e-android-full *args: android-debug e2e-emulator-up
     cd e2e && bunx wdio run wdio.android.conf.ts {{args}}
 
 # Clean E2E artifacts and logs

@@ -1,5 +1,6 @@
 import { execSync } from 'child_process';
 import path from 'path';
+import { ADB } from './adb.js';
 
 const FIXTURES_DIR = path.join(__dirname, '..', 'fixtures');
 const FIXTURES = ['url-https.png', 'email-mailto.png', 'phone-tel.png', 'text-hello.png', 'wifi.png', 'vcard.png', 'no-qr.png'];
@@ -11,10 +12,10 @@ function pushFixtureAndroid(fixtureName: string): void {
   const localPath = path.join(FIXTURES_DIR, fixtureName);
   const devicePath = `${DEVICE_DIR}/${fixtureName}`;
 
-  execSync(`adb shell mkdir -p '${DEVICE_DIR}'`);
-  execSync(`adb push '${localPath}' '${devicePath}'`);
+  execSync(`${ADB} shell mkdir -p '${DEVICE_DIR}'`);
+  execSync(`${ADB} push '${localPath}' '${devicePath}'`);
   execSync(
-    `adb shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d 'file://${devicePath}'`
+    `${ADB} shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d 'file://${devicePath}'`
   );
 }
 
@@ -36,9 +37,9 @@ export async function cleanupFixtures(): Promise<void> {
   if (!driver.isAndroid) return; // iOS: noReset handles cleanup
 
   try {
-    execSync(`adb shell rm -rf '${DEVICE_DIR}'`);
+    execSync(`${ADB} shell rm -rf '${DEVICE_DIR}'`);
     execSync(
-      `adb shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d 'file:///sdcard/DCIM/'`
+      `${ADB} shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d 'file:///sdcard/DCIM/'`
     );
   } catch (e) {
     console.warn('Fixture cleanup failed (best-effort):', (e as Error).message);
