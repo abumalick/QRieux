@@ -12,14 +12,14 @@ RepoType: git
 Repo: https://github.com/abumalick/QRieux.git
 
 Builds:
-  - versionName: 1.8.3
-    versionCode: 23
-    commit: v1.8.3
+  - versionName: 1.9.0
+    versionCode: 24
+    commit: v1.9.0
     subdir: composeApp
     gradle:
       - yes
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: 1.8.3
-CurrentVersionCode: 23
+CurrentVersion: 1.9.0
+CurrentVersionCode: 24
