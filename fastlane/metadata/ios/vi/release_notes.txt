@@ -1,2 +1,2 @@
-• Mới: Lịch sử quét — xem và mở lại các lần quét trước
-• Phần trợ giúp đầy đủ hơn
+• Quét mã vạch cầm nghiêng nhanh hơn
+• Ảnh lớn từ thư viện được xử lý ổn định hơn

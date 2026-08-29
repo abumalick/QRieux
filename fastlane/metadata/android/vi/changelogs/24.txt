@@ -1,0 +1,3 @@
+• Việc quét mã vạch giờ đây chạy trên nền tảng mã nguồn mở, nhờ đó QRieux có thể được phát hành trên F-Droid
+• Quét mã vạch cầm nghiêng nhanh hơn
+• Ảnh lớn từ thư viện được xử lý ổn định hơn

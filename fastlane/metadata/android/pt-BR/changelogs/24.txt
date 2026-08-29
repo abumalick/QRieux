@@ -1,2 +1,3 @@
+• A leitura de código de barras agora usa um mecanismo de código aberto, o que permite publicar o QRieux na F-Droid
 • Leitura mais rápida de códigos de barras segurados de lado
 • Fotos grandes da galeria agora são processadas de forma mais confiável

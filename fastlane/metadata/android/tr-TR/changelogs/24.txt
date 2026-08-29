@@ -1,2 +1,3 @@
+• Barkod tarama artık açık kaynaklı bir motorla çalışıyor, bu sayede QRieux F-Droid'de yayınlanabiliyor
 • Yan tutulan barkodların taranması hızlandı
 • Galerideki büyük fotoğraflar artık daha güvenilir şekilde işleniyor

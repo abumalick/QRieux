@@ -1,2 +1,3 @@
+• La lecture des codes-barres utilise désormais un moteur open source, ce qui permet de publier QRieux sur F-Droid
 • Lecture plus rapide des codes-barres tenus de côté
 • Les grandes photos de la galerie sont traitées de façon plus fiable

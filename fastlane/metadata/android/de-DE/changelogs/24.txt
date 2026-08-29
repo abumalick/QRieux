@@ -1,2 +1,3 @@
+• Die Barcode-Erkennung läuft jetzt mit einer Open-Source-Engine, wodurch QRieux auf F-Droid veröffentlicht werden kann
 • Schnelleres Scannen von seitlich gehaltenen Barcodes
 • Große Fotos aus der Galerie werden zuverlässiger verarbeitet
