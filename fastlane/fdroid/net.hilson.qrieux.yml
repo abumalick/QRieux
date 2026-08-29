@@ -10,7 +10,7 @@ RepoType: git
 Repo: https://github.com/abumalick/QRieux.git
 
 Builds:
-  - versionName: '1.9.0'
+  - versionName: 1.9.0
     versionCode: 24
     commit: v1.9.0
     subdir: composeApp
@@ -19,5 +19,5 @@ Builds:
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: '1.9.0'
+CurrentVersion: 1.9.0
 CurrentVersionCode: 24
