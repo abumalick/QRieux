@@ -144,9 +144,12 @@ private fun LiveCameraPreview(
     val lifecycleOwner = LocalLifecycleOwner.current
     var flashEnabled by remember { mutableStateOf(false) }
     var camera by remember { mutableStateOf<androidx.camera.core.Camera?>(null) }
+    // Decoding runs on the analysis executor, so hand the result back on the main thread.
     val qrAnalyzer = remember { QrAnalyzer { qrValue ->
-        vibrate(AndroidContext(context))
-        onQrCodeDetected(qrValue)
+        ContextCompat.getMainExecutor(context).execute {
+            vibrate(AndroidContext(context))
+            onQrCodeDetected(qrValue)
+        }
     } }
 
     LaunchedEffect(isScanning) {

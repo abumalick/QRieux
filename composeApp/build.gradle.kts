@@ -38,7 +38,6 @@ kotlin {
             implementation(libs.androidx.camera.camera2)
             implementation(libs.androidx.camera.lifecycle)
             implementation(libs.androidx.camera.view)
-            implementation(libs.mlkit.barcode.scanning)
             implementation(libs.accompanist.permissions)
             implementation(libs.zxing.core)
         }
@@ -115,7 +114,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("release")
+            // F-Droid builds unsigned: only wire up signing when the keystore is present.
+            if (keystorePropertiesFile.exists()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
     compileOptions {

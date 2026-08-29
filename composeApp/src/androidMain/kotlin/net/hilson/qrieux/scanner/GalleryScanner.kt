@@ -1,31 +1,42 @@
 package net.hilson.qrieux.scanner
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
-import com.google.mlkit.vision.barcode.BarcodeScanning
-import com.google.mlkit.vision.barcode.BarcodeScannerOptions
-import com.google.mlkit.vision.barcode.common.Barcode
-import com.google.mlkit.vision.common.InputImage
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-private val options = BarcodeScannerOptions.Builder()
-    .setBarcodeFormats(Barcode.FORMAT_ALL_FORMATS)
-    .build()
+internal fun sampleSizeFor(width: Int, height: Int, maxEdge: Int): Int {
+    var sampleSize = 1
+    while (maxOf(width, height) / sampleSize > maxEdge) {
+        sampleSize *= 2
+    }
+    return sampleSize
+}
 
-suspend fun scanBarcodeFromUri(context: Context, uri: Uri): String? {
-    return suspendCancellableCoroutine { continuation ->
-        try {
-            val image = InputImage.fromFilePath(context, uri)
-            BarcodeScanning.getClient(options).process(image)
-                .addOnSuccessListener { barcodes ->
-                    continuation.resume(barcodes.firstOrNull()?.rawValue)
-                }
-                .addOnFailureListener {
-                    continuation.resume(null)
-                }
-        } catch (e: Exception) {
-            continuation.resume(null)
+fun decodeBarcodeFromBitmap(bitmap: Bitmap): String? {
+    val pixels = IntArray(bitmap.width * bitmap.height)
+    bitmap.getPixels(pixels, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
+    return QrDecoder.decodeArgbPixels(pixels, bitmap.width, bitmap.height)
+}
+
+// Decoding allocates several full-size pixel buffers, so a phone-camera photo is
+// downsampled first; a QR code stays readable well below full sensor resolution.
+private const val MAX_GALLERY_EDGE = 2048
+
+suspend fun scanBarcodeFromUri(context: Context, uri: Uri): String? = withContext(Dispatchers.IO) {
+    try {
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, bounds) }
+
+        val options = BitmapFactory.Options().apply {
+            inSampleSize = sampleSizeFor(bounds.outWidth, bounds.outHeight, MAX_GALLERY_EDGE)
         }
+        context.contentResolver.openInputStream(uri)
+            ?.use { BitmapFactory.decodeStream(it, null, options) }
+            ?.let { decodeBarcodeFromBitmap(it) }
+    } catch (e: Exception) {
+        null
     }
 }
