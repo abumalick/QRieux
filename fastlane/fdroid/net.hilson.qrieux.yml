@@ -8,6 +8,7 @@ Changelog: https://github.com/abumalick/QRieux/releases
 
 RepoType: git
 Repo: https://github.com/abumalick/QRieux.git
+Binaries: https://github.com/abumalick/QRieux/releases/download/v%v/QRieux-%v.apk
 
 Builds:
   - versionName: 1.9.0
@@ -16,6 +17,8 @@ Builds:
     subdir: composeApp
     gradle:
       - yes
+
+AllowedAPKSigningKeys: 12f4fcae46cc1834aea9e97e72630dd10a331db7fc4fca36c2182c360d5d7deb
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
