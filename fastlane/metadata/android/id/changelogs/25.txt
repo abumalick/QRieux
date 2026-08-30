@@ -1,0 +1,3 @@
+• Pemindaian barcode kini menggunakan mesin sumber terbuka, sehingga QRieux dapat dirilis di F-Droid
+• Pemindaian barcode yang dipegang miring kini lebih cepat
+• Foto besar dari galeri kini ditangani lebih andal

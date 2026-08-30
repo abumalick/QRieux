@@ -1,0 +1,3 @@
+• La scansione dei codici a barre ora utilizza un motore open source, il che consente di pubblicare QRieux su F-Droid
+• Scansione più veloce dei codici a barre tenuti di lato
+• Le foto grandi dalla galleria vengono gestite in modo più affidabile

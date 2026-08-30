@@ -1,0 +1,3 @@
+• Uchanganuzi wa barcode sasa unatumia injini huria (open-source), hivyo QRieux inaweza kuchapishwa kwenye F-Droid
+• Uchanganuzi wa haraka zaidi wa barcode zinaposhikwa kwa upande
+• Picha kubwa kutoka kwenye galeria sasa zinashughulikiwa kwa uhakika zaidi

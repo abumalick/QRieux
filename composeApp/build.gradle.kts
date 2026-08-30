@@ -81,8 +81,8 @@ android {
         applicationId = "net.hilson.qrieux"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 24
-        versionName = "1.9.0"
+        versionCode = 25
+        versionName = "1.9.1"
     }
 
     signingConfigs {
@@ -100,6 +100,12 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+    // AGP otherwise adds a dependency-metadata block to the APK signing block.
+    // F-Droid's scanner rejects it, which blocks reproducible builds.
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
     }
     buildTypes {
         getByName("debug") {
