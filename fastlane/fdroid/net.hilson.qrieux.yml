@@ -13,7 +13,7 @@ Binaries: https://github.com/abumalick/QRieux/releases/download/v%v/QRieux-%v.ap
 Builds:
   - versionName: 1.9.1
     versionCode: 25
-    commit: cfe41df573d100f1772cc2f14aa1da61bf0b1a9d
+    commit: 8e7fb227d84ad94e4296c46a7e8406276d4fd190
     subdir: composeApp
     gradle:
       - yes
