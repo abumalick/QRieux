@@ -8,6 +8,14 @@ android-debug:
 android-release:
     ./gradlew :composeApp:bundleRelease
 
+# Build the signed release APK published on GitHub for the F-Droid reproducible build
+android-release-apk:
+    ./gradlew :composeApp:assembleRelease
+
+# Check a release APK carries no signing block F-Droid rejects
+verify-fdroid-apk apk="composeApp/build/outputs/apk/release/composeApp-release.apk":
+    python3 scripts/check_apk_signing_blocks.py {{apk}}
+
 # iOS
 
 # Build iOS debug framework for simulator

@@ -46,9 +46,28 @@ to appear in the repository roughly 24-48h after the merge.
 `UpdateCheckMode: Tags` means F-Droid picks up new releases on its own from
 signed git tags — no further merge requests are needed for routine updates.
 
+**Every release must publish a signed APK on GitHub**, named exactly as the
+`Binaries` line expects:
+
+```
+https://github.com/abumalick/QRieux/releases/download/v<versionName>/QRieux-<versionName>.apk
+```
+
+Without that asset F-Droid cannot publish the update, and nothing here reports
+the failure. `/release` covers this; `just verify-fdroid-apk` checks the APK
+before it is uploaded.
+
 ## Signing
 
-F-Droid signs with its own key, so the Play Store and F-Droid builds are not
-interchangeable: users cannot upgrade from one to the other without
-reinstalling. The release build only wires up the Play Store signing config
-when `key.properties` is present, which keeps F-Droid's unsigned build working.
+Reproducible builds are enabled: F-Droid rebuilds the tagged commit, compares
+it against the published APK, and on a match ships that APK under this
+project's signature rather than its own. `AllowedAPKSigningKeys` is the
+SHA-256 of the release certificate.
+
+The release build only wires up the signing config when `key.properties` is
+present, which keeps F-Droid's own unsigned build working.
+
+AGP writes a dependency-metadata block into the APK signing block by default
+and F-Droid's scanner rejects it, so `composeApp/build.gradle.kts` sets
+`dependenciesInfo { includeInApk = false; includeInBundle = false }`. Removing
+that will break reproducible builds.

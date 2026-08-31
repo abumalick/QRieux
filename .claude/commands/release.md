@@ -35,11 +35,19 @@ Path: `fastlane/metadata/android/<locale>/changelogs/<versionCode>.txt`
 Format: Bullet points starting with "•", max 500 chars per file.
 Translate appropriately for each language.
 
-## 4. Update Version in build.gradle.kts
+## 4. Update Version
 
-Edit `composeApp/build.gradle.kts` to update:
+Edit `composeApp/build.gradle.kts`:
 - `versionCode = <new-code>`
 - `versionName = "<new-name>"`
+
+Edit `iosApp/iosApp/Info.plist` to keep the platforms in step:
+- `CFBundleShortVersionString` = `<new-name>`
+- `CFBundleVersion` = `<new-code>`
+
+Edit `fastlane/fdroid/net.hilson.qrieux.yml` so the F-Droid recipe matches:
+- `versionName`, `versionCode`, `CurrentVersion`, `CurrentVersionCode`
+- `commit` = the full hash of the release commit (filled in after step 6)
 
 ## 5. Build Release Bundle
 
@@ -47,20 +55,73 @@ Run: `just android-release`
 
 Ensure build succeeds before proceeding.
 
-## 6. Commit Changes
+## 6. Commit and Tag
 
 Stage and commit with message: `v<versionName> (versionCode <code>)`
 
-Create a git tag: `git tag v<versionName>`
+Tag and push both, so the tag exists on GitHub before the release is created:
 
-## 7. Upload to Production
+```bash
+git tag -a v<versionName> -m "v<versionName> (versionCode <code>)"
+git push && git push origin v<versionName>
+```
+
+## 7. Publish the APK for F-Droid
+
+**Do not skip this.** F-Droid rebuilds the tagged commit and compares it against
+the APK published here. Without a matching asset at the exact URL below,
+F-Droid cannot publish the update at all — and the failure is silent from this
+side. The URL is fixed by `Binaries` in `fastlane/fdroid/net.hilson.qrieux.yml`:
+
+```
+https://github.com/abumalick/QRieux/releases/download/v%v/QRieux-%v.apk
+```
+
+Build the APK **from the tag**, not from the working tree, so it matches what
+F-Droid builds:
+
+```bash
+git stash -u                      # only if the tree is dirty
+git checkout v<versionName>
+just android-release-apk
+just verify-fdroid-apk            # must pass; see below
+```
+
+`verify-fdroid-apk` fails if the APK carries a signing block F-Droid rejects.
+The usual cause is AGP's dependency-metadata block; `dependenciesInfo` in
+`composeApp/build.gradle.kts` disables it, so a failure here means that setting
+was lost. Do not publish an APK that fails this check.
+
+Confirm the signature matches the key F-Droid expects
+(`AllowedAPKSigningKeys` in the recipe):
+
+```bash
+apksigner verify --print-certs composeApp/build/outputs/apk/release/composeApp-release.apk
+```
+
+Then publish, naming the asset exactly `QRieux-<versionName>.apk`:
+
+```bash
+cp composeApp/build/outputs/apk/release/composeApp-release.apk .tmp/QRieux-<versionName>.apk
+gh release create v<versionName> --repo abumalick/QRieux \
+  --title "QRieux <versionName>" \
+  --notes-file fastlane/metadata/android/en-US/changelogs/<versionCode>.txt \
+  .tmp/QRieux-<versionName>.apk
+git checkout main
+```
+
+No merge request to fdroiddata is needed for an update: `UpdateCheckMode: Tags`
+picks the release up from the tag.
+
+## 8. Upload to Production
 
 Run: `just android-production`
 
-## 8. Summary
+## 9. Summary
 
 Report to user:
 - Version released
 - Changelog summary
-- Upload status
+- Play Store upload status
+- GitHub release URL and confirmation the APK asset is attached
 - Remind about git push if remote exists
