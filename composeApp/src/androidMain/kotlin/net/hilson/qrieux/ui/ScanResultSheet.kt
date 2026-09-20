@@ -1,5 +1,6 @@
 package net.hilson.qrieux.ui
 
+import android.content.res.Configuration
 import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -56,71 +57,119 @@ fun ScanResultOverlay(
         is QrContentType.Text -> contentType.text
     }
 
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 0.85f))
     ) {
-        // The buttons alone are taller than a phone in landscape, so pinning them is
-        // not an option: the whole column scrolls and the card is capped, which keeps
-        // the actions at full size and only a scroll away for any payload length.
-        val maxContentHeight = (LocalConfiguration.current.screenHeightDp * 0.4f).dp
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding)
-                .consumeWindowInsets(contentPadding)
-                .windowInsetsPadding(WindowInsets.safeDrawing)
-                .verticalScroll(rememberScrollState())
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = stringResource(R.string.scan_result_title),
-                color = Color.White,
-                fontSize = 28.sp,
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center
-            )
+        val frame = Modifier
+            .fillMaxSize()
+            .padding(contentPadding)
+            .consumeWindowInsets(contentPadding)
+            .windowInsetsPadding(WindowInsets.safeDrawing)
 
-            Spacer(modifier = Modifier.height(24.dp))
-
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(max = maxContentHeight),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color.White
-                ),
-                shape = RoundedCornerShape(16.dp)
+        if (isLandscape) {
+            // Stacked, the buttons alone are taller than a landscape phone, and no
+            // arrangement of full-size targets fits. Side by side the actions get the
+            // whole height instead of what the content leaves them, and the width the
+            // stacked layout wasted pays for it. Padding is tighter vertically for the
+            // same reason: height is the scarce dimension here, not width.
+            Row(
+                modifier = frame.padding(horizontal = 24.dp, vertical = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-                Text(
-                    text = rawValue,
-                    modifier = Modifier
-                        .semantics { testTag = "scan_result_content" }
-                        .verticalScroll(rememberScrollState())
-                        .padding(20.dp),
-                    fontSize = 20.sp,
-                    color = Color.Black
-                )
+                Column(modifier = Modifier.weight(1f)) {
+                    ResultTitle()
+                    Spacer(modifier = Modifier.height(24.dp))
+                    ResultCard(rawValue, Modifier.weight(1f, fill = false))
+                }
+                Column(modifier = Modifier.weight(1f)) {
+                    Column(
+                        modifier = Modifier
+                            .weight(1f, fill = false)
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        ResultActions(contentType, context)
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    ScanAgainButton(onDismiss)
+                }
             }
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            when (contentType) {
-                is QrContentType.Url -> UrlActions(contentType.url, onDismiss, context)
-                is QrContentType.Email -> EmailActions(contentType.email, onDismiss, context)
-                is QrContentType.Phone -> PhoneActions(contentType.phone, onDismiss, context)
-                is QrContentType.Wifi -> WifiActions(contentType, onDismiss, context)
-                is QrContentType.Contact -> ContactActions(contentType, onDismiss, context)
-                is QrContentType.Text -> TextActions(contentType.text, onDismiss, context)
+        } else {
+            // Portrait has the height for a single column, but not always enough of
+            // it: the column scrolls so the actions stay reachable, and the card is
+            // capped so a long payload cannot push them far down.
+            val maxContentHeight = (configuration.screenHeightDp * 0.4f).dp
+            Column(
+                modifier = frame
+                    .verticalScroll(rememberScrollState())
+                    .padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                ResultTitle()
+                Spacer(modifier = Modifier.height(24.dp))
+                ResultCard(rawValue, Modifier.heightIn(max = maxContentHeight))
+                Spacer(modifier = Modifier.height(32.dp))
+                ResultActions(contentType, context)
+                Spacer(modifier = Modifier.height(16.dp))
+                ScanAgainButton(onDismiss)
             }
         }
     }
 }
 
 @Composable
-private fun UrlActions(url: String, onDismiss: () -> Unit, context: android.content.Context) {
+private fun ResultTitle() {
+    Text(
+        text = stringResource(R.string.scan_result_title),
+        color = Color.White,
+        fontSize = 28.sp,
+        modifier = Modifier.fillMaxWidth(),
+        textAlign = TextAlign.Center
+    )
+}
+
+@Composable
+private fun ResultCard(rawValue: String, modifier: Modifier = Modifier) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Text(
+            text = rawValue,
+            modifier = Modifier
+                .semantics { testTag = "scan_result_content" }
+                .verticalScroll(rememberScrollState())
+                .padding(20.dp),
+            fontSize = 20.sp,
+            color = Color.Black
+        )
+    }
+}
+
+@Composable
+private fun ResultActions(
+    contentType: QrContentType,
+    context: android.content.Context
+) {
+    when (contentType) {
+        is QrContentType.Url -> UrlActions(contentType.url, context)
+        is QrContentType.Email -> EmailActions(contentType.email, context)
+        is QrContentType.Phone -> PhoneActions(contentType.phone, context)
+        is QrContentType.Wifi -> WifiActions(contentType, context)
+        is QrContentType.Contact -> ContactActions(contentType, context)
+        is QrContentType.Text -> TextActions(contentType.text, context)
+    }
+}
+
+@Composable
+private fun UrlActions(url: String, context: android.content.Context) {
     val uri = Uri.parse(url)
     val isSafeScheme = uri.scheme?.lowercase() in listOf("http", "https")
     val toastCopied = stringResource(R.string.toast_copied)
@@ -141,12 +190,11 @@ private fun UrlActions(url: String, onDismiss: () -> Unit, context: android.cont
         ActionButton(stringResource(R.string.action_share), Icons.Default.Share) {
             shareText(platformContext, url, shareTitle)
         }
-        SecondaryButton(stringResource(R.string.action_scan_again), Icons.Default.QrCodeScanner, onDismiss)
     }
 }
 
 @Composable
-private fun EmailActions(email: String, onDismiss: () -> Unit, context: android.content.Context) {
+private fun EmailActions(email: String, context: android.content.Context) {
     val toastCopied = stringResource(R.string.toast_copied)
     val clipboardLabel = stringResource(R.string.clipboard_label_qr)
     val shareTitle = stringResource(R.string.action_share)
@@ -163,12 +211,11 @@ private fun EmailActions(email: String, onDismiss: () -> Unit, context: android.
         ActionButton(stringResource(R.string.action_share), Icons.Default.Share) {
             shareText(platformContext, email, shareTitle)
         }
-        SecondaryButton(stringResource(R.string.action_scan_again), Icons.Default.QrCodeScanner, onDismiss)
     }
 }
 
 @Composable
-private fun PhoneActions(phone: String, onDismiss: () -> Unit, context: android.content.Context) {
+private fun PhoneActions(phone: String, context: android.content.Context) {
     val toastCopied = stringResource(R.string.toast_copied)
     val clipboardLabel = stringResource(R.string.clipboard_label_qr)
     val shareTitle = stringResource(R.string.action_share)
@@ -185,12 +232,11 @@ private fun PhoneActions(phone: String, onDismiss: () -> Unit, context: android.
         ActionButton(stringResource(R.string.action_share), Icons.Default.Share) {
             shareText(platformContext, phone, shareTitle)
         }
-        SecondaryButton(stringResource(R.string.action_scan_again), Icons.Default.QrCodeScanner, onDismiss)
     }
 }
 
 @Composable
-private fun WifiActions(wifi: QrContentType.Wifi, onDismiss: () -> Unit, context: android.content.Context) {
+private fun WifiActions(wifi: QrContentType.Wifi, context: android.content.Context) {
     val toastCopied = stringResource(R.string.toast_copied)
     val toastWifiSent = stringResource(R.string.toast_wifi_sent)
     val clipboardLabel = stringResource(R.string.clipboard_label_qr)
@@ -211,12 +257,11 @@ private fun WifiActions(wifi: QrContentType.Wifi, onDismiss: () -> Unit, context
         ActionButton(stringResource(R.string.action_share), Icons.Default.Share) {
             shareText(platformContext, wifi.ssid, shareTitle)
         }
-        SecondaryButton(stringResource(R.string.action_scan_again), Icons.Default.QrCodeScanner, onDismiss)
     }
 }
 
 @Composable
-private fun ContactActions(contact: QrContentType.Contact, onDismiss: () -> Unit, context: android.content.Context) {
+private fun ContactActions(contact: QrContentType.Contact, context: android.content.Context) {
     val toastCopied = stringResource(R.string.toast_copied)
     val clipboardLabel = stringResource(R.string.clipboard_label_qr)
     val shareTitle = stringResource(R.string.action_share)
@@ -239,12 +284,11 @@ private fun ContactActions(contact: QrContentType.Contact, onDismiss: () -> Unit
         ActionButton(stringResource(R.string.action_share), Icons.Default.Share) {
             shareText(platformContext, contact.rawVCard, shareTitle)
         }
-        SecondaryButton(stringResource(R.string.action_scan_again), Icons.Default.QrCodeScanner, onDismiss)
     }
 }
 
 @Composable
-private fun TextActions(text: String, onDismiss: () -> Unit, context: android.content.Context) {
+private fun TextActions(text: String, context: android.content.Context) {
     val toastCopied = stringResource(R.string.toast_copied)
     val clipboardLabel = stringResource(R.string.clipboard_label_qr)
     val shareTitle = stringResource(R.string.action_share)
@@ -258,8 +302,12 @@ private fun TextActions(text: String, onDismiss: () -> Unit, context: android.co
         ActionButton(stringResource(R.string.action_share), Icons.Default.Share) {
             shareText(platformContext, text, shareTitle)
         }
-        SecondaryButton(stringResource(R.string.action_scan_again), Icons.Default.QrCodeScanner, onDismiss)
     }
+}
+
+@Composable
+private fun ScanAgainButton(onDismiss: () -> Unit) {
+    SecondaryButton(stringResource(R.string.action_scan_again), Icons.Default.QrCodeScanner, onDismiss)
 }
 
 @Composable

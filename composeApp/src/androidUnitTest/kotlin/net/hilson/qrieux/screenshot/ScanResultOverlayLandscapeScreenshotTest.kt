@@ -11,9 +11,11 @@ import net.hilson.qrieux.util.QrContentType
 // The result screen is the one place where the content and every action have to fit
 // a screen only a few hundred dp tall. Each type gets its own capture because the
 // number of action buttons differs per type, and that is what pushes them off screen.
+// The size is a phone held sideways rather than Robolectric's default screen
+// rotated, since the two-pane layout only makes sense at a real landscape width.
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
-@Config(sdk = [34], qualifiers = "+land")
+@Config(sdk = [34], qualifiers = "w891dp-h411dp-land")
 class ScanResultOverlayLandscapeScreenshotTest {
 
     @Test
