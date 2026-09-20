@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
@@ -37,7 +38,8 @@ import net.hilson.qrieux.showToast
 @Composable
 fun ScanResultOverlay(
     contentType: QrContentType,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    contentPadding: PaddingValues = PaddingValues()
 ) {
     val context = LocalContext.current
     val rawValue = when (contentType) {
@@ -59,10 +61,17 @@ fun ScanResultOverlay(
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 0.85f))
     ) {
+        // The buttons alone are taller than a phone in landscape, so pinning them is
+        // not an option: the whole column scrolls and the card is capped, which keeps
+        // the actions at full size and only a scroll away for any payload length.
+        val maxContentHeight = (LocalConfiguration.current.screenHeightDp * 0.4f).dp
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Top))
+                .padding(contentPadding)
+                .consumeWindowInsets(contentPadding)
+                .windowInsetsPadding(WindowInsets.safeDrawing)
+                .verticalScroll(rememberScrollState())
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -79,7 +88,7 @@ fun ScanResultOverlay(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f, fill = false),
+                    .heightIn(max = maxContentHeight),
                 colors = CardDefaults.cardColors(
                     containerColor = Color.White
                 ),

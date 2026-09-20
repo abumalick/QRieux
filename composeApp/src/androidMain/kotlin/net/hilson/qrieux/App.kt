@@ -251,7 +251,10 @@ fun App(
                         scannedContent?.let { content ->
                             ScanResultOverlay(
                                 contentType = content,
-                                onDismiss = { scannedContent = null }
+                                onDismiss = { scannedContent = null },
+                                // The scanner Box fills the screen, so the bottom bar is
+                                // drawn over it: the overlay keeps its actions above it.
+                                contentPadding = paddingValues
                             )
                         }
                     }
