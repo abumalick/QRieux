@@ -75,6 +75,89 @@ class QrDecoderTest {
     }
 
     @Test
+    fun `decodes a light-on-dark QR code from a camera frame`() {
+        val matrix = encode("inverted-camera-frame", BarcodeFormat.QR_CODE, 300, 300)
+
+        val result = QrDecoder.decodeLuminancePlane(
+            plane = matrix.toLuminancePlane(rowStride = matrix.width).inverted(),
+            rowStride = matrix.width,
+            width = matrix.width,
+            height = matrix.height
+        )
+
+        assertEquals("inverted-camera-frame", result)
+    }
+
+    @Test
+    fun `decodes a light-on-dark QR code from gallery image pixels`() {
+        val matrix = encode("inverted-gallery-image", BarcodeFormat.QR_CODE, 300, 300)
+
+        val result = QrDecoder.decodeArgbPixels(
+            pixels = matrix.toArgbPixels(inverted = true),
+            width = matrix.width,
+            height = matrix.height
+        )
+
+        assertEquals("inverted-gallery-image", result)
+    }
+
+    @Test
+    fun `decodes a Data Matrix code`() {
+        val matrix = encode("data-matrix-payload", BarcodeFormat.DATA_MATRIX, 300, 300)
+
+        val result = QrDecoder.decodeLuminancePlane(
+            plane = matrix.toLuminancePlane(rowStride = matrix.width),
+            rowStride = matrix.width,
+            width = matrix.width,
+            height = matrix.height
+        )
+
+        assertEquals("data-matrix-payload", result)
+    }
+
+    @Test
+    fun `decodes an Aztec code`() {
+        val matrix = encode("aztec-payload", BarcodeFormat.AZTEC, 300, 300)
+
+        val result = QrDecoder.decodeLuminancePlane(
+            plane = matrix.toLuminancePlane(rowStride = matrix.width),
+            rowStride = matrix.width,
+            width = matrix.width,
+            height = matrix.height
+        )
+
+        assertEquals("aztec-payload", result)
+    }
+
+    @Test
+    fun `decodes a PDF417 code`() {
+        val matrix = encode("pdf417-payload", BarcodeFormat.PDF_417, 600, 300)
+
+        val result = QrDecoder.decodeLuminancePlane(
+            plane = matrix.toLuminancePlane(rowStride = matrix.width),
+            rowStride = matrix.width,
+            width = matrix.width,
+            height = matrix.height
+        )
+
+        assertEquals("pdf417-payload", result)
+    }
+
+    @Test
+    fun `decodes a Code 128 barcode`() {
+        val matrix = encode("CODE128-PAYLOAD", BarcodeFormat.CODE_128, 400, 200)
+
+        val result = QrDecoder.decodeLuminancePlane(
+            plane = matrix.toLuminancePlane(rowStride = matrix.width),
+            rowStride = matrix.width,
+            width = matrix.width,
+            height = matrix.height
+        )
+
+        assertEquals("CODE128-PAYLOAD", result)
+    }
+
+    @Test
     fun `returns null when the gallery image holds no barcode`() {
         val blank = IntArray(300 * 300) { 0xFFFFFFFF.toInt() }
 
@@ -100,12 +183,16 @@ private fun BitMatrix.toLuminancePlane(rowStride: Int): ByteArray {
     return plane
 }
 
-private fun BitMatrix.toArgbPixels(): IntArray {
+private fun BitMatrix.toArgbPixels(inverted: Boolean = false): IntArray {
+    val dark = if (inverted) 0xFFFFFFFF.toInt() else 0xFF000000.toInt()
+    val light = if (inverted) 0xFF000000.toInt() else 0xFFFFFFFF.toInt()
     val pixels = IntArray(width * height)
     for (y in 0 until height) {
         for (x in 0 until width) {
-            pixels[y * width + x] = if (this[x, y]) 0xFF000000.toInt() else 0xFFFFFFFF.toInt()
+            pixels[y * width + x] = if (this[x, y]) dark else light
         }
     }
     return pixels
 }
+
+private fun ByteArray.inverted(): ByteArray = ByteArray(size) { this[it].toInt().inv().toByte() }

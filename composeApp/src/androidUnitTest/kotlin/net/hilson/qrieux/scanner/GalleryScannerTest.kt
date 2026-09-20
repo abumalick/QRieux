@@ -32,6 +32,13 @@ class GalleryScannerTest {
     }
 
     @Test
+    fun `reads a light-on-dark QR code out of a picked image`() {
+        val bitmap = qrBitmap("inverted-from-gallery", inverted = true)
+
+        assertEquals("inverted-from-gallery", decodeBarcodeFromBitmap(bitmap))
+    }
+
+    @Test
     fun `returns null for a picture holding no barcode`() {
         val bitmap = Bitmap.createBitmap(300, 300, Bitmap.Config.ARGB_8888).apply {
             eraseColor(0xFFFFFFFF.toInt())
@@ -41,12 +48,14 @@ class GalleryScannerTest {
     }
 }
 
-private fun qrBitmap(content: String): Bitmap {
+private fun qrBitmap(content: String, inverted: Boolean = false): Bitmap {
     val matrix: BitMatrix = MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, 300, 300)
+    val dark = if (inverted) 0xFFFFFFFF.toInt() else 0xFF000000.toInt()
+    val light = if (inverted) 0xFF000000.toInt() else 0xFFFFFFFF.toInt()
     val pixels = IntArray(matrix.width * matrix.height) { i ->
         val x = i % matrix.width
         val y = i / matrix.width
-        if (matrix[x, y]) 0xFF000000.toInt() else 0xFFFFFFFF.toInt()
+        if (matrix[x, y]) dark else light
     }
     return Bitmap.createBitmap(matrix.width, matrix.height, Bitmap.Config.ARGB_8888).apply {
         setPixels(pixels, 0, matrix.width, 0, 0, matrix.width, matrix.height)

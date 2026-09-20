@@ -62,6 +62,22 @@ class QrAnalyzerTest {
     }
 
     @Test
+    fun `reports a light-on-dark barcode found in a frame`() {
+        val detected = mutableListOf<String>()
+        val matrix = MultiFormatWriter().encode("inverted-frame", BarcodeFormat.QR_CODE, 300, 300)
+        val frame = FakeImageProxy(
+            plane = matrix.toPaddedPlane(padding = 0, dark = -1, light = 0),
+            rowStride = matrix.width,
+            width = matrix.width,
+            height = matrix.height
+        )
+
+        QrAnalyzer { detected.add(it) }.analyze(frame)
+
+        assertEquals(listOf("inverted-frame"), detected)
+    }
+
+    @Test
     fun `reads frames whose rows carry stride padding`() {
         val detected = mutableListOf<String>()
         val matrix = MultiFormatWriter().encode("padded-frame", BarcodeFormat.QR_CODE, 300, 300)
@@ -88,12 +104,12 @@ private fun frameContaining(content: String): FakeImageProxy {
     )
 }
 
-private fun BitMatrix.toPaddedPlane(padding: Int): ByteArray {
+private fun BitMatrix.toPaddedPlane(padding: Int, dark: Byte = 0, light: Byte = -1): ByteArray {
     val rowStride = width + padding
-    val plane = ByteArray(rowStride * height) { -1 }
+    val plane = ByteArray(rowStride * height) { light }
     for (y in 0 until height) {
         for (x in 0 until width) {
-            if (this[x, y]) plane[y * rowStride + x] = 0
+            if (this[x, y]) plane[y * rowStride + x] = dark
         }
     }
     return plane
