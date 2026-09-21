@@ -262,7 +262,10 @@ fun App(
                 else -> {
                     PermissionScreen(
                         showRationale = cameraPermissionState.status.shouldShowRationale,
-                        onRequestPermission = { cameraPermissionState.launchPermissionRequest() }
+                        onRequestPermission = { cameraPermissionState.launchPermissionRequest() },
+                        // Drawn under the tab bar like the scanner, so it keeps
+                        // Open Settings above it.
+                        contentPadding = paddingValues
                     )
                 }
             }

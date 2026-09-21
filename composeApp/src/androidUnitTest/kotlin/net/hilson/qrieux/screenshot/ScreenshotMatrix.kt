@@ -3,6 +3,7 @@ package net.hilson.qrieux.screenshot
 import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.os.Build
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.asImageBitmap
@@ -10,6 +11,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
 import com.github.takahirom.roborazzi.captureRoboImage
 import net.hilson.qrieux.GeneratedQrCode
 import net.hilson.qrieux.history.HistoryEntry
@@ -46,7 +48,7 @@ internal fun captureMatrix(name: String, content: @Composable () -> Unit) {
 }
 
 // Landscape is the short-screen case: the portrait matrix already covers SDK, theme
-// and locale, so one capture per result layout is enough to catch clipping.
+// and locale, so one capture per layout is enough to catch clipping.
 internal fun captureLandscape(name: String, content: @Composable () -> Unit) {
     val previous = Locale.getDefault()
     Locale.setDefault(Locale.ENGLISH)
@@ -62,6 +64,11 @@ internal fun captureLandscape(name: String, content: @Composable () -> Unit) {
         Locale.setDefault(previous)
     }
 }
+
+// Screens drawn behind the tab bar get it as Scaffold padding: an 80dp bar over a
+// 24dp gesture bar. A landscape capture that ignores it is that much more generous
+// than the app ever is, which is the whole margin these screens are missing.
+internal val TAB_BAR_PADDING = PaddingValues(bottom = 104.dp)
 
 @Composable
 private fun WithLocale(tag: String, content: @Composable () -> Unit) {

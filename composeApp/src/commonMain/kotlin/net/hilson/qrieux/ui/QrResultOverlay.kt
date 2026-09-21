@@ -4,24 +4,25 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Edit
@@ -43,6 +44,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import androidx.compose.ui.unit.sp
 import net.hilson.qrieux.GeneratedQrCode
 import org.jetbrains.compose.resources.stringResource
@@ -60,120 +62,183 @@ fun QrResultOverlay(
     onEdit: () -> Unit,
     onBack: (() -> Unit)? = null
 ) {
-    Box(
+    BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 0.85f)),
         contentAlignment = Alignment.TopCenter
     ) {
-        Column(
-            // Cap content width so the square QR container doesn't blow past the viewport
-            // on tablets (where fillMaxWidth + aspectRatio(1f) would be ~2560dp).
-            modifier = Modifier
-                .widthIn(max = 500.dp)
-                .fillMaxHeight()
-                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Top))
-                .padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        val frame = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
+
+        if (maxWidth > maxHeight) {
+            // Stacked on a landscape phone the square alone is taller than the
+            // window, and pushing the buttons below it puts them off screen. Side
+            // by side the code gets the whole height and the buttons the width the
+            // stacked layout wasted.
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                modifier = frame
+                    .fillMaxSize()
+                    .padding(horizontal = 24.dp, vertical = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-                IconButton(
-                    onClick = onBack ?: onEdit,
-                    modifier = Modifier.semantics { testTag = "qr_result_back" }
+                Column(
+                    modifier = Modifier.weight(1f),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(Res.string.navigate_back),
-                        tint = Color.White
+                    ResultTitle(onBack ?: onEdit)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    QrPanel(
+                        generatedQr = generatedQr,
+                        isGenerating = isGenerating,
+                        modifier = Modifier.weight(1f).fillMaxWidth()
                     )
                 }
-                Text(
-                    text = stringResource(Res.string.generator_result_title),
-                    color = Color.White,
-                    fontSize = 28.sp,
-                    modifier = Modifier.weight(1f).semantics { testTag = "qr_result_title" },
-                    textAlign = TextAlign.Center
+                Box(
+                    modifier = Modifier.weight(1f).fillMaxHeight(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+                        QrResultActions(generatedQr, onShare, onEdit)
+                    }
+                }
+            }
+        } else {
+            Column(
+                // Cap content width so the square QR container doesn't blow past the viewport
+                // on tablets (where fillMaxWidth + aspectRatio(1f) would be ~2560dp).
+                modifier = frame
+                    .widthIn(max = 500.dp)
+                    .fillMaxHeight()
+                    .verticalScroll(rememberScrollState())
+                    .padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                ResultTitle(onBack ?: onEdit)
+                Spacer(modifier = Modifier.height(24.dp))
+                QrPanel(
+                    generatedQr = generatedQr,
+                    isGenerating = isGenerating,
+                    modifier = Modifier.fillMaxWidth().aspectRatio(1f)
                 )
-                // Balance the row so title stays centered
-                Spacer(modifier = Modifier.size(48.dp))
+                Spacer(modifier = Modifier.height(32.dp))
+                QrResultActions(generatedQr, onShare, onEdit)
             }
+        }
+    }
+}
 
-            Spacer(modifier = Modifier.height(24.dp))
+@Composable
+private fun ResultTitle(onBack: () -> Unit) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(
+            onClick = onBack,
+            modifier = Modifier.semantics { testTag = "qr_result_back" }
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = stringResource(Res.string.navigate_back),
+                tint = Color.White
+            )
+        }
+        Text(
+            text = stringResource(Res.string.generator_result_title),
+            color = Color.White,
+            fontSize = 28.sp,
+            modifier = Modifier.weight(1f).semantics { testTag = "qr_result_title" },
+            textAlign = TextAlign.Center
+        )
+        // Balance the row so title stays centered
+        Spacer(modifier = Modifier.size(48.dp))
+    }
+}
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f)
-                    .background(Color.White, RoundedCornerShape(20.dp)),
-                contentAlignment = Alignment.Center
-            ) {
-                if (isGenerating) {
-                    CircularProgressIndicator()
-                } else if (generatedQr != null) {
-                    Image(
-                        bitmap = generatedQr.image,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(24.dp),
-                        contentScale = ContentScale.Fit
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(32.dp))
-
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                Button(
-                    onClick = onShare,
-                    enabled = generatedQr != null,
+@Composable
+private fun QrPanel(
+    generatedQr: GeneratedQrCode?,
+    isGenerating: Boolean,
+    modifier: Modifier
+) {
+    // A code that runs off the screen cannot be scanned, which is the whole point
+    // of the screen, so the panel takes the shorter side of the space it is given
+    // rather than the width alone.
+    BoxWithConstraints(modifier = modifier, contentAlignment = Alignment.Center) {
+        Box(
+            modifier = Modifier
+                .size(min(maxWidth, maxHeight))
+                .background(Color.White, RoundedCornerShape(20.dp)),
+            contentAlignment = Alignment.Center
+        ) {
+            if (isGenerating) {
+                CircularProgressIndicator()
+            } else if (generatedQr != null) {
+                Image(
+                    bitmap = generatedQr.image,
+                    contentDescription = null,
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(72.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    )
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Share,
-                        contentDescription = null,
-                        modifier = Modifier.size(28.dp)
-                    )
-                    Spacer(Modifier.width(12.dp))
-                    Text(
-                        text = stringResource(Res.string.generator_share_qr),
-                        fontSize = 22.sp,
-                        textAlign = TextAlign.Center
-                    )
-                }
-
-                OutlinedButton(
-                    onClick = onEdit,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(72.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        contentColor = Color.White
-                    )
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Edit,
-                        contentDescription = null,
-                        modifier = Modifier.size(28.dp)
-                    )
-                    Spacer(Modifier.width(12.dp))
-                    Text(
-                        text = stringResource(Res.string.generator_edit_button),
-                        fontSize = 22.sp,
-                        textAlign = TextAlign.Center
-                    )
-                }
+                        .fillMaxSize()
+                        .padding(24.dp),
+                    contentScale = ContentScale.Fit
+                )
             }
+        }
+    }
+}
+
+@Composable
+private fun QrResultActions(
+    generatedQr: GeneratedQrCode?,
+    onShare: () -> Unit,
+    onEdit: () -> Unit
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        Button(
+            onClick = onShare,
+            enabled = generatedQr != null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(72.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary
+            )
+        ) {
+            Icon(
+                imageVector = Icons.Default.Share,
+                contentDescription = null,
+                modifier = Modifier.size(28.dp)
+            )
+            Spacer(Modifier.width(12.dp))
+            Text(
+                text = stringResource(Res.string.generator_share_qr),
+                fontSize = 22.sp,
+                textAlign = TextAlign.Center
+            )
+        }
+
+        OutlinedButton(
+            onClick = onEdit,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(72.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = ButtonDefaults.outlinedButtonColors(
+                contentColor = Color.White
+            )
+        ) {
+            Icon(
+                imageVector = Icons.Default.Edit,
+                contentDescription = null,
+                modifier = Modifier.size(28.dp)
+            )
+            Spacer(Modifier.width(12.dp))
+            Text(
+                text = stringResource(Res.string.generator_edit_button),
+                fontSize = 22.sp,
+                textAlign = TextAlign.Center
+            )
         }
     }
 }
