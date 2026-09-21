@@ -1,0 +1,2 @@
+• The scan result, QR code, welcome and permission screens now fit on screen when the phone is held sideways
+• Codes printed light-on-dark are now recognised

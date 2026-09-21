@@ -1,0 +1,2 @@
+• As telas de resultado da leitura, código QR, boas-vindas e permissão de câmera agora cabem na tela quando o celular é segurado de lado
+• Códigos claros sobre fundo escuro agora são reconhecidos

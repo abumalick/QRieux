@@ -1,2 +1,1 @@
-• Leitura mais rápida de códigos de barras segurados de lado
-• Fotos grandes da galeria agora são processadas de forma mais confiável
+• A tela de código QR agora cabe na tela quando o celular é segurado de lado

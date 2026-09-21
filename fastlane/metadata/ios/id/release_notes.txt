@@ -1,2 +1,1 @@
-• Pemindaian barcode yang dipegang miring kini lebih cepat
-• Foto besar dari galeri kini ditangani lebih andal
+• Layar kode QR kini pas di layar saat ponsel dipegang mendatar

@@ -1,0 +1,2 @@
+• Le schermate di risultato scansione, codice QR, benvenuto e autorizzazione fotocamera ora si adattano bene quando il telefono è tenuto di lato
+• I codici chiari su sfondo scuro vengono ora riconosciuti

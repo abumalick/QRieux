@@ -1,0 +1,2 @@
+• Les écrans de résultat du scan, de code QR, de bienvenue et d'autorisation caméra s'affichent maintenant correctement quand le téléphone est tenu de côté
+• Les codes clairs sur fond sombre sont maintenant reconnus

@@ -1,2 +1,1 @@
-• Faster scanning of barcodes held sideways
-• Large photos from the gallery are handled more reliably
+• The QR code screen now fits when the phone is held sideways

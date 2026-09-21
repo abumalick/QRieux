@@ -1,0 +1,2 @@
+• Die Bildschirme für Scan-Ergebnis, QR-Code, Begrüßung und Kameraberechtigung passen jetzt auch bei seitlich gehaltenem Handy auf den Bildschirm
+• Hell gedruckte Codes auf dunklem Hintergrund werden jetzt erkannt

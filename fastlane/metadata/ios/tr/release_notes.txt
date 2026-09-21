@@ -1,2 +1,1 @@
-• Yan tutulan barkodların taranması hızlandı
-• Galerideki büyük fotoğraflar artık daha güvenilir şekilde işleniyor
+• QR kod ekranı artık telefon yan tutulduğunda da sığıyor

@@ -1,0 +1,2 @@
+• Màn hình kết quả quét, mã QR, chào mừng và quyền truy cập camera giờ đây hiển thị vừa màn hình khi cầm ngang điện thoại
+• Giờ đây có thể nhận diện mã có màu sáng trên nền tối

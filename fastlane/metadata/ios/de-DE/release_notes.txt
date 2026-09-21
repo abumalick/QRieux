@@ -1,2 +1,1 @@
-• Schnelleres Scannen von seitlich gehaltenen Barcodes
-• Große Fotos aus der Galerie werden zuverlässiger verarbeitet
+• Der Bildschirm für den QR-Code passt jetzt auch bei seitlich gehaltenem Handy auf den Bildschirm

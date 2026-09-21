@@ -1,0 +1,2 @@
+• Las pantallas de resultado del escaneo, código QR, bienvenida y permiso de cámara ahora se ajustan bien cuando el teléfono se sostiene de lado
+• Ahora se reconocen los códigos de color claro sobre fondo oscuro

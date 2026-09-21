@@ -1,2 +1,1 @@
-• Escaneo más rápido de códigos de barras sostenidos de lado
-• Las fotos grandes de la galería se procesan de forma más confiable
+• La pantalla de código QR ahora se ajusta bien cuando el teléfono se sostiene de lado

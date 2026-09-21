@@ -1,2 +1,1 @@
-• Lecture plus rapide des codes-barres tenus de côté
-• Les grandes photos de la galerie sont traitées de façon plus fiable
+• L'écran du code QR s'affiche maintenant correctement quand le téléphone est tenu de côté

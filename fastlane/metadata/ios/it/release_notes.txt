@@ -1,2 +1,1 @@
-• Scansione più veloce dei codici a barre tenuti di lato
-• Le foto grandi dalla galleria vengono gestite in modo più affidabile
+• La schermata del codice QR ora si adatta bene quando il telefono è tenuto di lato
