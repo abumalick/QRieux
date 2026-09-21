@@ -45,6 +45,24 @@ internal fun captureMatrix(name: String, content: @Composable () -> Unit) {
     }
 }
 
+// Landscape is the short-screen case: the portrait matrix already covers SDK, theme
+// and locale, so one capture per result layout is enough to catch clipping.
+internal fun captureLandscape(name: String, content: @Composable () -> Unit) {
+    val previous = Locale.getDefault()
+    Locale.setDefault(Locale.ENGLISH)
+    try {
+        captureRoboImage("src/androidUnitTest/snapshots/$name-land.png") {
+            WithLocale("en") {
+                QRieuxTheme(darkTheme = false, dynamicColor = true) {
+                    content()
+                }
+            }
+        }
+    } finally {
+        Locale.setDefault(previous)
+    }
+}
+
 @Composable
 private fun WithLocale(tag: String, content: @Composable () -> Unit) {
     val locale = Locale.forLanguageTag(tag)
