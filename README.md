@@ -7,6 +7,10 @@ A simple, ad-free QR code scanner designed for everyone — especially our paren
   <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2_url_result.png" width="250" alt="URL Result">
 </p>
 
+<p align="center">
+  <a href="https://f-droid.org/packages/net.hilson.qrieux/"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="70" alt="Get it on F-Droid"></a>
+</p>
+
 ## Why QRieux?
 
 Finding a QR code scanner that is simple, ad-free, free, and privacy-respecting is nearly impossible. So I built one.
@@ -28,7 +32,7 @@ Finding a QR code scanner that is simple, ad-free, free, and privacy-respecting 
 
 - Kotlin Multiplatform + Compose Multiplatform
 - CameraX for camera capture
-- ML Kit for barcode scanning
+- ZXing for barcode scanning and generation
 - Material3 for UI
 
 ## Build
