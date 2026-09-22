@@ -9,6 +9,8 @@ A simple, ad-free QR code scanner designed for everyone — especially our paren
 
 <p align="center">
   <a href="https://f-droid.org/packages/net.hilson.qrieux/"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="70" alt="Get it on F-Droid"></a>
+  <a href="https://play.google.com/store/apps/details?id=net.hilson.qrieux"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="70" alt="Get it on Google Play"></a>
+  <a href="https://apps.apple.com/app/id6758559665"><img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" height="47" alt="Download on the App Store"></a>
 </p>
 
 ## Why QRieux?
