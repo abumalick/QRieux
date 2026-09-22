@@ -23,11 +23,11 @@ Finding a QR code scanner that is simple, ad-free, free, and privacy-respecting 
 - **Smart actions** — open links, call phones, send emails, connect to WiFi, copy, share
 - **Gallery scanning** — scan QR codes from photos
 - **Share to scan** — share images from other apps to scan
-- **Multilingual** — English, French, Arabic
+- **Create QR codes** — for a website, email address, phone number, WiFi network or any text
+- **Multilingual** — 20 languages
 
 ## Coming Soon
 
-- Generate your own QR codes
 - Security warnings for suspicious links (anti-phishing)
 
 ## Tech Stack
