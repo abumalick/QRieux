@@ -40,6 +40,7 @@ just e2e-clean                  # Remove E2E artifacts and logs — always use t
 
 - Android: `composeApp/build.gradle.kts` — `versionCode` and `versionName`
 - iOS: `iosApp/iosApp/Info.plist` — `CFBundleShortVersionString` and `CFBundleVersion`
+- iOS ShareExtension: `iosApp/iosApp.xcodeproj/project.pbxproj` — `MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` (both configs); must match the app or App Store Connect rejects the build
 
 **Debug vs Release:**
 

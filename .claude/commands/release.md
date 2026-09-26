@@ -45,6 +45,10 @@ Edit `iosApp/iosApp/Info.plist` to keep the platforms in step:
 - `CFBundleShortVersionString` = `<new-name>`
 - `CFBundleVersion` = `<new-code>`
 
+Edit `iosApp/iosApp.xcodeproj/project.pbxproj` for the ShareExtension target (Debug and Release) — App Store Connect rejects a build whose extension version differs from the app's:
+- `MARKETING_VERSION = <new-name>;`
+- `CURRENT_PROJECT_VERSION = <new-code>;`
+
 Edit `fastlane/fdroid/net.hilson.qrieux.yml` so the F-Droid recipe matches:
 - `versionName`, `versionCode`, `CurrentVersion`, `CurrentVersionCode`
 - `commit` = the full hash of the release commit (filled in after step 6)
