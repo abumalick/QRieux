@@ -85,7 +85,8 @@ platform :ios do
   # certificate through the API key, so no signing identity is needed in the local keychain (which
   # is locked in SSH sessions). The export keeps only the entitlements the archived binaries
   # request, and an unsigned binary requests none, so they are first ad-hoc signed with the
-  # project's entitlements files.
+  # project's entitlements files. Xcode would otherwise raise the build number on export when it is
+  # already taken on App Store Connect; the repository stays the source of truth instead.
   def build_store_ipa
     root = File.expand_path("..", __dir__)
     build_dir = "#{root}/.tmp/ios-build"
@@ -101,6 +102,7 @@ platform :ios do
         <key>signingStyle</key><string>automatic</string>
         <key>teamID</key><string>#{ENV['APPLE_TEAM_ID']}</string>
         <key>uploadSymbols</key><true/>
+        <key>manageAppVersionAndBuildNumber</key><false/>
       </dict></plist>
     PLIST
 
@@ -133,6 +135,11 @@ platform :ios do
     sh("unzip", "-q", "-o", ipa, "-d", payload)
     app = Dir["#{payload}/Payload/*.app"].first
     app_info = read_plist("#{app}/Info.plist")
+    project_info = read_plist("#{root}/iosApp/iosApp/Info.plist")
+    %w[CFBundleShortVersionString CFBundleVersion].each do |key|
+      next if app_info[key] == project_info[key]
+      UI.user_error!("The IPA has #{key} #{app_info[key]} but iosApp/iosApp/Info.plist has #{project_info[key]}")
+    end
 
     signed_bundles.each do |relative, entitlements_file|
       bundle = relative ? File.join(app, relative) : app
