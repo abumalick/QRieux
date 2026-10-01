@@ -1,3 +1,6 @@
+require "open3"
+require "plist"
+
 before_all do
   # Xcode's IPA-export step shells out to /usr/bin/rsync (openrsync), which
   # then resolves a "server-side" `rsync` via PATH. When Homebrew's rsync 3.x
@@ -70,6 +73,100 @@ end
 
 # iOS lanes
 platform :ios do
+  # Bundles inside iosApp.app that get signed, innermost first, with the entitlements file each one requests
+  def signed_bundles
+    [
+      ["PlugIns/ShareExtension.appex", "iosApp/ShareExtension/ShareExtension.entitlements"],
+      [nil, "iosApp/iosApp/iosApp.entitlements"]
+    ]
+  end
+
+  # The archive is left unsigned and the export is signed with Apple's cloud-managed distribution
+  # certificate through the API key, so no signing identity is needed in the local keychain (which
+  # is locked in SSH sessions). The export keeps only the entitlements the archived binaries
+  # request, and an unsigned binary requests none, so they are first ad-hoc signed with the
+  # project's entitlements files.
+  def build_store_ipa
+    root = File.expand_path("..", __dir__)
+    build_dir = "#{root}/.tmp/ios-build"
+    archive = "#{build_dir}/QRieux.xcarchive"
+    FileUtils.rm_rf(build_dir)
+    FileUtils.mkdir_p(build_dir)
+    File.write("#{build_dir}/ExportOptions.plist", <<~PLIST)
+      <?xml version="1.0" encoding="UTF-8"?>
+      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+      <plist version="1.0"><dict>
+        <key>method</key><string>app-store-connect</string>
+        <key>destination</key><string>export</string>
+        <key>signingStyle</key><string>automatic</string>
+        <key>teamID</key><string>#{ENV['APPLE_TEAM_ID']}</string>
+        <key>uploadSymbols</key><true/>
+      </dict></plist>
+    PLIST
+
+    sh("xcodebuild", "-project", "#{root}/iosApp/iosApp.xcodeproj", "-scheme", "iosApp",
+       "-configuration", "Release", "-destination", "generic/platform=iOS",
+       "-archivePath", archive, "archive",
+       "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO", "CODE_SIGN_IDENTITY=")
+
+    app = "#{archive}/Products/Applications/iosApp.app"
+    signed_bundles.each do |bundle, entitlements|
+      sh("codesign", "--force", "--sign", "-", "--entitlements", "#{root}/#{entitlements}",
+         bundle ? File.join(app, bundle) : app)
+    end
+
+    sh("xcodebuild", "-exportArchive", "-archivePath", archive,
+       "-exportOptionsPlist", "#{build_dir}/ExportOptions.plist", "-exportPath", build_dir,
+       "-allowProvisioningUpdates",
+       "-authenticationKeyPath", "#{root}/fastlane/AuthKey_#{ENV['APP_STORE_KEY_ID']}.p8",
+       "-authenticationKeyID", ENV["APP_STORE_KEY_ID"],
+       "-authenticationKeyIssuerID", ENV["APP_STORE_ISSUER_ID"])
+
+    ipa = Dir["#{build_dir}/*.ipa"].first || UI.user_error!("The export produced no IPA")
+    verify_store_ipa(ipa, root)
+    ipa
+  end
+
+  # Refuses an IPA that App Store Connect would reject, or that would ship without its capabilities
+  def verify_store_ipa(ipa, root)
+    payload = "#{File.dirname(ipa)}/unzipped"
+    sh("unzip", "-q", "-o", ipa, "-d", payload)
+    app = Dir["#{payload}/Payload/*.app"].first
+    app_info = read_plist("#{app}/Info.plist")
+
+    signed_bundles.each do |relative, entitlements_file|
+      bundle = relative ? File.join(app, relative) : app
+      name = File.basename(bundle)
+      info = read_plist("#{bundle}/Info.plist")
+      %w[CFBundleShortVersionString CFBundleVersion].each do |key|
+        next if info[key] == app_info[key]
+        UI.user_error!("#{name} has #{key} #{info[key]} but the app has #{app_info[key]}")
+      end
+
+      signed = Plist.parse_xml(capture("codesign", "-d", "--entitlements", "-", "--xml", bundle)) || {}
+      Plist.parse_xml(File.read("#{root}/#{entitlements_file}")).each do |key, value|
+        UI.user_error!("#{name} is missing the #{key} entitlement") unless signed[key] == value
+      end
+      UI.user_error!("#{name} is signed with get-task-allow") unless signed["get-task-allow"] == false
+
+      authority = Open3.capture2e("codesign", "-dvv", bundle).first[/^Authority=(.*)$/, 1]
+      unless authority&.start_with?("Apple Distribution")
+        UI.user_error!("#{name} is signed by #{authority.inspect}, not an Apple Distribution certificate")
+      end
+      UI.success("#{name}: #{info['CFBundleShortVersionString']} (#{info['CFBundleVersion']}), entitlements match, #{authority}")
+    end
+  end
+
+  def read_plist(path)
+    Plist.parse_xml(capture("plutil", "-convert", "xml1", "-o", "-", path))
+  end
+
+  def capture(*command)
+    output, status = Open3.capture2(*command)
+    UI.user_error!("#{command.join(' ')} failed") unless status.success?
+    output
+  end
+
   desc "Build and upload to TestFlight"
   lane :beta do
     api_key = app_store_connect_api_key(
@@ -78,15 +175,9 @@ platform :ios do
       key_filepath: "fastlane/AuthKey_#{ENV['APP_STORE_KEY_ID']}.p8"
     )
 
-    build_app(
-      project: "iosApp/iosApp.xcodeproj",
-      scheme: "iosApp",
-      export_method: "app-store",
-      xcargs: "-allowProvisioningUpdates"
-    )
-
     upload_to_testflight(
       api_key: api_key,
+      ipa: build_store_ipa,
       skip_waiting_for_build_processing: true
     )
   end
@@ -106,14 +197,9 @@ platform :ios do
     )
   end
 
-  desc "Build only (no upload)"
+  desc "Build the App Store IPA only (no upload)"
   lane :build do
-    build_app(
-      project: "iosApp/iosApp.xcodeproj",
-      scheme: "iosApp",
-      export_method: "app-store",
-      xcargs: "-allowProvisioningUpdates"
-    )
+    build_store_ipa
   end
 
   desc "Upload metadata to App Store Connect"

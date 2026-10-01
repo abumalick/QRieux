@@ -49,3 +49,6 @@ fastlane/api_key.json
 e2e/artifacts/
 e2e/logs/
 compose-multiplatform-core
+
+# Local scratch space (fastlane's rsync shim and iOS build output)
+.tmp/
